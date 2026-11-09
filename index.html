@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peptopia Healthcare - Research & Education</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800&family=DM+Sans:wght@400&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Peptopia" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --bg:#F4F6FA;--card:#FFF;--border:rgba(15,23,42,.07);
+            --sh:0 1px 3px rgba(0,0,0,.05),0 1px 2px rgba(0,0,0,.03);
+            --sh-h:0 12px 28px rgba(0,0,0,.08),0 4px 10px rgba(0,0,0,.04);
+            --t1:#0F172A;--t2:#475569;--t3:#94A3B8;
+            --purple:#9000F5;--pink:#FF85E1;--cyan:#06B6D4;--orange:#F97316;--violet:#A855F7;--emerald:#10B981;--amber:#F59E0B;--red:#DC2626;
+            --neon-border: #00FFCC;
+            --pal-energy:#FFFFFF;--pal-focus:#F06000;--pal-mood:#10C000;--pal-calm:#F0F000;--pal-pain:#E01020;--pal-sleep:#0A0A0A;--pal-cobalt:#0070D0;--pal-purple:#6C4FE0;--pal-purple-lt:#7759ED;
+        }
+        html.dark{--bg:#0B1120;--card:rgba(255,255,255,.04);--border:rgba(255,255,255,.08);--sh:none;--sh-h:0 0 0 0 transparent;--t1:#E2E8F0;--t2:#94A3B8;--t3:#64748B}
+        
+        body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;line-height:1.6;display:flex;flex-direction:column; overflow-x: hidden; transition: background 0.3s, color 0.3s;}
+        .hdr{padding:10px 24px;display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;width:100%}
+        .hdr-brand{display:flex;align-items:center;gap:14px;text-decoration:none}
+        
+        /* Logo Styles */
+        .brand-logo-img{
+            width:48px;height:48px;
+            object-fit:cover;
+            border-radius: 50%;
+            border: 2px solid var(--neon-border);
+            box-shadow: 0 0 10px var(--neon-border);
+            background: transparent;
+        }
+        
+        .brand{display:flex;flex-direction:column}
+        .brand-name{font-family:'Outfit',sans-serif;font-weight:700;font-size:1.15rem;color:var(--t1);letter-spacing:2px;text-transform:uppercase;line-height:1.1}
+        .brand-tag{font-size:.7rem;color:var(--t3);letter-spacing:1.5px;text-transform:uppercase}
+        
+        .nav{display:flex;align-items:center;gap:8px}
+        .nav a{font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--t2);text-decoration:none;padding:8px 16px;border-radius:8px}
+        .nav a:hover{color:var(--t1);background:rgba(15,23,42,.03)}
+        
+        /* Theme Toggle */
+        .theme-toggle{cursor:pointer;background:none;border:none;font-size:1.2rem;color:var(--t1);padding:8px;transition:transform 0.2s;}
+        .theme-toggle:hover{transform:scale(1.1);}
+        html.dark .theme-toggle .fa-moon{display:none}
+        .theme-toggle .fa-sun{display:none}
+        html.dark .theme-toggle .fa-sun{display:inline-block;color:#FBBF24}
+        
+        .hero{text-align:center;padding:0 24px 12px;max-width:800px;margin:0 auto}
+        .hero h1{font-family:'Outfit',sans-serif;font-size:clamp(2.2rem,4vw,3.5rem);font-weight:800;margin-bottom:6px}
+        .hero h1 span{background:linear-gradient(90deg,#0584B0 0%,#07876B 28%,#7C22CE 62%,#D9500E 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        html.dark .hero h1 span{background:linear-gradient(90deg,var(--cyan) 0%,var(--emerald) 28%,var(--violet) 62%,var(--orange) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .hero p{font-size:1.1rem;color:var(--t2)}
+        .grid{max-width:1200px;margin:0 auto;padding:0 24px 32px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;justify-items:center}.grid .card{width:100%;max-width:340px}@media (max-width:1024px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+        .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px 18px 18px;display:flex;flex-direction:column;align-items:center;text-align:center;box-shadow:var(--sh);position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s;text-decoration:none;color:var(--t1)}
+        .card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;transition:height .3s}
+        .card:hover{transform:translateY(-4px);box-shadow:var(--sh-h)}
+        .card:hover::before{height:4px}
+        .ico{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:16px;transition:transform .3s}
+        .card:hover .ico{transform:scale(1.08)}
+        .c-cyan::before{background:linear-gradient(90deg,var(--cyan),rgba(6,182,212,.3))}.c-cyan .ico{background:rgba(6,182,212,.1);color:#00C2F0}
+        .c-orange::before{background:linear-gradient(90deg,var(--orange),rgba(249,115,22,.3))}.c-orange .ico{background:rgba(249,115,22,.1);color:#FF7A1A}
+        .c-purple::before{background:linear-gradient(90deg,var(--violet),rgba(168,85,247,.3))}.c-purple .ico{background:rgba(168,85,247,.1);color:#B45CFF}
+        .c-emerald::before{background:linear-gradient(90deg,var(--emerald),rgba(16,185,129,.3))}.c-emerald .ico{background:rgba(16,185,129,.1);color:#00C853}
+        .c-amber::before{background:linear-gradient(90deg,var(--amber),rgba(245,158,11,.3))}.c-amber .ico{background:rgba(245,158,11,.1);color:var(--amber)}
+        .c-red::before{background:linear-gradient(90deg,var(--red),rgba(220,38,38,.3))}.c-red .ico{background:rgba(220,38,38,.1);color:var(--red)}
+        .card h2{font-family:'Outfit',sans-serif;font-size:1.3rem;margin:0 0 6px}
+        .card p{color:var(--t2);font-size:.9rem;margin:0 0 12px;line-height:1.38;flex-grow:1}
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 24px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:700;text-transform:uppercase;color:#fff;width:100%;transition:filter .3s}
+        .b-cyan{background:linear-gradient(135deg,#0891B2,var(--cyan))}
+        .b-orange{background:linear-gradient(135deg,#EA580C,var(--orange))}
+.c-pink::before{background:linear-gradient(90deg,#DB2777,rgba(219,39,119,.3))}
+.c-pink .ico{background:rgba(219,39,119,.1);color:#FF2E8C}
+.b-pink{background:linear-gradient(135deg,#DB2777,#F472B6)}
+        .b-purple{background:linear-gradient(135deg,var(--purple),#B347FF)}
+        .b-emerald{background:linear-gradient(135deg,#059669,var(--emerald))}
+        .b-amber{background:linear-gradient(135deg,#D97706,var(--amber))}
+        .b-red{background:linear-gradient(135deg,#B91C1C,var(--red))}
+        .c-bio::before{background:linear-gradient(90deg,var(--pal-purple),rgba(108,79,224,.3))}.c-bio .ico{background:rgba(108,79,224,.12);color:#7A5CFF}
+        .b-bio{background:linear-gradient(135deg,var(--pal-purple),var(--pal-purple-lt))}
+        .card:hover .btn{filter:brightness(1.1)}
+        /* Round 2: circular neon push-button card icons (black core, glowing ring, raised gloss) */
+        .card .ico{width:112px;height:112px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#2A2F3A,#0B0D12 62%,#05070A);font-size:3.3rem;margin:0 0 10px;position:relative}
+        .card .ico::after{content:'';position:absolute;top:7%;left:12%;width:55%;height:38%;border-radius:50%;background:radial-gradient(ellipse at center,rgba(255,255,255,.55),rgba(255,255,255,0) 70%);opacity:.5;pointer-events:none}
+        .card .ico .glow-ico{position:relative;display:block;line-height:0}
+        .card .ico .glow-halo{position:absolute;left:0;top:0;filter:blur(6px);opacity:.8}
+        .card .ico .glow-core{position:relative;display:block;filter:none}
+        .card:active .ico{transform:translateY(2px)}
+        .c-emerald .ico{border:3px solid #34D399;color:#34D399;box-shadow:0 0 18px #34D399CC,0 0 44px #34D39955,inset 0 0 0 2px rgba(0,0,0,.6),inset 0 -12px 20px rgba(0,0,0,.55),inset 0 12px 18px rgba(255,255,255,.13),0 16px 26px rgba(15,23,42,.30)}
+        .c-emerald:active .ico{box-shadow:0 0 18px #34D399CC,0 0 44px #34D39955,inset 0 0 0 2px rgba(0,0,0,.6),inset 0 -12px 20px rgba(0,0,0,.55),inset 0 12px 18px rgba(255,255,255,.13),0 5px 10px rgba(15,23,42,.25)}
+        .c-cyan .ico{border:3px solid #22D3EE;color:#22D3EE;box-shadow:0 0 18px #22D3EECC,0 0 44px #22D3EE55,inset 0 0 0 2px rgba(0,0,0,.6),inset 0 -12px 20px rgba(0,0,0,.55),inset 0 12px 18px rgba(255,255,255,.13),0 16px 26px rgba(15,23,42,.30)}
+        .c-cyan:active .ico{box-shadow:0 0 18px #22D3EECC,0 0 44px #22D3EE55,inset 0 0 0 2px rgba(0,0,0,.6),inset 0 -12px 20px rgba(0,0,0,.55),inset 0 12px 18px rgba(255,255,255,.13),0 5px 10px rgba(15,23,42,.25)}
+        .c-bio .ico{border:3px solid #8B6FF0;color:#8B6FF0;box-shadow:0 0 18px #8B6FF0CC,0 0 44px #8B6FF055,inset 0 0 0 2px rgba(0,0,0,.6),inset 0 -12px 20px rgba(0,0,0,.55),inset 0 12px 18px rgba(255,255,255,.13),0 16px 26px rgba(15,23,42,.30)}
+        .c-bio:active .ico{box-shadow:0 0 18px #8B6FF0CC,0 0 44px #8B6FF055,inset 0 0 0 2px rgba(0,0,0,.6),inset 0 -12px 20px rgba(0,0,0,.55),inset 0 12px 18px rgba(255,255,255,.13),0 5px 10px rgba(15,23,42,.25)}
+        .c-pink .ico{border:3px solid #F472B6;box-shadow:0 0 18px #F472B6CC,0 0 44px #F472B655,inset 0 0 0 2px rgba(0,0,0,.6),inset 0 -12px 20px rgba(0,0,0,.55),inset 0 12px 18px rgba(255,255,255,.13),0 16px 26px rgba(15,23,42,.30)}
+        .c-pink:active .ico{box-shadow:0 0 18px #F472B6CC,0 0 44px #F472B655,inset 0 0 0 2px rgba(0,0,0,.6),inset 0 -12px 20px rgba(0,0,0,.55),inset 0 12px 18px rgba(255,255,255,.13),0 5px 10px rgba(15,23,42,.25)}
+        .c-purple .ico{border:3px solid #B347FF;color:#B347FF;box-shadow:0 0 18px #B347FFCC,0 0 44px #B347FF55,inset 0 0 0 2px rgba(0,0,0,.6),inset 0 -12px 20px rgba(0,0,0,.55),inset 0 12px 18px rgba(255,255,255,.13),0 16px 26px rgba(15,23,42,.30)}
+        .c-purple:active .ico{box-shadow:0 0 18px #B347FFCC,0 0 44px #B347FF55,inset 0 0 0 2px rgba(0,0,0,.6),inset 0 -12px 20px rgba(0,0,0,.55),inset 0 12px 18px rgba(255,255,255,.13),0 5px 10px rgba(15,23,42,.25)}
+        .c-orange .ico{border:3px solid #FB923C;color:#FB923C;box-shadow:0 0 18px #FB923CCC,0 0 44px #FB923C55,inset 0 0 0 2px rgba(0,0,0,.6),inset 0 -12px 20px rgba(0,0,0,.55),inset 0 12px 18px rgba(255,255,255,.13),0 16px 26px rgba(15,23,42,.30)}
+        .c-orange:active .ico{box-shadow:0 0 18px #FB923CCC,0 0 44px #FB923C55,inset 0 0 0 2px rgba(0,0,0,.6),inset 0 -12px 20px rgba(0,0,0,.55),inset 0 12px 18px rgba(255,255,255,.13),0 5px 10px rgba(15,23,42,.25)}
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; padding: 0 16px 24px; }
+            .hdr { flex-direction: column; gap: 12px; padding: 16px; }
+            .hero { padding: 12px 16px 20px; }
+            .hero h1 { font-size: 2rem; }
+            .nav { width: 100%; justify-content: center; flex-wrap: wrap; }
+        }
+    /* ===== Peptopia site chrome: logo / nav / print / theme toggle / footer ===== */
+.peptopia-hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1200px;margin:0 auto;padding:14px 24px;position:relative;z-index:50}
+.peptopia-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.peptopia-logo{width:46px;height:46px;border-radius:50%;flex:none;box-shadow:0 0 10px 2px rgba(236,72,153,.55),0 0 26px 8px rgba(236,72,153,.18)}
+.peptopia-wordmark{display:flex;flex-direction:column;font:800 1.02rem/1.15 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.14em;color:#1e1b4b}
+html.dark .peptopia-wordmark{color:#f1f5f9}
+.peptopia-tagline{font-size:.6rem;font-weight:600;letter-spacing:.3em;color:#64748b}
+html.dark .peptopia-tagline{color:#94a3b8}
+.peptopia-nav{display:flex;align-items:center;gap:1.25rem}
+.peptopia-nav>a{font:700 .8rem/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.12em;color:#334155;text-decoration:none}
+html.dark .peptopia-nav>a{color:#cbd5e1}
+.peptopia-nav>a:hover{color:#be185d}
+.peptopia-iconbtn{width:38px;height:38px;border-radius:50%;border:1px solid rgba(15,23,42,.12);background:#fff;color:#475569;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+html.dark .peptopia-iconbtn{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:#cbd5e1}
+.peptopia-iconbtn:hover{border-color:#ec4899;color:#be185d}
+.peptopia-iconbtn svg{width:17px;height:17px}
+.peptopia-theme-toggle .pp-sun{display:none}
+html.dark .peptopia-theme-toggle .pp-sun{display:block}
+html.dark .peptopia-theme-toggle .pp-moon{display:none}
+.peptopia-ftr{border-top:1px solid rgba(15,23,42,.08);margin-top:48px;padding:22px 24px;text-align:center;font:500 .8rem/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#64748b}
+html.dark .peptopia-ftr{border-color:rgba(255,255,255,.08);color:#94a3b8}
+.peptopia-ftr .ftr-email-line{text-align:center;margin:6px 0}
+.peptopia-ftr .ftr-email-line a{color:#64748b;text-decoration:none}
+html.dark .peptopia-ftr .ftr-email-line a{color:#94a3b8}
+.peptopia-ftr .peptopia-ftr-icons{display:flex;gap:16px;justify-content:center;margin-top:10px}
+.peptopia-ftr .peptopia-ftr-icons a{color:#64748b;display:inline-flex}
+html.dark .peptopia-ftr .peptopia-ftr-icons a{color:#94a3b8}
+.peptopia-ftr .peptopia-ftr-icons a:hover{color:#be185d}
+.peptopia-ftr .peptopia-ftr-icons svg{width:18px;height:18px}
+.peptopia-ftr .ftr-logo img{width:18px;height:18px;border-radius:50%;filter:grayscale(1);opacity:.55}
+.peptopia-ftr .ftr-logo:hover img{filter:none;opacity:1}
+html.dark .peptopia-ftr .ftr-logo img{filter:grayscale(1) invert(1);opacity:.75}
+html.dark .peptopia-ftr .ftr-logo:hover img{filter:none;opacity:1}
+.peptopia-ftr a.ftr-email{color:inherit;text-decoration:none}
+.peptopia-ftr a.ftr-email:hover{color:#be185d;text-decoration:underline}
+@media print{.peptopia-nav .peptopia-iconbtn,.peptopia-ftr-icons{display:none!important}.statcard,.statgrid,table,thead,tbody,tr,figure,figcaption,blockquote,.coa-callout,.card,.strain-card,pre,.callout,img{break-inside:avoid!important;page-break-inside:avoid!important}h1,h2,h3,h4,h5,h6{break-after:avoid!important;page-break-after:avoid!important}p,li{orphans:3;widows:3}a{color:inherit;text-decoration:none}body{background:#fff!important}}
+
+/* ===== Peptopia site chrome: logo / nav / print / theme toggle / footer ===== */
+.peptopia-hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1200px;margin:0 auto;padding:14px 24px;position:relative;z-index:50}
+.peptopia-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.peptopia-logo{width:46px;height:46px;border-radius:50%;flex:none;box-shadow:0 0 10px 2px rgba(236,72,153,.55),0 0 26px 8px rgba(236,72,153,.18)}
+.peptopia-wordmark{display:flex;flex-direction:column;font:800 1.02rem/1.15 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.14em;color:#1e1b4b}
+html.dark .peptopia-wordmark{color:#f1f5f9}
+.peptopia-tagline{font-size:.6rem;font-weight:600;letter-spacing:.3em;color:#64748b}
+html.dark .peptopia-tagline{color:#94a3b8}
+.peptopia-nav{display:flex;align-items:center;gap:1.25rem}
+.peptopia-nav>a{font:700 .8rem/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.12em;color:#334155;text-decoration:none}
+html.dark .peptopia-nav>a{color:#cbd5e1}
+.peptopia-nav>a:hover{color:#be185d}
+.peptopia-iconbtn{width:38px;height:38px;border-radius:50%;border:1px solid rgba(15,23,42,.12);background:#fff;color:#475569;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+html.dark .peptopia-iconbtn{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:#cbd5e1}
+.peptopia-iconbtn:hover{border-color:#ec4899;color:#be185d}
+.peptopia-iconbtn svg{width:17px;height:17px}
+.peptopia-theme-toggle .pp-sun{display:none}
+html.dark .peptopia-theme-toggle .pp-sun{display:block}
+html.dark .peptopia-theme-toggle .pp-moon{display:none}
+.peptopia-ftr{border-top:1px solid rgba(15,23,42,.08);margin-top:48px;padding:22px 24px;text-align:center;font:500 .8rem/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#64748b}
+html.dark .peptopia-ftr{border-color:rgba(255,255,255,.08);color:#94a3b8}
+.peptopia-ftr .ftr-email-line{text-align:center;margin:6px 0}
+.peptopia-ftr .ftr-email-line a{color:#64748b;text-decoration:none}
+html.dark .peptopia-ftr .ftr-email-line a{color:#94a3b8}
+.peptopia-ftr .peptopia-ftr-icons{display:flex;gap:16px;justify-content:center;margin-top:10px}
+.peptopia-ftr .peptopia-ftr-icons a{color:#64748b;display:inline-flex}
+html.dark .peptopia-ftr .peptopia-ftr-icons a{color:#94a3b8}
+.peptopia-ftr .peptopia-ftr-icons a:hover{color:#be185d}
+.peptopia-ftr .peptopia-ftr-icons svg{width:18px;height:18px}
+.peptopia-ftr .ftr-logo img{width:18px;height:18px;border-radius:50%;filter:grayscale(1);opacity:.55}
+.peptopia-ftr .ftr-logo:hover img{filter:none;opacity:1}
+html.dark .peptopia-ftr .ftr-logo img{filter:grayscale(1) invert(1);opacity:.75}
+html.dark .peptopia-ftr .ftr-logo:hover img{filter:none;opacity:1}
+.peptopia-ftr a.ftr-email{color:inherit;text-decoration:none}
+.peptopia-ftr a.ftr-email:hover{color:#be185d;text-decoration:underline}
+@media print{.peptopia-nav .peptopia-iconbtn,.peptopia-ftr-icons{display:none!important}.statcard,.statgrid,table,thead,tbody,tr,figure,figcaption,blockquote,.coa-callout,.card,.strain-card,pre,.callout,img{break-inside:avoid!important;page-break-inside:avoid!important}h1,h2,h3,h4,h5,h6{break-after:avoid!important;page-break-after:avoid!important}p,li{orphans:3;widows:3}a{color:inherit;text-decoration:none}body{background:#fff!important}}
+
+/* ===== Peptopia site chrome: logo / nav / print / theme toggle / footer ===== */
+.peptopia-hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1200px;margin:0 auto;padding:14px 24px;position:relative;z-index:50}
+.peptopia-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.peptopia-logo{width:46px;height:46px;border-radius:50%;flex:none;box-shadow:0 0 10px 2px rgba(236,72,153,.55),0 0 26px 8px rgba(236,72,153,.18)}
+/* Dark logo (dark circle) shows on LIGHT theme; light logo (light circle) shows on DARK theme */
+.peptopia-wordmark{display:flex;flex-direction:column;font:800 1.02rem/1.15 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.14em;color:#1e1b4b}
+html.dark .peptopia-wordmark{color:#f1f5f9}
+.peptopia-tagline{font-size:.6rem;font-weight:600;letter-spacing:.3em;color:#64748b}
+html.dark .peptopia-tagline{color:#94a3b8}
+.peptopia-nav{display:flex;align-items:center;gap:1.25rem}
+.peptopia-nav>a{font:700 .8rem/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.12em;color:#334155;text-decoration:none}
+html.dark .peptopia-nav>a{color:#cbd5e1}
+.peptopia-nav>a:hover{color:#be185d}
+.peptopia-iconbtn{width:38px;height:38px;border-radius:50%;border:1px solid rgba(15,23,42,.12);background:#fff;color:#475569;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+html.dark .peptopia-iconbtn{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:#cbd5e1}
+.peptopia-iconbtn:hover{border-color:#ec4899;color:#be185d}
+.peptopia-iconbtn svg{width:17px;height:17px}
+.peptopia-theme-toggle .pp-sun{display:none}
+html.dark .peptopia-theme-toggle .pp-sun{display:block}
+html.dark .peptopia-theme-toggle .pp-moon{display:none}
+.peptopia-ftr{border-top:1px solid rgba(15,23,42,.08);margin-top:48px;padding:22px 24px;text-align:center;font:500 .8rem/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#64748b}
+html.dark .peptopia-ftr{border-color:rgba(255,255,255,.08);color:#94a3b8}
+.peptopia-ftr .ftr-email-line{text-align:center;margin:6px 0}
+.peptopia-ftr .ftr-email-line a{color:#64748b;text-decoration:none}
+html.dark .peptopia-ftr .ftr-email-line a{color:#94a3b8}
+.peptopia-ftr .peptopia-ftr-icons{display:flex;gap:16px;justify-content:center;margin-top:10px}
+.peptopia-ftr .peptopia-ftr-icons a{color:#64748b;display:inline-flex}
+html.dark .peptopia-ftr .peptopia-ftr-icons a{color:#94a3b8}
+.peptopia-ftr .peptopia-ftr-icons a:hover{color:#be185d}
+.peptopia-ftr .peptopia-ftr-icons svg{width:18px;height:18px}
+.peptopia-ftr .ftr-logo img{width:18px;height:18px;border-radius:50%;filter:grayscale(1);opacity:.55}
+.peptopia-ftr .ftr-logo:hover img{filter:none;opacity:1}
+html.dark .peptopia-ftr .ftr-logo img{filter:grayscale(1) invert(1);opacity:.75}
+html.dark .peptopia-ftr .ftr-logo:hover img{filter:none;opacity:1}
+.peptopia-ftr a.ftr-email{color:inherit;text-decoration:none}
+.peptopia-ftr a.ftr-email:hover{color:#be185d;text-decoration:underline}
+@media print{.peptopia-nav .peptopia-iconbtn,.peptopia-ftr-icons{display:none!important}.statcard,.statgrid,table,thead,tbody,tr,figure,figcaption,blockquote,.coa-callout,.card,.strain-card,pre,.callout,img{break-inside:avoid!important;page-break-inside:avoid!important}h1,h2,h3,h4,h5,h6{break-after:avoid!important;page-break-after:avoid!important}p,li{orphans:3;widows:3}a{color:inherit;text-decoration:none}body{background:#fff!important}}
+
+/* ===== Peptopia site chrome: logo / nav / print / theme toggle / footer ===== */
+.peptopia-hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1200px;margin:0 auto;padding:14px 24px;position:relative;z-index:50}
+.peptopia-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.peptopia-logo{width:46px;height:46px;border-radius:50%;flex:none;box-shadow:0 0 10px 2px rgba(236,72,153,.55),0 0 26px 8px rgba(236,72,153,.18)}
+/* Dark logo (dark circle) shows on LIGHT theme; light logo (light circle) shows on DARK theme */
+.peptopia-logo.logo-light,.ftr-logo .logo-light{display:none}
+html.dark .peptopia-logo.logo-light,html.dark .ftr-logo .logo-light{display:block}
+html.dark .peptopia-logo.logo-dark,html.dark .ftr-logo .logo-dark{display:none}
+.peptopia-wordmark{display:flex;flex-direction:column;font:800 1.02rem/1.15 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.14em;color:#1e1b4b}
+html.dark .peptopia-wordmark{color:#f1f5f9}
+.peptopia-tagline{font-size:.6rem;font-weight:600;letter-spacing:.3em;color:#64748b}
+html.dark .peptopia-tagline{color:#94a3b8}
+.peptopia-nav{display:flex;align-items:center;gap:1.25rem}
+@media(max-width:640px){.peptopia-hdr{padding:10px 12px;gap:8px}.peptopia-brand{gap:8px}.peptopia-logo{width:38px;height:38px}.peptopia-wordmark{font-size:.85rem}.peptopia-nav{gap:.6rem}.peptopia-nav>a{font-size:.7rem;letter-spacing:.08em}.peptopia-iconbtn{width:34px;height:34px;flex:none}}
+.peptopia-nav>a{font:700 .8rem/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.12em;color:#334155;text-decoration:none}
+html.dark .peptopia-nav>a{color:#cbd5e1}
+.peptopia-nav>a:hover{color:#be185d}
+.peptopia-iconbtn{width:38px;height:38px;border-radius:50%;border:1px solid rgba(15,23,42,.12);background:#fff;color:#475569;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+html.dark .peptopia-iconbtn{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:#cbd5e1}
+.peptopia-iconbtn:hover{border-color:#ec4899;color:#be185d}
+.peptopia-iconbtn svg{width:17px;height:17px}
+.peptopia-theme-toggle .pp-sun{display:none}
+html.dark .peptopia-theme-toggle .pp-sun{display:block}
+html.dark .peptopia-theme-toggle .pp-moon{display:none}
+.peptopia-ftr{border-top:1px solid rgba(15,23,42,.08);margin-top:48px;padding:22px 24px;text-align:center;font:500 .8rem/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#64748b}
+html.dark .peptopia-ftr{border-color:rgba(255,255,255,.08);color:#94a3b8}
+.peptopia-ftr .ftr-email-line{text-align:center;margin:6px 0}
+.peptopia-ftr .ftr-email-line a{color:#64748b;text-decoration:none}
+html.dark .peptopia-ftr .ftr-email-line a{color:#94a3b8}
+.peptopia-ftr .peptopia-ftr-icons{display:flex;gap:16px;justify-content:center;margin-top:10px}
+.peptopia-ftr .peptopia-ftr-icons a{color:#64748b;display:inline-flex}
+html.dark .peptopia-ftr .peptopia-ftr-icons a{color:#94a3b8}
+.peptopia-ftr .peptopia-ftr-icons a:hover{color:#be185d}
+.peptopia-ftr .peptopia-ftr-icons svg{width:18px;height:18px}
+.peptopia-ftr .ftr-logo img{width:18px;height:18px;border-radius:50%;filter:grayscale(1);opacity:.55}
+.peptopia-ftr .ftr-logo:hover img{filter:none;opacity:1}
+html.dark .peptopia-ftr .ftr-logo img{filter:grayscale(1) invert(1);opacity:.75}
+html.dark .peptopia-ftr .ftr-logo:hover img{filter:none;opacity:1}
+.peptopia-ftr a.ftr-email{color:inherit;text-decoration:none}
+.peptopia-ftr a.ftr-email:hover{color:#be185d;text-decoration:underline}
+@media print{.peptopia-nav .peptopia-iconbtn,.peptopia-ftr-icons{display:none!important}.statcard,.statgrid,table,thead,tbody,tr,figure,figcaption,blockquote,.coa-callout,.card,.strain-card,pre,.callout,img{break-inside:avoid!important;page-break-inside:avoid!important}h1,h2,h3,h4,h5,h6{break-after:avoid!important;page-break-after:avoid!important}p,li{orphans:3;widows:3}a{color:inherit;text-decoration:none}body{background:#fff!important}}
+
+</style>
+<style>/* ===== Peptopia site chrome: logo / nav / print / theme toggle / footer ===== */
+.peptopia-hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1200px;margin:0 auto;padding:14px 24px;position:relative;z-index:50}
+.peptopia-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.peptopia-logo{width:46px;height:46px;border-radius:50%;flex:none;box-shadow:0 0 10px 2px rgba(236,72,153,.55),0 0 26px 8px rgba(236,72,153,.18)}
+.peptopia-wordmark{display:flex;flex-direction:column;font:800 1.02rem/1.15 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.14em;color:#1e1b4b}
+html.dark .peptopia-wordmark{color:#f1f5f9}
+.peptopia-tagline{font-size:.6rem;font-weight:600;letter-spacing:.3em;color:#64748b}
+html.dark .peptopia-tagline{color:#94a3b8}
+.peptopia-nav{display:flex;align-items:center;gap:1.25rem}
+.peptopia-nav>a{font:700 .8rem/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.12em;color:#334155;text-decoration:none}
+html.dark .peptopia-nav>a{color:#cbd5e1}
+.peptopia-nav>a:hover{color:#be185d}
+.peptopia-iconbtn{width:38px;height:38px;border-radius:50%;border:1px solid rgba(15,23,42,.12);background:#fff;color:#475569;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+html.dark .peptopia-iconbtn{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:#cbd5e1}
+.peptopia-iconbtn:hover{border-color:#ec4899;color:#be185d}
+.peptopia-iconbtn svg{width:17px;height:17px}
+.peptopia-theme-toggle .pp-sun{display:none}
+html.dark .peptopia-theme-toggle .pp-sun{display:block}
+html.dark .peptopia-theme-toggle .pp-moon{display:none}
+.peptopia-ftr{border-top:1px solid rgba(15,23,42,.08);margin-top:48px;padding:22px 24px;text-align:center;font:500 .8rem/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#64748b}
+html.dark .peptopia-ftr{border-color:rgba(255,255,255,.08);color:#94a3b8}
+.peptopia-ftr .peptopia-ftr-icons{display:flex;gap:16px;justify-content:center;margin-top:10px}
+.peptopia-ftr .peptopia-ftr-icons a{color:#64748b;display:inline-flex}
+html.dark .peptopia-ftr .peptopia-ftr-icons a{color:#94a3b8}
+.peptopia-ftr .peptopia-ftr-icons a:hover{color:#be185d}
+.peptopia-ftr .peptopia-ftr-icons svg{width:18px;height:18px}
+.peptopia-ftr .ftr-logo img{width:18px;height:18px;border-radius:50%;filter:grayscale(1);opacity:.55}
+.peptopia-ftr .ftr-logo:hover img{filter:none;opacity:1}
+html.dark .peptopia-ftr .ftr-logo img{filter:grayscale(1) invert(1);opacity:.75}
+html.dark .peptopia-ftr .ftr-logo:hover img{filter:none;opacity:1}
+.peptopia-ftr a.ftr-email{color:inherit;text-decoration:none}
+.peptopia-ftr a.ftr-email:hover{color:#be185d;text-decoration:underline}
+@media print{.peptopia-nav .peptopia-iconbtn,.peptopia-ftr-icons{display:none!important}.statcard,.statgrid,table,thead,tbody,tr,figure,figcaption,blockquote,.coa-callout,.card,.strain-card,pre,.callout,img{break-inside:avoid!important;page-break-inside:avoid!important}h1,h2,h3,h4,h5,h6{break-after:avoid!important;page-break-after:avoid!important}p,li{orphans:3;widows:3}a{color:inherit;text-decoration:none}body{background:#fff!important}}
+
+
+/* ===== Homepage restyle - David, Nov 8, 2026 =====
+   (1) Featured icon buttons 25 pct smaller (112px to 84px); glyphs scaled
+       to match so ONLY the buttons shrink. (2) Bottom title buttons:
+       shorter, maximum glossy raised push-button effect modeled on the
+       header logo. (3) Descriptions: exactly two tightly spaced lines.
+   (4) Icon glyphs get a crisp contrast edge and brighter hues. */
+.card .ico{width:84px;height:84px}
+.card .ico .glow-ico svg{transform:scale(.75);transform-origin:center center}
+.card .ico .glow-core svg{filter:drop-shadow(0 0 .7px currentColor) saturate(1.35) brightness(1.1) contrast(1.06)}
+.card p.card-desc2{line-height:1.16;margin:0 0 14px}
+.btn{padding:6px 22px;border-radius:999px;border:1.5px solid rgba(15,23,42,.28);
+  box-shadow:inset 0 2px 3px rgba(255,255,255,.75),inset 0 -3px 5px rgba(0,0,0,.28),0 5px 10px rgba(15,23,42,.30),0 1px 2px rgba(15,23,42,.35);
+  text-shadow:0 1px 2px rgba(0,0,0,.35)}
+.card:active .btn{transform:translateY(2px);
+  box-shadow:inset 0 1px 2px rgba(255,255,255,.5),inset 0 -1px 3px rgba(0,0,0,.3),0 2px 4px rgba(15,23,42,.30)}
+</style>
+</head>
+<body>
+    <header class="peptopia-hdr">
+<a class="peptopia-brand" href="https://x-peps.com/">
+<img class="peptopia-logo logo-dark" src="https://x-peps.com/X-Peps/IMG_3345.png" alt="Peptopia Health &amp; Wellness"><img class="peptopia-logo logo-light" src="https://x-peps.com/X-Peps/IMG_3346.png" alt="Peptopia Health &amp; Wellness">
+<span class="peptopia-wordmark">PEPTOPIA<span class="peptopia-tagline">HEALTH &amp; WELLNESS</span></span>
+</a>
+<nav class="peptopia-nav" aria-label="Site">
+<a href="https://x-peps.com/">HOME</a>
+<a href="https://x-peps.com/X-Peps/orders/">ORDERS</a>
+<button type="button" class="peptopia-iconbtn peptopia-theme-toggle" onclick="toggleTheme()" title="Toggle light / dark" aria-label="Toggle theme"><svg class="pp-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="pp-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></button>
+</nav>
+</header>
+    <section class="hero">
+        <h1><span>Peptopia Healthcare</span></h1>
+        <p>Premium research and education.</p>
+    </section>
+    <main class="grid">
+        <a href="https://peptopia-health.github.io/X-Peps/orders/" class="card c-emerald">
+            <div class="ico"><span class="glow-ico"><svg class="glow-halo" viewBox="0 0 576 512" width="77.2" height="68.6" aria-hidden="true"><path fill="currentColor" d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg><svg class="glow-core" viewBox="0 0 576 512" width="77.2" height="68.6" aria-hidden="true"><path fill="currentColor" d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg></span></div>
+            <h2>Healthcare Shop</h2>
+            <p class="card-desc2">Premium Research:<br>Peptides • Nootropics • Herbal Remedies</p>
+            <span class="btn b-emerald"><i class="fa-solid fa-bag-shopping"></i> Go to Store</span>
+        </a>
+        <a href="https://peptopia-health.github.io/X-Peps/" class="card c-cyan">
+            <div class="ico"><span class="glow-ico"><svg class="glow-halo" viewBox="0 0 576 512" width="77.2" height="68.6" aria-hidden="true"><path fill="currentColor" d="M249.6 471.5c10.8 3.8 22.4-4.1 22.4-15.5V78.6c0-4.2-1.6-8.4-5-11C247.4 52 202.4 32 144 32C93.5 32 46.3 45.3 18.1 56.1C6.8 60.5 0 71.7 0 83.8V454.1c0 11.9 12.8 20.2 24.1 16.5C55.6 460.1 105.5 448 144 448c33.9 0 79 14 105.6 23.5zm76.8 0C353 462 398.1 448 432 448c38.5 0 88.4 12.1 119.9 22.6c11.3 3.8 24.1-4.6 24.1-16.5V83.8c0-12.1-6.8-23.3-18.1-27.6C529.7 45.3 482.5 32 432 32c-58.4 0-103.4 20-123 35.6c-3.3 2.6-5 6.8-5 11V456c0 11.4 11.7 19.3 22.4 15.5z"/></svg><svg class="glow-core" viewBox="0 0 576 512" width="77.2" height="68.6" aria-hidden="true"><path fill="currentColor" d="M249.6 471.5c10.8 3.8 22.4-4.1 22.4-15.5V78.6c0-4.2-1.6-8.4-5-11C247.4 52 202.4 32 144 32C93.5 32 46.3 45.3 18.1 56.1C6.8 60.5 0 71.7 0 83.8V454.1c0 11.9 12.8 20.2 24.1 16.5C55.6 460.1 105.5 448 144 448c33.9 0 79 14 105.6 23.5zm76.8 0C353 462 398.1 448 432 448c38.5 0 88.4 12.1 119.9 22.6c11.3 3.8 24.1-4.6 24.1-16.5V83.8c0-12.1-6.8-23.3-18.1-27.6C529.7 45.3 482.5 32 432 32c-58.4 0-103.4 20-123 35.6c-3.3 2.6-5 6.8-5 11V456c0 11.4 11.7 19.3 22.4 15.5z"/></svg></span></div>
+            <h2>Education</h2>
+            <p class="card-desc2">Education<br>Guides • Calculators • Streams</p>
+            <span class="btn b-cyan"><i class="fa-solid fa-file-lines"></i> Read the Guides</span>
+        </a>
+        <a href="https://x-peps.com/X-Peps/biohacking-news.html" class="card c-bio">
+            <div class="ico"><span class="glow-ico"><svg class="glow-halo" viewBox="0 0 512 512" width="68.6" height="68.6" aria-hidden="true"><path fill="currentColor" d="M96 96c0-35.3 28.7-64 64-64H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H80c-44.2 0-80-35.8-80-80V128c0-17.7 14.3-32 32-32s32 14.3 32 32V400c0 8.8 7.2 16 16 16s16-7.2 16-16V96zm64 24v80c0 13.3 10.7 24 24 24H296c13.3 0 24-10.7 24-24V120c0-13.3-10.7-24-24-24H184c-13.3 0-24 10.7-24 24zm208-8c0 8.8 7.2 16 16 16h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H384c-8.8 0-16 7.2-16 16zm0 96c0 8.8 7.2 16 16 16h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H384c-8.8 0-16 7.2-16 16zM160 304c0 8.8 7.2 16 16 16H432c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16zm0 96c0 8.8 7.2 16 16 16H432c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16z"/></svg><svg class="glow-core" viewBox="0 0 512 512" width="68.6" height="68.6" aria-hidden="true"><path fill="currentColor" d="M96 96c0-35.3 28.7-64 64-64H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H80c-44.2 0-80-35.8-80-80V128c0-17.7 14.3-32 32-32s32 14.3 32 32V400c0 8.8 7.2 16 16 16s16-7.2 16-16V96zm64 24v80c0 13.3 10.7 24 24 24H296c13.3 0 24-10.7 24-24V120c0-13.3-10.7-24-24-24H184c-13.3 0-24 10.7-24 24zm208-8c0 8.8 7.2 16 16 16h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H384c-8.8 0-16 7.2-16 16zm0 96c0 8.8 7.2 16 16 16h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H384c-8.8 0-16 7.2-16 16zM160 304c0 8.8 7.2 16 16 16H432c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16zm0 96c0 8.8 7.2 16 16 16H432c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16z"/></svg></span></div>
+            <h2>Biohacking News</h2>
+            <p class="card-desc2">Biohacking News<br>Research • Breakthroughs • Results</p>
+            <span class="btn b-bio"><i class="fa-solid fa-bolt"></i> Read the News</span>
+        </a>
+        <a href="https://x-peps.com/X-Peps/kratom-vendor-reviews.html" class="card c-pink">
+            <div class="ico"><span class="glow-ico"><svg class="glow-halo" viewBox="0 0 24 24" width="66" height="66" fill="#4CC94F" stroke="#F5E600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20C4 11 10 4 20 4c0 10-6 16-16 16Z"/><path d="M4 20c3-6 8-11 13-13" fill="none"/></svg><svg class="glow-core" viewBox="0 0 24 24" width="66" height="66" fill="#4CC94F" stroke="#F5E600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20C4 11 10 4 20 4c0 10-6 16-16 16Z"/><path d="M4 20c3-6 8-11 13-13" fill="none"/></svg></span></div>
+            <h2>Kratom Reviews</h2>
+            <p class="card-desc2">Kratom Reviews<br>Real Reviews • Real Trust</p>
+            <span class="btn b-pink"><i class="fa-solid fa-magnifying-glass"></i> Read Reviews</span>
+        </a>
+        <a href="https://peptopia.github.io/NCLEX/" class="card c-purple">
+            <div class="ico"><span class="glow-ico"><svg class="glow-halo" viewBox="0 0 448 512" width="60.1" height="68.6" aria-hidden="true"><path fill="currentColor" d="M96 128V70.2c0-13.3 8.3-25.3 20.8-30l96-36c7.2-2.7 15.2-2.7 22.5 0l96 36c12.5 4.7 20.8 16.6 20.8 30V128h-.3c.2 2.6 .3 5.3 .3 8v40c0 70.7-57.3 128-128 128s-128-57.3-128-128V136c0-2.7 .1-5.4 .3-8H96zm48 48c0 44.2 35.8 80 80 80s80-35.8 80-80V160H144v16zM111.9 327.7c10.5-3.4 21.8 .4 29.4 8.5l71 75.5c6.3 6.7 17 6.7 23.3 0l71-75.5c7.6-8.1 18.9-11.9 29.4-8.5C401 348.6 448 409.4 448 481.3c0 17-13.8 30.7-30.7 30.7H30.7C13.8 512 0 498.2 0 481.3c0-71.9 47-132.7 111.9-153.6zM208 48V64H192c-4.4 0-8 3.6-8 8V88c0 4.4 3.6 8 8 8h16v16c0 4.4 3.6 8 8 8h16c4.4 0 8-3.6 8-8V96h16c4.4 0 8-3.6 8-8V72c0-4.4-3.6-8-8-8H240V48c0-4.4-3.6-8-8-8H216c-4.4 0-8 3.6-8 8z"/></svg><svg class="glow-core" viewBox="0 0 448 512" width="60.1" height="68.6" aria-hidden="true"><path fill="currentColor" d="M96 128V70.2c0-13.3 8.3-25.3 20.8-30l96-36c7.2-2.7 15.2-2.7 22.5 0l96 36c12.5 4.7 20.8 16.6 20.8 30V128h-.3c.2 2.6 .3 5.3 .3 8v40c0 70.7-57.3 128-128 128s-128-57.3-128-128V136c0-2.7 .1-5.4 .3-8H96zm48 48c0 44.2 35.8 80 80 80s80-35.8 80-80V160H144v16zM111.9 327.7c10.5-3.4 21.8 .4 29.4 8.5l71 75.5c6.3 6.7 17 6.7 23.3 0l71-75.5c7.6-8.1 18.9-11.9 29.4-8.5C401 348.6 448 409.4 448 481.3c0 17-13.8 30.7-30.7 30.7H30.7C13.8 512 0 498.2 0 481.3c0-71.9 47-132.7 111.9-153.6zM208 48V64H192c-4.4 0-8 3.6-8 8V88c0 4.4 3.6 8 8 8h16v16c0 4.4 3.6 8 8 8h16c4.4 0 8-3.6 8-8V96h16c4.4 0 8-3.6 8-8V72c0-4.4-3.6-8-8-8H240V48c0-4.4-3.6-8-8-8H216c-4.4 0-8 3.6-8 8z"/></svg></span></div>
+            <h2>Nursing Education</h2>
+            <p class="card-desc2">Nursing Education<br>NCLEX Success • Nursing Excellence</p>
+            <span class="btn b-purple"><i class="fa-solid fa-laptop-medical"></i> Courseware</span>
+        </a>
+        <a href="https://peptopia-health.github.io/Corrections/" class="card c-orange">
+            <div class="ico"><span class="glow-ico"><svg class="glow-halo" viewBox="0 0 640 512" width="75.9" height="60.7" aria-hidden="true"><path fill="currentColor" d="M240 32a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM192 48a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm-32 80c17.7 0 32 14.3 32 32h8c13.3 0 24 10.7 24 24v16c0 1.7-.2 3.4-.5 5.1C280.3 229.6 320 286.2 320 352c0 88.4-71.6 160-160 160S0 440.4 0 352c0-65.8 39.7-122.4 96.5-146.9c-.4-1.6-.5-3.3-.5-5.1V184c0-13.3 10.7-24 24-24h8c0-17.7 14.3-32 32-32zm0 320a96 96 0 1 0 0-192 96 96 0 1 0 0 192zm192-96c0-25.9-5.1-50.5-14.4-73.1c16.9-32.9 44.8-59.1 78.9-73.9c-.4-1.6-.5-3.3-.5-5.1V184c0-13.3 10.7-24 24-24h8c0-17.7 14.3-32 32-32s32 14.3 32 32h8c13.3 0 24 10.7 24 24v16c0 1.7-.2 3.4-.5 5.1C600.3 229.6 640 286.2 640 352c0 88.4-71.6 160-160 160c-62 0-115.8-35.3-142.4-86.9c9.3-22.5 14.4-47.2 14.4-73.1zm224 0a96 96 0 1 0 -192 0 96 96 0 1 0 192 0zM368 0a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm80 48a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg><svg class="glow-core" viewBox="0 0 640 512" width="75.9" height="60.7" aria-hidden="true"><path fill="currentColor" d="M240 32a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM192 48a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm-32 80c17.7 0 32 14.3 32 32h8c13.3 0 24 10.7 24 24v16c0 1.7-.2 3.4-.5 5.1C280.3 229.6 320 286.2 320 352c0 88.4-71.6 160-160 160S0 440.4 0 352c0-65.8 39.7-122.4 96.5-146.9c-.4-1.6-.5-3.3-.5-5.1V184c0-13.3 10.7-24 24-24h8c0-17.7 14.3-32 32-32zm0 320a96 96 0 1 0 0-192 96 96 0 1 0 0 192zm192-96c0-25.9-5.1-50.5-14.4-73.1c16.9-32.9 44.8-59.1 78.9-73.9c-.4-1.6-.5-3.3-.5-5.1V184c0-13.3 10.7-24 24-24h8c0-17.7 14.3-32 32-32s32 14.3 32 32h8c13.3 0 24 10.7 24 24v16c0 1.7-.2 3.4-.5 5.1C600.3 229.6 640 286.2 640 352c0 88.4-71.6 160-160 160c-62 0-115.8-35.3-142.4-86.9c9.3-22.5 14.4-47.2 14.4-73.1zm224 0a96 96 0 1 0 -192 0 96 96 0 1 0 192 0zM368 0a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm80 48a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg></span></div>
+            <h2>Corrections Nursing</h2>
+            <p class="card-desc2">Correctional Nursing<br>Care • Custody • Control</p>
+            <span class="btn b-orange"><i class="fa-solid fa-clipboard-list"></i> Access Portal</span>
+        </a>
+    </main>
+
+    <script>
+        // Storage helper
+        var storage = (function() {
+            try {
+                var s = window.self === window.top ? window['local' + 'Storage'] : null;
+                if (s) { s.setItem('_t', '1'); s.removeItem('_t'); }
+                return s;
+            } catch(e) { return null; }
+        })();
+
+        // Toggle Theme
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            var isDark = document.documentElement.classList.contains('dark');
+            if (storage) {
+                storage.setItem('peptopia-theme', isDark ? 'dark' : 'light');
+            }
+        }
+
+        // Apply saved theme on load
+        (function() {
+            var saved = storage ? storage.getItem('peptopia-theme') : null;
+            if (saved === 'dark') {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+<footer class="peptopia-ftr">
+<div>&copy; 2026 Peptopia Health &bull; All rights reserved</div>
+<div class="ftr-email-line"><a href="mailto:Peptopia@x-peps.com?subject=From%20the%20Peptopia%20Health%20Website">Peptopia@x-peps.com</a></div>
+<div class="peptopia-ftr-icons">
+<a class="ftr-logo" href="https://x-peps.com/" title="Home" aria-label="Home"><img src="https://x-peps.com/X-Peps/IMG_3345.png" alt="Peptopia home" class="logo-dark"><img src="https://x-peps.com/X-Peps/IMG_3346.png" alt="Peptopia home" class="logo-light"></a>
+<a href="https://x-peps.com/X-Peps/orders/" title="Shop" aria-label="Shop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></a>
+<a href="https://discord.gg/sHAYkB5NAM" target="_blank" rel="noopener" title="Discord" aria-label="Discord"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.93-1.51 1.98 1.98 0 0 0-.08 1.53 19.5 19.5 0 0 0-5.9 0A1.98 1.98 0 0 0 9.34 2.86a19.8 19.8 0 0 0-4.93 1.51A20.3 20.3 0 0 0 .1 18.06a19.9 19.9 0 0 0 6.07 3.03c.46-.63.87-1.3 1.22-2a12.9 12.9 0 0 1-1.93-.92c.16-.12.32-.24.47-.37a14.2 14.2 0 0 0 12.14 0c.15.13.31.25.47.37-.61.36-1.26.68-1.93.92.35.7.76 1.37 1.22 2a19.8 19.8 0 0 0 6.07-3.03 20.2 20.2 0 0 0-4.29-13.69ZM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42s.95-2.42 2.16-2.42 2.18 1.09 2.16 2.42c0 1.34-.95 2.42-2.16 2.42Zm7.97 0c-1.18 0-2.16-1.08-2.16-2.42s.95-2.42 2.16-2.42 2.18 1.09 2.16 2.42c0 1.34-.95 2.42-2.16 2.42Z"/></svg></a>
+<a href="https://youtube.com/playlist?list=PLJI0wP-Amc5mLaPG7sDBdRTYVvCOA7DUR&si=a0xNfjs4uDrBzKHh" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81ZM9.55 15.57V8.43L15.82 12l-6.27 3.57Z"/></svg></a>
+</div>
+</footer>
+</body>
+</html>

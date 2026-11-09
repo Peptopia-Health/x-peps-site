@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retirement Withdrawals — The Long Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF7F1; --panel:#FFFFFF; --ink:#1C2430; --sub:#5B6675; --line:#E6E2DA;
+  --orange:#EA580C; --orange-deep:#9A3412;
+  --cobalt:#0070D0; --cobalt-deep:#004E96; --cobalt-pale:#E1EEFA;
+  --violet:#7C3AED; --violet-deep:#5B21B6; --violet-pale:#EFE9FD;
+  --green:#0B8A00; --green-pale:#E4F2E7;
+  --gold:#F0F000; --gold-deep:#8F8F00;
+  --mark:#FEF08A; --mark-ink:#263238;
+  --shadow:0 2px 6px rgba(15,23,42,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);line-height:1.45;font-size:1rem;padding:20px 16px 40px}
+body.dark{--bg:#101623;--panel:#1B2334;--ink:#ECE7DB;--sub:#A9B2C1;--line:#33405A;--cobalt-pale:#16324A;--violet-pale:#271B45;--green-pale:#17301F}
+.col{max-width:960px;margin:0 auto}
+a{color:var(--cobalt-deep)} body.dark a{color:#8FC6FF}
+.top-row{display:flex;justify-content:flex-end;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.pill{font-family:"Outfit",sans-serif;font-weight:700;font-size:.85rem;color:var(--orange-deep);background:#FFF3E8;border:2px solid var(--orange);border-radius:999px;padding:6px 13px;box-shadow:var(--shadow)}
+body.dark .pill{color:#FDBA74;background:#3A2415}
+.push{font-family:"Outfit",sans-serif;font-weight:700;font-size:.88rem;cursor:pointer;color:#fff;background:linear-gradient(180deg,#F97316 0%,#EA580C 55%,#C2410C 100%);border:2px solid var(--orange-deep);border-radius:999px;padding:7px 16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -2px 4px rgba(0,0,0,.25),0 3px 6px rgba(15,23,42,.25);transition:transform .05s ease,box-shadow .05s ease}
+.push:active{transform:translateY(2px);box-shadow:inset 0 2px 5px rgba(15,23,42,.35)}
+.push.alt{background:linear-gradient(180deg,#38BDF8 0%,#0070D0 55%,#005AA8 100%);border-color:var(--cobalt-deep)}
+.hero{text-align:center;margin-bottom:18px}
+.kicker{display:inline-block;font-family:"Outfit",sans-serif;font-weight:700;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);background:#FFF3E8;padding:4px 12px;border-radius:999px;margin-bottom:8px}
+body.dark .kicker{background:#3A2415;color:#FDBA74}
+h1{font-family:"Outfit",sans-serif;font-weight:800;color:var(--orange);font-size:2.1rem;line-height:1.08;letter-spacing:-.01em}
+.intro{font-family:"Outfit",sans-serif;font-weight:700;font-size:clamp(.68rem,3.1vw,1.02rem);white-space:nowrap;color:var(--ink);margin-top:7px}
+.intro2{color:var(--sub);font-size:.95rem;margin-top:5px}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:13px}
+.chip{font-family:"Outfit",sans-serif;font-weight:700;font-size:.86rem;text-decoration:none;color:#fff;background:linear-gradient(180deg,#38BDF8 0%,#0070D0 55%,#005AA8 100%);border:2px solid var(--cobalt-deep);border-radius:999px;padding:8px 15px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),inset 0 -2px 4px rgba(0,0,0,.22),0 3px 6px rgba(15,23,42,.22);transition:transform .05s ease}
+.chip:active{transform:translateY(2px)}
+.chip.v{background:linear-gradient(180deg,#A78BFA 0%,#7C3AED 55%,#5B21B6 100%);border-color:var(--violet-deep)}
+.chip.o{background:linear-gradient(180deg,#F97316 0%,#EA580C 55%,#C2410C 100%);border-color:var(--orange-deep)}
+.chip.g{background:linear-gradient(180deg,#4ADE80 0%,#10C000 55%,#0B8A00 100%);border-color:#0A7300}
+section{margin:26px 0}
+.band-wrap{text-align:center;margin-bottom:12px}
+.band{display:inline-block;width:fit-content;max-width:100%;text-align:center;background:linear-gradient(180deg,#F97316 0%,#EA580C 60%,#D2540A 100%);color:#fff;border:2px solid var(--orange-deep);border-radius:14px;padding:9px 70px 10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),inset 0 -3px 6px rgba(0,0,0,.22),0 4px 8px rgba(15,23,42,.2)}
+.band h2{font-family:"Outfit",sans-serif;font-weight:800;font-size:1.28rem;line-height:1.15}
+.band .bsub{font-size:.86rem;font-weight:500;max-width:34ch;margin:2px auto 0;opacity:.95}
+.band.blue{background:linear-gradient(180deg,#38BDF8 0%,#0070D0 60%,#0062B8 100%);border-color:var(--cobalt-deep)}
+.band.violet{background:linear-gradient(180deg,#A78BFA 0%,#7C3AED 60%,#6D28D9 100%);border-color:var(--violet-deep)}
+.band.green{background:linear-gradient(180deg,#4ADE80 0%,#10C000 60%,#0D9A00 100%);border-color:#0A7300}
+.card{background:var(--panel);border:1.5px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow);margin-bottom:12px}
+.card h3{font-family:"Outfit",sans-serif;font-weight:700;font-size:1.08rem;color:var(--orange-deep);margin-bottom:6px}
+body.dark .card h3{color:#FDBA74}
+.card p{margin-bottom:8px}
+.card ul{margin:4px 0 8px 20px}
+.card li{margin-bottom:4px}
+.lead{font-size:1.04rem}
+mark{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone;font-weight:700}
+.hlg{background:var(--green-pale);padding:0 3px;border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.stat{background:var(--panel);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;text-align:center;box-shadow:var(--shadow)}
+.stat .big{font-family:"Outfit",sans-serif;font-weight:800;font-size:1.45rem;color:var(--orange)}
+.stat .lbl{font-size:.82rem;color:var(--sub);font-weight:500}
+.stat.b .big{color:var(--cobalt)} .stat.v .big{color:var(--violet)} body.dark .stat.v .big{color:#C4B5FD}
+.tbl-wrap{border:2.5px solid var(--cobalt);border-radius:12px;overflow:hidden;margin-bottom:12px;background:var(--panel)}
+.tbl-wrap.v{border-color:var(--violet)} .tbl-wrap.o{border-color:var(--orange)} .tbl-wrap.g{border-color:var(--green)}
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:.92rem}
+th{font-family:"Outfit",sans-serif;font-weight:700;text-align:right;padding:8px 10px;background:var(--cobalt-pale);color:var(--ink);border-bottom:2px solid var(--cobalt)}
+.tbl-wrap.v th{background:var(--violet-pale);border-bottom-color:var(--violet)}
+.tbl-wrap.o th{background:#FFF3E8;border-bottom-color:var(--orange)} body.dark .tbl-wrap.o th{background:#3A2415}
+.tbl-wrap.g th{background:var(--green-pale);border-bottom-color:var(--green)}
+th:first-child,td:first-child{text-align:left}
+td{padding:6px 10px;text-align:right;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:none}
+tr.tot td{font-weight:700;background:var(--cobalt-pale);border-top:2px solid var(--cobalt)}
+.tbl-wrap.v tr.tot td{background:var(--violet-pale);border-top-color:var(--violet)}
+tr.bridge td{color:var(--sub);font-style:italic}
+tr.retire-start td{border-top:3px solid var(--orange);font-weight:700}
+.tbl-cap{font-size:.85rem;color:var(--sub);margin:-4px 0 12px}
+.fig{text-align:center;margin:6px 0 4px}
+.fig svg{max-width:420px;width:100%;height:auto}
+body.dark text[fill="#475569"]{fill:#9FB0C9}
+.bar-row{display:grid;grid-template-columns:150px 1fr 92px;gap:10px;align-items:center;margin:7px 0;font-size:.9rem}
+.bar-row .bl{font-family:"Outfit",sans-serif;font-weight:700;text-align:right}
+.bar-track{height:20px}
+.bar-fill{height:20px;border-radius:6px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),inset 0 -2px 3px rgba(0,0,0,.2)}
+.bar-row .bv{font-weight:700;font-variant-numeric:tabular-nums}
+.verdict{border:2.5px solid var(--green);background:var(--green-pale);border-radius:14px;padding:16px 18px;margin-bottom:12px}
+.verdict h3{font-family:"Outfit",sans-serif;font-weight:800;font-size:1.2rem;color:var(--green);margin-bottom:5px}
+body.dark .verdict h3{color:#4ADE80}
+.note{border-left:5px solid var(--orange);background:var(--panel);border-radius:0 12px 12px 0;padding:12px 16px;margin-bottom:12px;box-shadow:var(--shadow)}
+.note h3{font-family:"Outfit",sans-serif;font-weight:700;color:var(--orange-deep);margin-bottom:4px}
+body.dark .note h3{color:#FDBA74}
+.src-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.foot{margin-top:30px;text-align:center;color:var(--sub);font-size:.85rem}
+.top-link{position:fixed;right:14px;bottom:14px;width:48px;height:48px;border-radius:50%;background:linear-gradient(180deg,#F97316,#C2410C);border:2px solid var(--orange-deep);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 4px 8px rgba(15,23,42,.3);display:flex;align-items:center;justify-content:center;text-decoration:none;z-index:50}
+.top-link:active{transform:translateY(2px)}
+@media print{
+  @page{size:Letter;margin:.5in}
+  html{font-size:10pt}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff!important;color:#1C2430!important;padding:0}
+  .top-row,.top-link,.chips{display:none!important}
+  .card,.stat,.tbl-wrap,.verdict,.note,.fig{break-inside:avoid}
+  h1,h2,h3{break-after:avoid}
+  tr{break-inside:avoid}
+  thead{display:table-header-group}
+  .band{box-shadow:none}
+  body.dark{--bg:#fff;--panel:#fff;--ink:#1C2430;--sub:#444;--line:#ccc;--cobalt-pale:#E1EEFA;--violet-pale:#EFE9FD;--green-pale:#E4F2E7}
+  body.dark text[fill="#475569"]{fill:#475569}
+  img,svg{max-height:3.2in!important}
+}
+</style>
+
+<style id="ret-responsive-print-standard">
+html,body{overflow-x:clip}
+img,svg{max-width:100%}
+@media(max-width:640px){
+  .stat-row{grid-template-columns:1fr}
+  .src-grid{grid-template-columns:1fr}
+  .bar-row{grid-template-columns:1fr}
+  .bar-row .bl{text-align:left}
+  table{font-size:.74rem}
+  td,th{padding:4px 4px}
+  .band{padding-left:16px;padding-right:16px}
+  h1{font-size:1.55rem}
+}
+@media print{
+  @page{size:Letter;margin:.5in}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  [hidden]{display:block!important}
+}
+</style>
+
+</head>
+<body>
+<div class="col">
+<div class="top-row"><span class="pill">📅 Nov 5, 2026</span><button class="push alt" id="themeBtn" type="button">☾ Dark</button><button class="push" type="button" onclick="window.print()">🖨 Print</button></div>
+
+<header class="hero" id="top">
+<span class="kicker">Career · Retirement</span>
+<h1>Retirement Withdrawals — The Long Guide</h1>
+<p class="intro">Year by year, source by source — from your saved numbers.</p>
+<p class="intro2">Both ways to finish — work to 62 or work to 67 — with every year of income laid out from the records already on file.</p>
+<div class="chips"><a class="chip" href="#work62">If You Work to 62</a><a class="chip v" href="#work67">If You Work to 67</a><a class="chip o" href="#compare">Side by Side</a><a class="chip g" href="#need">What You Need</a><a class="chip o" href="#watch">Watch Items</a></div>
+</header>
+
+<div class="verdict"><h3>✅ The Verdict: Sufficient — Either Way</h3>
+<p>On the figures already on file, you can afford to retire at <mark>62 on $9,903 a month</mark> or at <mark>67 on $13,742 a month</mark>. Your real spending — measured from your own accounts — runs about <strong>$2,725 a month</strong> living exactly as you do now. Retiring at 62 covers that <strong>3.6 times over</strong>; waiting to 67 covers it <strong>5 times over</strong>. The rest of this guide shows every year, every source, and every assumption behind those two numbers.</p></div>
+
+<section id="sources-of-income">
+<div class="band-wrap"><div class="band "><h2>The Three Income Sources</h2><p class="bsub">Three streams, one paycheck</p></div></div>
+
+<figure class="fig"><div role="img" aria-label="Three income sources medallion: FERS pension, Social Security, and portfolio withdrawals feeding one retirement income">
+<svg viewBox="34 2 272 250" fill="none" stroke-linecap="round" stroke-linejoin="round" font-family="Outfit, 'DM Sans', sans-serif">
+<defs>
+<radialGradient id="ret-core" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#D8CCFF"/><stop offset=".55" stop-color="#7C3AED"/><stop offset="1" stop-color="#5B21B6"/></radialGradient>
+<radialGradient id="ret-pen" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#8FC6FF"/><stop offset=".55" stop-color="#0070D0"/><stop offset="1" stop-color="#005AA8"/></radialGradient>
+<radialGradient id="ret-ss" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#B9FBC9"/><stop offset=".55" stop-color="#10C000"/><stop offset="1" stop-color="#0B8A00"/></radialGradient>
+<radialGradient id="ret-port" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#FFFFC8"/><stop offset=".55" stop-color="#F0F000"/><stop offset="1" stop-color="#D8D800"/></radialGradient>
+</defs>
+<path d="M104 54 C 122 64, 132 74, 140 84" stroke="#5B21B6" stroke-width="3" stroke-dasharray="0.5 5.5"/>
+<path d="M236 54 C 218 64, 208 74, 200 84" stroke="#5B21B6" stroke-width="3" stroke-dasharray="0.5 5.5"/>
+<path d="M170 182 C 170 184, 170 185, 170 186" stroke="#5B21B6" stroke-width="3" stroke-dasharray="0.5 3.5"/>
+<circle cx="170" cy="117" r="58" fill="url(#ret-core)" stroke="#0F172A" stroke-width="3"/>
+<ellipse cx="146" cy="82" rx="20" ry="11" fill="#FFFFFF" opacity=".35" transform="rotate(-24 146 82)"/>
+<text x="170" y="124" text-anchor="middle" font-size="16" font-weight="800" fill="#FFFFFF">RETIRE</text>
+<circle cx="80" cy="46" r="27" fill="url(#ret-pen)" stroke="rgba(0,0,0,.28)" stroke-width="3"/>
+<g transform="translate(80 46)" stroke="#FFFFFF" stroke-width="3.5"><path d="M-12 11 h7 v-7 h7 v-7 h7"/></g>
+<text x="80" y="88" text-anchor="middle" font-size="10.5" font-weight="800" letter-spacing=".06em" fill="#475569">PENSION</text>
+<circle cx="260" cy="46" r="27" fill="url(#ret-ss)" stroke="rgba(0,0,0,.28)" stroke-width="3"/>
+<g transform="translate(260 46)" stroke="#FFFFFF" stroke-width="3"><circle r="10.5"/><path d="M0 -6.5 V0 L4.5 3.5"/></g>
+<text x="260" y="86" text-anchor="middle" font-size="10.5" font-weight="800" letter-spacing=".06em" fill="#475569">SOCIAL</text>
+<text x="260" y="99" text-anchor="middle" font-size="10.5" font-weight="800" letter-spacing=".06em" fill="#475569">SECURITY</text>
+<circle cx="170" cy="208" r="23" fill="url(#ret-port)" stroke="rgba(0,0,0,.28)" stroke-width="3"/>
+<g transform="translate(170 208) scale(0.88)" stroke="#3A3400" stroke-width="3"><path d="M-11 6 A12.5 12.5 0 0 1 11 6"/><path d="M0 6 L7.5 -4.5"/></g>
+<text x="170" y="246" text-anchor="middle" font-size="10.5" font-weight="800" letter-spacing=".06em" fill="#475569">PORTFOLIO</text>
+</svg></div></figure>
+
+<div class="src-grid">
+<div class="card"><h3>🏛 FERS Pension</h3><p>The federal pension from your service: <strong>9.2 prior creditable years</strong> (7.2 CIA under FERS + about 2 Air Force years bought back) plus your VA years from Sep 21, 2026. The saved estimates: <strong>$20,735/yr retiring at 62</strong> and <strong>$27,985/yr at 67</strong>.</p><p><span class="hlg">This component is an <strong>estimate, contingent on HR verification</strong> of the 9.2 years — still pending with Lara Glory.</span> If only the 7.2 CIA years verify, every total in this guide drops <strong>$3,335/yr</strong>.</p></div>
+<div class="card"><h3>🕐 Social Security</h3><p>From your <strong>official SSA statement dated Nov 5, 2026</strong>: full retirement age <strong>67</strong>; <strong>$2,610/mo at 62</strong>, <strong>$3,707/mo at 67</strong>, <strong>$4,596/mo at 70</strong>. Disability, if you became disabled now: <strong>$3,918/mo</strong>.</p><p>SSA's estimates assume you keep earning <strong>$30,100/yr</strong> until you start benefits — that is SSA's own stated basis on the statement.</p></div>
+<div class="card"><h3>📈 Portfolio Withdrawal</h3><p>Drawn from your TSP and Fidelity accounts. In these tables it is the <strong>balancing figure</strong> of the saved projection: the on-file total minus pension minus Social Security — <strong>$66,775/yr</strong> in the 62 scenario, <strong>$92,439/yr</strong> at 67.</p><p>Cross-check: a flat 4% draw on the Nov 2, 2026 balance alone is <strong>$49,452/yr ($4,121/mo)</strong> — which by itself clears your live-as-now need.</p></div>
+</div>
+<div class="card"><h3>Your Social Security Ladder — Official Statement, Nov 5, 2026</h3>
+<div class="tbl-wrap g"><table><thead><tr><th>Start Age</th><th>Year</th><th>Per Month</th><th>Per Year</th></tr></thead><tbody>
+<tr class="tot"><td>62</td><td>2031</td><td>$2,610</td><td>$31,320</td></tr>
+<tr><td>63</td><td>2032</td><td>$2,780</td><td>$33,360</td></tr>
+<tr><td>64</td><td>2033</td><td>$2,965</td><td>$35,580</td></tr>
+<tr><td>65</td><td>2034</td><td>$3,212</td><td>$38,544</td></tr>
+<tr><td>66</td><td>2035</td><td>$3,459</td><td>$41,508</td></tr>
+<tr class="tot"><td>67</td><td>2036</td><td>$3,707</td><td>$44,484</td></tr>
+<tr><td>68</td><td>2037</td><td>$3,781</td><td>$45,372</td></tr>
+<tr><td>69</td><td>2038</td><td>$4,077</td><td>$48,924</td></tr>
+<tr><td>70</td><td>2039</td><td>$4,596</td><td>$55,152</td></tr>
+</tbody></table></div>
+<p class="tbl-cap">Bold rows are the two scenarios in this guide. Full retirement age is 67; starting at 62 is a permanent reduction, waiting past 67 grows the check to age 70.</p></div>
+</section>
+
+<section id="balances">
+<div class="band-wrap"><div class="band blue"><h2>Where the Money Stands</h2><p class="bsub">Balances on file, Nov 2, 2026</p></div></div>
+<div class="tbl-wrap"><table><thead><tr><th>Account</th><th>Balance</th></tr></thead><tbody>
+<tr><td>Fidelity (all accounts)</td><td>$693,690</td></tr>
+<tr><td>Thrift Savings Plan</td><td>$534,298</td></tr>
+<tr><td>NWFCU</td><td>$8,321</td></tr>
+<tr class="tot"><td>Total — debt $0</td><td>$1,236,309</td></tr>
+</tbody></table></div>
+<p>Today you work as a VA inpatient mental health RN (VN-01, Step 02, <strong>$35.13/hr</strong>), taking home <strong>$1,972 every two weeks</strong> — about $4,273/mo — with <strong>5% going to TSP Traditional</strong> each pay period. These balances are the Nov 2, 2026 re-baseline; a refresh is due in late November 2026.</p>
+</section>
+
+<section id="method">
+<div class="band-wrap"><div class="band green"><h2>How to Read These Tables</h2><p class="bsub">The method, in the open</p></div></div>
+<div class="card"><p class="lead">Every number in the two scenario tables is built the same transparent way:</p>
+<ul>
+<li><strong>Total income</strong> is the standing on-file projection for that retirement age — the same totals your briefings carry ($118,830/yr at 62 · $164,908/yr at 67).</li>
+<li><strong>FERS pension</strong> is the saved component split from your confirmed service record — an estimate, <strong>contingent on the pending HR verification</strong>.</li>
+<li><strong>Social Security</strong> is the official Nov 5, 2026 statement amount for that start age.</li>
+<li><strong>Portfolio withdrawal</strong> is what is left: total minus pension minus Social Security. It is a balancing figure from the saved model — <span class="hlg">not a new projection</span>.</li>
+<li>Amounts are held <strong>level in today's dollars</strong> for every year. <strong>No market growth, no cost-of-living increases, and no new assumptions</strong> were added to build these tables.</li>
+<li>The first rows of each table are <strong>bridge years</strong> — still working, living on VA pay — so you can see the handoff year where the three retirement streams switch on.</li>
+</ul></div>
+</section>
+
+<section id="work62">
+<div class="band-wrap"><div class="band blue"><h2>If You Work to 62</h2><p class="bsub">Retire October 2031 · income through age 85</p></div></div>
+<div class="stat-row">
+<div class="stat b"><div class="big">$9,903/mo</div><div class="lbl">$118,830 a year, every year</div></div>
+<div class="stat"><div class="big">$2,851,920</div><div class="lbl">total income, age 62 through 85 (24 years)</div></div>
+<div class="stat"><div class="big">3.6×</div><div class="lbl">your live-as-now need of $2,725/mo</div></div>
+</div>
+<div class="tbl-wrap "><table>
+<thead><tr><th>Age</th><th>Year</th><th>FERS Pension *</th><th>Social Security</th><th>Portfolio Withdrawal</th><th>Total Income</th></tr></thead>
+<tbody>
+<tr class="bridge"><td>60</td><td>2029</td><td>—</td><td>—</td><td>—</td><td>$51,280 †</td></tr>
+<tr class="bridge"><td>61</td><td>2030</td><td>—</td><td>—</td><td>—</td><td>$51,280 †</td></tr>
+<tr class="retire-start"><td>62</td><td>2031</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr><td>63</td><td>2032</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr><td>64</td><td>2033</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr><td>65</td><td>2034</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr><td>66</td><td>2035</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr><td>67</td><td>2036</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr><td>68</td><td>2037</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr><td>69</td><td>2038</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr><td>70</td><td>2039</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr><td>71</td><td>2040</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr><td>72</td><td>2041</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr><td>73</td><td>2042</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr><td>74</td><td>2043</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr><td>75</td><td>2044</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr><td>76</td><td>2045</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr><td>77</td><td>2046</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr><td>78</td><td>2047</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr><td>79</td><td>2048</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr><td>80</td><td>2049</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr><td>81</td><td>2050</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr><td>82</td><td>2051</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr><td>83</td><td>2052</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr><td>84</td><td>2053</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr><td>85</td><td>2054</td><td>$20,735</td><td>$31,320</td><td>$66,775</td><td>$118,830</td></tr>
+<tr class="tot"><td colspan="2">Total × 24 retirement years</td><td>$497,640</td><td>$751,680</td><td>$1,602,600</td><td>$2,851,920</td></tr>
+</tbody></table></div>
+<p class="tbl-cap">† Bridge years: still working — VA take-home pay of $1,972 every two weeks, about $51,280 a year. * Pension is the saved estimate — <strong>contingent on HR verifying the 9.2 prior creditable years</strong> (verification pending).</p>
+<div class="card"><h3>Reading the 62 Path</h3>
+<p>You retire in <strong>October 2031</strong> with about <strong>14.3 creditable years</strong> (9.2 prior + 5.1 VA). All three streams start together: pension <strong>$1,728/mo</strong>, Social Security <strong>$2,610/mo</strong> (the reduced age-62 amount, locked for life on the statement's basis), and <strong>$5,565/mo</strong> from the portfolio — <mark>$9,903/mo in total</mark>.</p>
+<p>Across the 24 years from 62 to 85 that is <strong>$2,851,920</strong> of income — against a live-as-now spending need of about $32,700 a year. The margin is the story: even the earliest full exit on file pays <strong>3.6 times</strong> what you actually spend.</p></div>
+</section>
+
+<section id="work67">
+<div class="band-wrap"><div class="band violet"><h2>If You Work to 67</h2><p class="bsub">Retire October 2036 · income through age 85</p></div></div>
+<div class="stat-row">
+<div class="stat v"><div class="big">$13,742/mo</div><div class="lbl">$164,908 a year, every year</div></div>
+<div class="stat"><div class="big">$3,133,252</div><div class="lbl">total income, age 67 through 85 (19 years)</div></div>
+<div class="stat"><div class="big">5.0×</div><div class="lbl">your live-as-now need of $2,725/mo</div></div>
+</div>
+<div class="tbl-wrap v"><table>
+<thead><tr><th>Age</th><th>Year</th><th>FERS Pension *</th><th>Social Security</th><th>Portfolio Withdrawal</th><th>Total Income</th></tr></thead>
+<tbody>
+<tr class="bridge"><td>65</td><td>2034</td><td>—</td><td>—</td><td>—</td><td>$51,280 †</td></tr>
+<tr class="bridge"><td>66</td><td>2035</td><td>—</td><td>—</td><td>—</td><td>$51,280 †</td></tr>
+<tr class="retire-start"><td>67</td><td>2036</td><td>$27,985</td><td>$44,484</td><td>$92,439</td><td>$164,908</td></tr>
+<tr><td>68</td><td>2037</td><td>$27,985</td><td>$44,484</td><td>$92,439</td><td>$164,908</td></tr>
+<tr><td>69</td><td>2038</td><td>$27,985</td><td>$44,484</td><td>$92,439</td><td>$164,908</td></tr>
+<tr><td>70</td><td>2039</td><td>$27,985</td><td>$44,484</td><td>$92,439</td><td>$164,908</td></tr>
+<tr><td>71</td><td>2040</td><td>$27,985</td><td>$44,484</td><td>$92,439</td><td>$164,908</td></tr>
+<tr><td>72</td><td>2041</td><td>$27,985</td><td>$44,484</td><td>$92,439</td><td>$164,908</td></tr>
+<tr><td>73</td><td>2042</td><td>$27,985</td><td>$44,484</td><td>$92,439</td><td>$164,908</td></tr>
+<tr><td>74</td><td>2043</td><td>$27,985</td><td>$44,484</td><td>$92,439</td><td>$164,908</td></tr>
+<tr><td>75</td><td>2044</td><td>$27,985</td><td>$44,484</td><td>$92,439</td><td>$164,908</td></tr>
+<tr><td>76</td><td>2045</td><td>$27,985</td><td>$44,484</td><td>$92,439</td><td>$164,908</td></tr>
+<tr><td>77</td><td>2046</td><td>$27,985</td><td>$44,484</td><td>$92,439</td><td>$164,908</td></tr>
+<tr><td>78</td><td>2047</td><td>$27,985</td><td>$44,484</td><td>$92,439</td><td>$164,908</td></tr>
+<tr><td>79</td><td>2048</td><td>$27,985</td><td>$44,484</td><td>$92,439</td><td>$164,908</td></tr>
+<tr><td>80</td><td>2049</td><td>$27,985</td><td>$44,484</td><td>$92,439</td><td>$164,908</td></tr>
+<tr><td>81</td><td>2050</td><td>$27,985</td><td>$44,484</td><td>$92,439</td><td>$164,908</td></tr>
+<tr><td>82</td><td>2051</td><td>$27,985</td><td>$44,484</td><td>$92,439</td><td>$164,908</td></tr>
+<tr><td>83</td><td>2052</td><td>$27,985</td><td>$44,484</td><td>$92,439</td><td>$164,908</td></tr>
+<tr><td>84</td><td>2053</td><td>$27,985</td><td>$44,484</td><td>$92,439</td><td>$164,908</td></tr>
+<tr><td>85</td><td>2054</td><td>$27,985</td><td>$44,484</td><td>$92,439</td><td>$164,908</td></tr>
+<tr class="tot"><td colspan="2">Total × 19 retirement years</td><td>$531,715</td><td>$845,196</td><td>$1,756,341</td><td>$3,133,252</td></tr>
+</tbody></table></div>
+<p class="tbl-cap">† Bridge years: still working — VA take-home pay of $1,972 every two weeks, about $51,280 a year. * Pension is the saved estimate — <strong>contingent on HR verifying the 9.2 prior creditable years</strong> (verification pending).</p>
+<div class="card"><h3>Reading the 67 Path</h3>
+<p>Five more working years change three things at once: the pension grows to <strong>$2,332/mo</strong> (about 19.4 creditable years), Social Security starts at the <strong>full-retirement-age amount of $3,707/mo</strong> instead of the reduced 62 amount, and the portfolio draw in the saved model rises to <strong>$7,703/mo</strong> — <mark>$13,742/mo in total</mark>.</p>
+<p>That is <strong>$46,078/yr more</strong> than the 62 path — $3,839/mo — for five more years of work. Across 67 to 85 the path pays <strong>$3,133,252</strong>, and it covers your live-as-now need <strong>5 times over</strong>.</p></div>
+</section>
+
+<section id="compare">
+<div class="band-wrap"><div class="band "><h2>Side by Side</h2><p class="bsub">The two finishes, one view</p></div></div>
+<div class="tbl-wrap o"><table><thead><tr><th>Measure</th><th>Work to 62</th><th>Work to 67</th></tr></thead><tbody>
+<tr><td>Retirement date</td><td>October 2031</td><td>October 2036</td></tr>
+<tr><td>Monthly income</td><td>$9,903</td><td>$13,742</td></tr>
+<tr><td>Annual income</td><td>$118,830</td><td>$164,908</td></tr>
+<tr><td>FERS pension /mo *</td><td>$1,728</td><td>$2,332</td></tr>
+<tr><td>Social Security /mo</td><td>$2,610</td><td>$3,707</td></tr>
+<tr><td>Portfolio withdrawal /mo</td><td>$5,565</td><td>$7,703</td></tr>
+<tr><td>Covers live-as-now need ($2,725/mo)</td><td>3.6×</td><td>5.0×</td></tr>
+<tr><td>Total income through age 85</td><td>$2,851,920</td><td>$3,133,252</td></tr>
+</tbody></table></div>
+<p class="tbl-cap">* Pension is the saved estimate — contingent on HR verifying the 9.2 prior creditable years (pending).</p>
+<div class="card"><h3>Income vs. What You Spend — Per Month</h3>
+<div class="bar-row"><span class="bl">Work to 62</span><div class="bar-track"><div class="bar-fill" style="width:72%;background:linear-gradient(180deg,#38BDF8,#0070D0)"></div></div><span class="bv">$9,903</span></div>
+<div class="bar-row"><span class="bl">Work to 67</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:linear-gradient(180deg,#A78BFA,#7C3AED)"></div></div><span class="bv">$13,742</span></div>
+<div class="bar-row"><span class="bl">Live-as-now need</span><div class="bar-track"><div class="bar-fill" style="width:20%;background:linear-gradient(180deg,#F97316,#EA580C)"></div></div><span class="bv">$2,725</span></div>
+<div class="bar-row"><span class="bl">Lean need</span><div class="bar-track"><div class="bar-fill" style="width:14%;background:linear-gradient(180deg,#FBBF24,#D97706)"></div></div><span class="bv">$1,950</span></div>
+<p>Bars are proportional to the age-67 income. Either finish clears both need lines by a wide margin.</p></div>
+<div class="card"><h3>The Full Ladder — Every Anchor Age on File</h3>
+<div class="tbl-wrap o"><table><thead><tr><th>Retire at</th><th>Year</th><th>FERS Pension /yr *</th><th>Total Income /yr</th><th>Total /mo</th></tr></thead><tbody>
+<tr><td>57</td><td>2026</td><td>$13,485</td><td>$93,594</td><td>$7,800</td></tr>
+<tr><td>59</td><td>2028</td><td>$16,385</td><td>$103,067</td><td>$8,589</td></tr>
+<tr class="tot"><td>62</td><td>2031</td><td>$20,735</td><td>$118,830</td><td>$9,903</td></tr>
+<tr class="tot"><td>67</td><td>2036</td><td>$27,985</td><td>$164,908</td><td>$13,742</td></tr>
+<tr><td>70</td><td>2039</td><td>$35,569</td><td>$202,562</td><td>$16,880</td></tr>
+</tbody></table></div>
+<p class="tbl-cap">The standing projection totals for every anchor age, with the saved pension split for each. The 62 and 67 rows are the two scenarios detailed in this guide. * Contingent estimate — see Watch Items.</p></div>
+</section>
+
+<section id="need">
+<div class="band-wrap"><div class="band green"><h2>What You Actually Need</h2><p class="bsub">Measured from your own accounts</p></div></div>
+<div class="card"><p>Your need figures come from an 89-day pull of your actual spending (Oct 25, 2026 assessment), personal spending only:</p>
+<div class="tbl-wrap g"><table><thead><tr><th>Need Level</th><th>Per Month</th><th>Per Year</th></tr></thead><tbody>
+<tr><td>Lean — essentials, home &amp; auto, trimmed discretionary</td><td>$1,950</td><td>$23,400</td></tr>
+<tr><td>Live-as-now — your full current pattern</td><td>$2,725</td><td>$32,700</td></tr>
+</tbody></table></div>
+<p>Set against them: retiring at 62 pays <strong>$9,903/mo</strong> — <strong>3.6×</strong> the live-as-now need and 5.1× the lean need. Retiring at 67 pays <strong>$13,742/mo</strong> — <strong>5.0×</strong> live-as-now. And the harshest test on file: the portfolio alone at a flat 4% draw, ignoring pension and Social Security entirely, still pays about <strong>$4,121/mo</strong> — more than you spend.</p></div>
+</section>
+
+<section id="watch">
+<div class="band-wrap"><div class="band "><h2>Watch Items</h2><p class="bsub">What could move these numbers</p></div></div>
+<div class="note"><h3>1 · Pension verification — pending</h3><p>Every pension figure here assumes the full <strong>9.2 creditable years</strong> (7.2 CIA FERS + ~2 Air Force bought back). HR verification with Lara Glory is <strong>still pending</strong>. If only 7.2 years verify, pension — and therefore every scenario total — drops <strong>$3,335/yr</strong>. This is the single most likely near-term change to this guide.</p></div>
+<div class="note"><h3>2 · Social Security's earnings assumption</h3><p>The official statement's estimates assume continued earnings of <strong>$30,100/yr</strong> until benefits start. That is SSA's stated basis, printed on the statement itself — your actual VA earnings run higher, and future statements will restate the ladder on your real record.</p></div>
+<div class="note"><h3>3 · Balances are dated Nov 2, 2026</h3><p>The $1,236,309 total is the Nov 2, 2026 re-baseline. Markets move it daily; a full re-baseline with fresh TSP and fuller VA-pay history is due in <strong>late November 2026</strong>. The portfolio withdrawal in the tables is the saved model's balancing figure — when the re-baseline lands, this guide gets rebuilt from it.</p></div>
+<div class="note"><h3>4 · Concentration</h3><p>At the Oct 25, 2026 assessment, Chevron was about <strong>22%</strong> of everything you own, and Chevron + Apple together about <strong>34%</strong>. A single-company event is a larger risk to this plan than your spending is.</p></div>
+<div class="note"><h3>5 · TSP is 100% stocks</h3><p>Your TSP sits at <strong>61% S Fund / 39% I Fund</strong> — no stabilizer. That is a growth engine while you work; sequence risk grows as a retirement date gets close, and it is worth a deliberate look before either finish line.</p></div>
+<div class="note"><h3>6 · Cards stay at $0</h3><p>The need figures assume no card interest — true today, with the Fidelity Visa at $0. Any month interest reappears, the live-as-now need creeps up; keeping cards at zero is the cheapest raise in this whole plan.</p></div>
+</section>
+
+<section id="basis">
+<div class="band-wrap"><div class="band blue"><h2>Sources & Basis</h2><p class="bsub">Every figure traces to a record</p></div></div>
+<div class="card"><ul>
+<li><strong>Social Security:</strong> official SSA statement dated <strong>Nov 5, 2026</strong>, supplied by David and filed in his permanent records.</li>
+<li><strong>Pension splits &amp; scenario totals:</strong> the standing projection record — David's confirmed service history, <strong>Oct 13, 2026</strong> (9.2 creditable years); pension and totals as listed in the ladder table.</li>
+<li><strong>Need figures &amp; watch items:</strong> Baseline Retirement Assessment, <strong>Oct 25, 2026</strong> (89-day expense pull).</li>
+<li><strong>Balances &amp; VA pay:</strong> re-baseline of <strong>Nov 2, 2026</strong>; take-home $1,972 biweekly; VN-01 Step 02 at $35.13/hr; TSP Traditional 5%.</li>
+</ul>
+<p>This guide is coaching analysis from your own records — not a promise of future returns. Amounts are level today's dollars; no growth or COLA was assumed to build the tables.</p></div>
+</section>
+
+<p class="foot">Retirement Withdrawal Guide · Built Only from David's Saved Records · November 2026</p>
+</div>
+<a class="top-link" href="#top" aria-label="Back to top"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M12 4 L22 15 L16.5 15 L16.5 21 L7.5 21 L7.5 15 L2 15 Z" fill="#fff"/></svg></a>
+<script>
+(function(){var b=document.getElementById('themeBtn');function paint(){b.textContent=document.body.classList.contains('dark')?'☀ Light':'☾ Dark';}
+b.addEventListener('click',function(){document.body.classList.toggle('dark');paint();});paint();})();
+</script>
+</body>
+</html>

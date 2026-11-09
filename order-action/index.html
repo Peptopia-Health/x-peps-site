@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Peptopia Health — Order Action</title>
+<!--
+  Peptopia order-action page (NOT YET DEPLOYED — staged in
+  ~/workspace/order-pipeline/; publish target: x-peps.com/order-action/,
+  repo Peptopia-Health/peptopia-health.github.io, path order-action/index.html).
+
+  How it works (same proven mechanism as the Admin Portal Action Board):
+  the consolidated Peptopia order email carries two buttons linking here:
+      ?id=OG-xxxx&act=create|decline&k=<per-order token>
+  This page POSTs the action to Web3Forms -> the store mailbox
+  (peptopia@x-peps.com) with subject "Peptopia Order Action: <act> <id>".
+  process_order_actions.py polls that mailbox, validates k against the
+  order package's stored token, and records the decision. The access key
+  lives in the JS below exactly as on the orders page and Admin Portal
+  (established pattern); it is never shown in visible page text.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:'DM Sans', Arial, sans-serif; background:#F4F6FA; color:#0F172A; }
+  .wrap { max-width:560px; margin:0 auto; padding:28px 16px 48px; }
+  .card { background:#fff; border:1px solid #E5E7EB; border-radius:16px; padding:26px 22px; text-align:center;
+          box-shadow:0 6px 18px rgba(15,23,42,.06); }
+  h1 { font-family:'Outfit', Arial, sans-serif; font-weight:800; font-size:24px; color:#EA580C; margin:0 0 6px; }
+  .sub { font-size:15px; color:#475569; margin:0 0 18px; }
+  .big { font-family:'Outfit', Arial, sans-serif; font-weight:800; font-size:20px; margin:10px 0 6px; }
+  .ok  { color:#15803D; }
+  .bad { color:#B91C1C; }
+  .spin { font-size:34px; }
+  .fine { font-size:13px; color:#94A3B8; margin-top:16px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <h1>Peptopia Health</h1>
+    <p class="sub">Order action</p>
+    <div id="state-working">
+      <div class="spin">⏳</div>
+      <div class="big">Sending your decision to Muse…</div>
+      <p class="sub">One moment — nothing else to tap.</p>
+    </div>
+    <div id="state-done" style="display:none">
+      <div class="spin">✅</div>
+      <div class="big ok" id="done-line">Sent to Muse</div>
+      <p class="sub" id="done-detail"></p>
+    </div>
+    <div id="state-error" style="display:none">
+      <div class="spin">⚠️</div>
+      <div class="big bad">This link isn't complete</div>
+      <p class="sub" id="error-detail">The order action link is missing information, so nothing was sent. Please use the buttons in the Peptopia order email.</p>
+    </div>
+    <p class="fine">Peptopia Health · internal order tool</p>
+  </div>
+</div>
+<script>
+(function () {
+  var KEY = 'c3378175-a412-4313-bf5b-12fae9f925f3'; // store Web3Forms key (same as orders page / Admin Portal)
+  function show(id) {
+    ['state-working', 'state-done', 'state-error'].forEach(function (s) {
+      document.getElementById(s).style.display = (s === id) ? 'block' : 'none';
+    });
+  }
+  var q = new URLSearchParams(window.location.search);
+  var id = (q.get('id') || '').trim().toUpperCase();
+  var act = (q.get('act') || '').trim().toLowerCase();
+  var k = (q.get('k') || '').trim();
+  if (!/^OG-[A-Z0-9]{6}$/.test(id) || (act !== 'create' && act !== 'decline') || !k) {
+    show('state-error');
+    return;
+  }
+  var payload = {
+    access_key: KEY,
+    subject: 'Peptopia Order Action: ' + act + ' ' + id,
+    from_name: 'Peptopia Order Action',
+    action_id: id,
+    act: act,
+    k: k,
+    source: 'x-peps.com/order-action',
+    requested_at: new Date().toISOString()
+  };
+  fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+    .then(function (r) { if (!r.ok) throw new Error('send failed'); return r.json(); })
+    .then(function (j) { if (j && j.success === false) throw new Error('send failed'); })
+    .then(function () {
+      document.getElementById('done-line').textContent =
+        'Sent to Muse — order ' + id + (act === 'create' ? ' will be created' : ' will be declined');
+      document.getElementById('done-detail').textContent =
+        act === 'create'
+          ? 'Muse will send the customer their order email, and you will get a confirmation copy here at Peptopia.'
+          : 'Muse will send the customer a polite decline, and you will get a confirmation copy here at Peptopia.';
+      show('state-done');
+    })
+    .catch(function () {
+      document.getElementById('error-detail').textContent =
+        'The message could not be sent — check your connection and tap the button in the order email again. Nothing was recorded.';
+      show('state-error');
+    });
+})();
+</script>
+</body>
+</html>
