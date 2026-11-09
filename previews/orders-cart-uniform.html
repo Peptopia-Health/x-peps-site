@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<link rel="apple-touch-icon" href="/X-Peps/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/X-Peps/favicon-32x32.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders — PEPTOPIA Health</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-page: #F4F6FA;
+            --t1: #0F172A; 
+            --t2: #475569;
+            --purple: #9000F5; 
+            --emerald: #10B981; 
+            --orange: #F97316; 
+            --slate: #64748B;
+            --neon-border: #FF85E1; /* Pink/Purple Neon */
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            font-family: 'DM Sans', sans-serif; 
+            background: var(--bg-page); 
+            color: var(--t1); 
+            line-height: 1.4; 
+            padding-bottom: 50px; 
+        }
+        
+        /* ─── HEADER ─── */
+        .hdr { 
+            padding: 20px 24px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+        }
+        .header-brand { 
+            display: flex; 
+            align-items: center; 
+            gap: 14px; 
+            text-decoration: none; 
+        }
+        .brand-logo-img { 
+            width: 48px; 
+            height: 48px; 
+            border-radius: 50%; 
+            border: 2px solid var(--neon-border); 
+            box-shadow: 0 0 10px var(--neon-border); 
+            object-fit: cover; 
+            background: #FFFFFF;
+        }
+        .brand-name {
+            font-family: 'Outfit', sans-serif; 
+            font-weight: 700; 
+            font-size: 1.2rem; 
+            color: var(--t1);
+            letter-spacing: 1px;
+        }
+        
+        /* ─── HERO ─── */
+        .hero { 
+            text-align: center; 
+            padding: 10px 24px 25px; 
+        }
+        .hero h1 { 
+            font-family: 'Outfit', sans-serif; 
+            font-size: 2.5rem; 
+            font-weight: 800; 
+            margin-bottom: 5px; 
+        }
+        .hero p { 
+            color: var(--t2); 
+            line-height: 1.4; 
+        }
+
+        /* ─── CATEGORY CONTAINERS (Pastel Backgrounds) ─── */
+        .cat-wrap { 
+            max-width: 1000px; 
+            margin: 0 auto 30px; 
+            padding: 15px 25px 25px; 
+            border-radius: 16px; 
+        }
+        .cat-purple  { background-color: #F3EBFF; } /* Soft Purple */
+        .cat-emerald { background-color: #ECFDF5; } /* Soft Green */
+        .cat-orange  { background-color: #FFF7ED; } /* Soft Orange */
+        .cat-slate   { background-color: #F8FAFC; } /* Soft Slate */
+
+        .cat-title { 
+            font-family: 'Outfit', sans-serif; 
+            text-align: center; 
+            margin-bottom: 15px; 
+            font-size: 1.25rem; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+        }
+        
+        /* ─── GRID & LAYOUT ─── */
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, minmax(0, 1fr)); 
+            gap: 20px; 
+        }
+        
+        /* Centers the 4th tile in a 3-column layout */
+        .cagri-centered { 
+            grid-column: 2; 
+        }
+        
+        /* ─── TILES (CARDS) ─── */
+        .card { 
+            background: white; 
+            border-radius: 12px; 
+            padding: 20px; 
+            border: 1px solid #E2E8F0; 
+            position: relative; 
+            display: flex; 
+            flex-direction: column; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        /* Top colored highlight line */
+        .card::before { 
+            content: ''; 
+            position: absolute; 
+            top: 0; left: 0; right: 0; 
+            height: 4px; 
+            border-radius: 12px 12px 0 0; 
+        }
+        .accent-purple::before  { background: var(--purple); }
+        .accent-emerald::before { background: var(--emerald); }
+        .accent-orange::before  { background: var(--orange); }
+        .accent-slate::before   { background: var(--slate); }
+
+        .icon-box { 
+            font-size: 1.4rem; 
+            margin-bottom: 10px; 
+        }
+        .card-title { 
+            font-family: 'Outfit', sans-serif; 
+            font-weight: 700; 
+            font-size: 1.15rem; 
+            margin-bottom: 6px; 
+        }
+        .card-desc { 
+            font-size: 0.9rem; 
+            color: var(--t2); 
+            margin-bottom: 15px; 
+            line-height: 1.5; 
+            flex-grow: 1; 
+        }
+        
+        /* Highlighter Effects (Category Specific) */
+        mark { 
+            color: inherit; 
+            padding: 0 2px; 
+            border-radius: 3px; 
+        }
+        .cat-purple mark  { background-color: #E9D5FF; } /* Pale Purple */
+        .cat-emerald mark { background-color: #A7F3D0; } /* Pale Green */
+        .cat-orange mark  { background-color: #FED7AA; } /* Pale Orange */
+        .cat-slate mark   { background-color: #CBD5E1; } /* Pale Slate */
+
+        /* ─── BUBBLE BUTTONS ─── */
+        .btn-container {
+            text-align: center;
+            margin-top: auto;
+        }
+        .price-bubble { 
+            display: inline-block; 
+            background-color: #DCFCE7; 
+            color: #065F46; 
+            padding: 8px 24px; 
+            border-radius: 9999px; 
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700; 
+            font-size: 1.1rem;
+            text-decoration: none; 
+            border: 1px solid #6EE7B7;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+        .price-bubble:hover { 
+            transform: scale(1.05); 
+            background-color: #BBF7D0;
+        }
+        
+        .coming-soon-bubble {
+            display: inline-block; 
+            background-color: #F1F5F9; 
+            color: #64748B; 
+            padding: 8px 24px; 
+            border-radius: 9999px; 
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600; 
+            font-size: 1rem;
+            font-style: italic;
+            border: 1px solid #CBD5E1;
+        }
+
+        /* ─── FOOTER BANNER ─── */
+        .footer-banner { 
+            max-width: 1000px; 
+            margin: 10px auto 40px; 
+            padding: 20px; 
+            background: #F8FAFC; 
+            border-radius: 12px; 
+            text-align: center; 
+            font-size: 0.9rem; 
+            color: var(--t2);
+            border: 1px solid #E2E8F0;
+        }
+        .footer-banner a { 
+            color: var(--emerald); 
+            font-weight: 600; 
+            text-decoration: none;
+        }
+        .footer-banner a:hover { text-decoration: underline; }
+
+        /* ─── STRICT MOBILE LAYOUT (1 Tile Per Row) ─── */
+        @media (max-width: 900px) { 
+            .grid { grid-template-columns: 1fr; } 
+            .cagri-centered { grid-column: 1; } 
+        }
+    /* ===== Peptopia site chrome: logo / nav / print / theme toggle / footer ===== */
+.peptopia-hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1200px;margin:0 auto;padding:14px 24px;position:relative;z-index:50}
+.peptopia-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.peptopia-logo{width:46px;height:46px;border-radius:50%;flex:none;box-shadow:0 0 10px 2px rgba(236,72,153,.55),0 0 26px 8px rgba(236,72,153,.18)}
+.peptopia-wordmark{display:flex;flex-direction:column;font:800 1.02rem/1.15 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.14em;color:#1e1b4b}
+html.dark .peptopia-wordmark{color:#f1f5f9}
+.peptopia-tagline{font-size:.6rem;font-weight:600;letter-spacing:.3em;color:#64748b}
+html.dark .peptopia-tagline{color:#94a3b8}
+.peptopia-nav{display:flex;align-items:center;gap:1.25rem}
+.peptopia-nav>a{font:700 .8rem/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.12em;color:#334155;text-decoration:none}
+html.dark .peptopia-nav>a{color:#cbd5e1}
+.peptopia-nav>a:hover{color:#be185d}
+.peptopia-iconbtn{width:38px;height:38px;border-radius:50%;border:1px solid rgba(15,23,42,.12);background:#fff;color:#475569;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+html.dark .peptopia-iconbtn{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:#cbd5e1}
+.peptopia-iconbtn:hover{border-color:#ec4899;color:#be185d}
+.peptopia-iconbtn svg{width:17px;height:17px}
+.peptopia-theme-toggle .pp-sun{display:none}
+html.dark .peptopia-theme-toggle .pp-sun{display:block}
+html.dark .peptopia-theme-toggle .pp-moon{display:none}
+.peptopia-ftr{border-top:1px solid rgba(15,23,42,.08);margin-top:48px;padding:22px 24px;text-align:center;font:500 .8rem/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#64748b}
+html.dark .peptopia-ftr{border-color:rgba(255,255,255,.08);color:#94a3b8}
+.peptopia-ftr .peptopia-ftr-icons{display:flex;gap:16px;justify-content:center;margin-top:10px}
+.peptopia-ftr .peptopia-ftr-icons a{color:#64748b;display:inline-flex}
+html.dark .peptopia-ftr .peptopia-ftr-icons a{color:#94a3b8}
+.peptopia-ftr .peptopia-ftr-icons a:hover{color:#be185d}
+.peptopia-ftr .peptopia-ftr-icons svg{width:18px;height:18px}
+.peptopia-ftr .ftr-logo img{width:18px;height:18px;border-radius:50%;filter:grayscale(1);opacity:.55}
+.peptopia-ftr .ftr-email-line{text-align:center;margin:6px 0}
+.peptopia-ftr .ftr-email-line a{color:#64748b;text-decoration:none}
+html.dark .peptopia-ftr .ftr-email-line a{color:#94a3b8}
+.peptopia-ftr .ftr-logo:hover img{filter:none;opacity:1}
+html.dark .peptopia-ftr .ftr-logo img{filter:grayscale(1) invert(1);opacity:.75}
+html.dark .peptopia-ftr .ftr-logo:hover img{filter:none;opacity:1}
+.peptopia-ftr a.ftr-email{color:inherit;text-decoration:none}
+.peptopia-ftr a.ftr-email:hover{color:#be185d;text-decoration:underline}
+@media print{.peptopia-nav .peptopia-iconbtn,.peptopia-ftr-icons{display:none!important}.statcard,.statgrid,table,thead,tbody,tr,figure,figcaption,blockquote,.coa-callout,.card,.strain-card,pre,.callout,img{break-inside:avoid!important;page-break-inside:avoid!important}h1,h2,h3,h4,h5,h6{break-after:avoid!important;page-break-after:avoid!important}p,li{orphans:3;widows:3}a{color:inherit;text-decoration:none}body{background:#fff!important}}
+
+/* ===== Peptopia site chrome: logo / nav / print / theme toggle / footer ===== */
+.peptopia-hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1200px;margin:0 auto;padding:14px 24px;position:relative;z-index:50}
+.peptopia-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.peptopia-logo{width:46px;height:46px;border-radius:50%;flex:none;box-shadow:0 0 10px 2px rgba(236,72,153,.55),0 0 26px 8px rgba(236,72,153,.18)}
+/* Dark logo (dark circle) shows on LIGHT theme; light logo (light circle) shows on DARK theme */
+.peptopia-wordmark{display:flex;flex-direction:column;font:800 1.02rem/1.15 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.14em;color:#1e1b4b}
+html.dark .peptopia-wordmark{color:#f1f5f9}
+.peptopia-tagline{font-size:.6rem;font-weight:600;letter-spacing:.3em;color:#64748b}
+html.dark .peptopia-tagline{color:#94a3b8}
+.peptopia-nav{display:flex;align-items:center;gap:1.25rem}
+.peptopia-nav>a{font:700 .8rem/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.12em;color:#334155;text-decoration:none}
+html.dark .peptopia-nav>a{color:#cbd5e1}
+.peptopia-nav>a:hover{color:#be185d}
+.peptopia-iconbtn{width:38px;height:38px;border-radius:50%;border:1px solid rgba(15,23,42,.12);background:#fff;color:#475569;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+html.dark .peptopia-iconbtn{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:#cbd5e1}
+.peptopia-iconbtn:hover{border-color:#ec4899;color:#be185d}
+.peptopia-iconbtn svg{width:17px;height:17px}
+.peptopia-theme-toggle .pp-sun{display:none}
+html.dark .peptopia-theme-toggle .pp-sun{display:block}
+html.dark .peptopia-theme-toggle .pp-moon{display:none}
+.peptopia-ftr{border-top:1px solid rgba(15,23,42,.08);margin-top:48px;padding:22px 24px;text-align:center;font:500 .8rem/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#64748b}
+html.dark .peptopia-ftr{border-color:rgba(255,255,255,.08);color:#94a3b8}
+.peptopia-ftr .ftr-email-line{text-align:center;margin:6px 0}
+.peptopia-ftr .ftr-email-line a{color:#64748b;text-decoration:none}
+html.dark .peptopia-ftr .ftr-email-line a{color:#94a3b8}
+.peptopia-ftr .peptopia-ftr-icons{display:flex;gap:16px;justify-content:center;margin-top:10px}
+.peptopia-ftr .peptopia-ftr-icons a{color:#64748b;display:inline-flex}
+html.dark .peptopia-ftr .peptopia-ftr-icons a{color:#94a3b8}
+.peptopia-ftr .peptopia-ftr-icons a:hover{color:#be185d}
+.peptopia-ftr .peptopia-ftr-icons svg{width:18px;height:18px}
+.peptopia-ftr .ftr-logo img{width:18px;height:18px;border-radius:50%;filter:grayscale(1);opacity:.55}
+.peptopia-ftr .ftr-logo:hover img{filter:none;opacity:1}
+html.dark .peptopia-ftr .ftr-logo img{filter:grayscale(1) invert(1);opacity:.75}
+html.dark .peptopia-ftr .ftr-logo:hover img{filter:none;opacity:1}
+.peptopia-ftr a.ftr-email{color:inherit;text-decoration:none}
+.peptopia-ftr a.ftr-email:hover{color:#be185d;text-decoration:underline}
+@media print{.peptopia-nav .peptopia-iconbtn,.peptopia-ftr-icons{display:none!important}.statcard,.statgrid,table,thead,tbody,tr,figure,figcaption,blockquote,.coa-callout,.card,.strain-card,pre,.callout,img{break-inside:avoid!important;page-break-inside:avoid!important}h1,h2,h3,h4,h5,h6{break-after:avoid!important;page-break-after:avoid!important}p,li{orphans:3;widows:3}a{color:inherit;text-decoration:none}body{background:#fff!important}}
+
+/* ===== Peptopia site chrome: logo / nav / print / theme toggle / footer ===== */
+.peptopia-hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1200px;margin:0 auto;padding:14px 24px;position:relative;z-index:50}
+.peptopia-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.peptopia-logo{width:46px;height:46px;border-radius:50%;flex:none;box-shadow:0 0 10px 2px rgba(236,72,153,.55),0 0 26px 8px rgba(236,72,153,.18)}
+/* Dark logo (dark circle) shows on LIGHT theme; light logo (light circle) shows on DARK theme */
+.peptopia-logo.logo-light,.ftr-logo .logo-light{display:none}
+html.dark .peptopia-logo.logo-light,html.dark .ftr-logo .logo-light{display:block}
+html.dark .peptopia-logo.logo-dark,html.dark .ftr-logo .logo-dark{display:none}
+.peptopia-wordmark{display:flex;flex-direction:column;font:800 1.02rem/1.15 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.14em;color:#1e1b4b}
+html.dark .peptopia-wordmark{color:#f1f5f9}
+.peptopia-tagline{font-size:.6rem;font-weight:600;letter-spacing:.3em;color:#64748b}
+html.dark .peptopia-tagline{color:#94a3b8}
+.peptopia-nav{display:flex;align-items:center;gap:1.25rem}
+@media(max-width:640px){.peptopia-hdr{padding:10px 12px;gap:8px}.peptopia-brand{gap:8px}.peptopia-logo{width:38px;height:38px}.peptopia-wordmark{font-size:.85rem}.peptopia-nav{gap:.6rem}.peptopia-nav>a{font-size:.7rem;letter-spacing:.08em}.peptopia-iconbtn{width:34px;height:34px;flex:none}}
+.peptopia-nav>a{font:700 .8rem/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.12em;color:#334155;text-decoration:none}
+html.dark .peptopia-nav>a{color:#cbd5e1}
+.peptopia-nav>a:hover{color:#be185d}
+.peptopia-iconbtn{width:38px;height:38px;border-radius:50%;border:1px solid rgba(15,23,42,.12);background:#fff;color:#475569;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+html.dark .peptopia-iconbtn{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:#cbd5e1}
+.peptopia-iconbtn:hover{border-color:#ec4899;color:#be185d}
+.peptopia-iconbtn svg{width:17px;height:17px}
+.peptopia-theme-toggle .pp-sun{display:none}
+html.dark .peptopia-theme-toggle .pp-sun{display:block}
+html.dark .peptopia-theme-toggle .pp-moon{display:none}
+.peptopia-ftr{border-top:1px solid rgba(15,23,42,.08);margin-top:48px;padding:22px 24px;text-align:center;font:500 .8rem/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#64748b}
+html.dark .peptopia-ftr{border-color:rgba(255,255,255,.08);color:#94a3b8}
+.peptopia-ftr .ftr-email-line{text-align:center;margin:6px 0}
+.peptopia-ftr .ftr-email-line a{color:#64748b;text-decoration:none}
+html.dark .peptopia-ftr .ftr-email-line a{color:#94a3b8}
+.peptopia-ftr .peptopia-ftr-icons{display:flex;gap:16px;justify-content:center;margin-top:10px}
+.peptopia-ftr .peptopia-ftr-icons a{color:#64748b;display:inline-flex}
+html.dark .peptopia-ftr .peptopia-ftr-icons a{color:#94a3b8}
+.peptopia-ftr .peptopia-ftr-icons a:hover{color:#be185d}
+.peptopia-ftr .peptopia-ftr-icons svg{width:18px;height:18px}
+.peptopia-ftr .ftr-logo img{width:18px;height:18px;border-radius:50%;filter:grayscale(1);opacity:.55}
+.peptopia-ftr .ftr-logo:hover img{filter:none;opacity:1}
+html.dark .peptopia-ftr .ftr-logo img{filter:grayscale(1) invert(1);opacity:.75}
+html.dark .peptopia-ftr .ftr-logo:hover img{filter:none;opacity:1}
+.peptopia-ftr a.ftr-email{color:inherit;text-decoration:none}
+.peptopia-ftr a.ftr-email:hover{color:#be185d;text-decoration:underline}
+@media print{.peptopia-nav .peptopia-iconbtn,.peptopia-ftr-icons{display:none!important}.statcard,.statgrid,table,thead,tbody,tr,figure,figcaption,blockquote,.coa-callout,.card,.strain-card,pre,.callout,img{break-inside:avoid!important;page-break-inside:avoid!important}h1,h2,h3,h4,h5,h6{break-after:avoid!important;page-break-after:avoid!important}p,li{orphans:3;widows:3}a{color:inherit;text-decoration:none}body{background:#fff!important}}
+
+
+        /* ─── GLOW VENN CARD ─── */
+        .glow-stage { container-type: inline-size; }
+        .glow-benefits { display:flex; align-items:center; justify-content:center; gap:2.6cqw; margin:2px 0 6px; }
+        .glow-benefits .bic { height:18cqw; max-height:64px; width:auto; }
+        .glow-benefits .plus { height:10.8cqw; max-height:38px; width:auto; }
+        .glow-venn { position:relative; width:100%; max-width:300px; aspect-ratio:300/212; margin:2px auto 0; }
+        .glow-orb { position:absolute; width:37.34%; aspect-ratio:1; border-radius:50%;
+            display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
+            text-decoration:none; font-family:'Outfit',sans-serif; text-align:center;
+            border:3px solid rgba(0,0,0,.28);
+            box-shadow: inset 0 3px 6px rgba(255,255,255,.55), inset 0 -8px 14px rgba(0,0,0,.22), 0 5px 10px rgba(15,23,42,.25);
+            transition:transform .12s ease, box-shadow .12s ease; }
+        .glow-orb:active { transform:translateY(3px); box-shadow: inset 0 2px 4px rgba(255,255,255,.4), inset 0 -3px 8px rgba(0,0,0,.25), 0 1px 3px rgba(15,23,42,.25); }
+        .glow-orb .nm { font-weight:800; font-size:min(6.5cqw, 20.8px); line-height:1.05; letter-spacing:.02em; }
+        .glow-orb .pr { font-weight:700; font-size:min(5.2cqw, 16.3px); opacity:.95; }
+        .orb-glow { left:31.33%; top:0; background:radial-gradient(circle at 32% 28%, #FFFFC8 0%, #F0F000 55%, #D8D800 100%); color:#3A3400; }
+        .orb-klow { left:11.33%; top:47.17%; background:radial-gradient(circle at 32% 28%, #FFB37A 0%, #F06000 55%, #C24E00 100%); color:#0F172A; }
+        .orb-ghk  { left:51.33%; top:47.17%; background:radial-gradient(circle at 32% 28%, #7AC0FF 0%, #0070D0 55%, #005AA8 100%); color:#0F172A; }
+        .glow-tap { text-align:center; font-family:'Outfit',sans-serif; font-weight:700; font-size:1.15rem; color:var(--t1); margin:6px 0 10px; }
+        .glow-guide-btn { display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none;
+            font-family:'Outfit',sans-serif; font-weight:700; font-size:.95rem; color:#065F46;
+            background:linear-gradient(180deg,#ECFDF5,#D1FAE5); border:2px solid var(--emerald); border-radius:9999px;
+            padding:9px 18px; box-shadow:0 3px 6px rgba(5,150,105,.25), inset 0 2px 3px rgba(255,255,255,.8); }
+        .glow-guide-btn:active { transform:translateY(2px); box-shadow:0 1px 2px rgba(5,150,105,.25); }
+
+        /* ─── NEO CARD STANDARD (build script §36) ─── */
+        .card.neo .card-title { font-weight:800; font-size:1.3rem; color:#065F46; letter-spacing:.01em; margin-bottom:2px; }
+        .card.neo .punch { font-family:'Outfit',sans-serif; font-weight:800; font-size:1.3rem; color:#065F46; letter-spacing:.01em; margin-bottom:4px; }
+        .card.neo .card-desc mark { background:#D9FBEA; font-weight:700; }
+
+        /* ─── RETATRUTIDE (§36) ─── */
+        .card.reta .card-title, .card.reta .punch { color:#4C1D95; }
+        .metal-btn.metal-lav { background:linear-gradient(180deg,#EDE9FE 0%,#D8CCFF 32%,#B79CFA 68%,#9B78F5 100%); border-color:#4C1D95; color:#17102B;
+            box-shadow: inset 0 2px 2px rgba(255,255,255,.95), inset 0 -5px 8px rgba(76,29,149,.35), inset 2px 0 4px rgba(255,255,255,.3), inset -2px 0 4px rgba(76,29,149,.22), 0 8px 16px rgba(76,29,149,.35); }
+        .metal-btn.metal-lav:active { box-shadow: inset 0 3px 8px rgba(0,0,0,.5), 0 2px 4px rgba(76,29,149,.35); }
+        .mark-o { background:#FFE0C2; padding:0 3px; border-radius:3px; font-weight:700; }
+        .bpc-stage { width:100%; max-width:340px; margin:0 auto; }
+        .bpc-stage svg { width:100%; height:auto; display:block; }
+        .btn-col { display:flex; flex-direction:column; width:max-content; max-width:100%; margin:10px auto 0; gap:10px; }
+        .metal-btn { position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; text-decoration:none;
+            font-family:'Outfit',sans-serif; font-weight:800; font-size:1.15rem; color:#064E3B;
+            text-shadow:0 1px 0 rgba(255,255,255,.55);
+            background:linear-gradient(180deg,#EFFFF7 0%,#B9F6DC 26%,#4ADE9C 52%,#17B978 76%,#0A8F5D 100%);
+            border:2px solid #065F46; border-radius:9999px; padding:11px 26px;
+            box-shadow: inset 0 2px 2px rgba(255,255,255,.95), inset 0 -4px 7px rgba(0,0,0,.35),
+                        inset 3px 0 5px rgba(255,255,255,.35), inset -3px 0 5px rgba(0,0,0,.18),
+                        0 9px 18px rgba(15,23,42,.38), 0 2px 5px rgba(15,23,42,.28);
+            transition:transform .1s ease, box-shadow .1s ease; }
+        .metal-btn::after { content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+            background:linear-gradient(112deg, rgba(255,255,255,0) 25%, rgba(255,255,255,.16) 46%, rgba(255,255,255,.03) 60%, rgba(255,255,255,0) 78%); }
+        .metal-btn:active { transform:translateY(3px);
+            box-shadow: inset 0 2px 3px rgba(255,255,255,.7), inset 0 -2px 5px rgba(0,0,0,.3),
+                        inset 3px 0 5px rgba(255,255,255,.25), inset -3px 0 5px rgba(0,0,0,.15),
+                        0 3px 7px rgba(15,23,42,.35), 0 1px 3px rgba(15,23,42,.25); }
+
+        /* ─── GLOW POPUP + LABELED ICONS ─── */
+        .glow-benefits-labeled .bic-unit { display:flex; flex-direction:column; align-items:center; gap:3px; }
+        .glow-benefits-labeled .bic-lab { font-family:'Outfit',sans-serif; font-weight:800; font-size:10.5px; letter-spacing:.06em; color:#475569; }
+        .glow-benefits-labeled .plus { margin-top:13px; }
+        .metal-btn-sm { font-size:1.02rem; padding:11px 18px; }
+        button.glow-orb, button.metal-btn { cursor:pointer; }
+        .buy-pop { position:fixed; inset:0; background:rgba(15,23,42,.48); display:flex; align-items:center; justify-content:center; z-index:80; padding:18px; }
+        .buy-pop[hidden] { display:none; }
+        .buy-pop-card { background:#fff; border-radius:16px; border-top:4px solid var(--emerald); padding:24px 20px 20px; width:100%; max-width:330px; position:relative; box-shadow:0 24px 48px rgba(15,23,42,.35); }
+        .buy-pop-title { font-family:'Outfit',sans-serif; font-weight:800; font-size:1.3rem; color:#065F46; text-align:center; margin-bottom:6px; }
+        .buy-pop-x { position:absolute; top:10px; right:10px; width:32px; height:32px; border-radius:50%; border:2px solid #065F46;
+            background:radial-gradient(circle at 32% 28%, #F0FFF8 0%, #A7F3D0 55%, #34D399 100%); color:#065F46;
+            font-family:'Outfit',sans-serif; font-weight:800; font-size:1.05rem; line-height:1; cursor:pointer;
+            box-shadow: inset 0 2px 3px rgba(255,255,255,.8), inset 0 -3px 5px rgba(0,0,0,.2), 0 3px 6px rgba(15,23,42,.3); }
+        .buy-pop-x:active { transform:translateY(2px); }
+        .pop-btn { position:relative; overflow:hidden; display:flex; align-items:center; justify-content:space-between; text-decoration:none;
+            font-family:'Outfit',sans-serif; font-weight:800; font-size:1.12rem; border-radius:9999px; padding:12px 22px; margin-top:10px;
+            border:2px solid rgba(0,0,0,.3);
+            box-shadow: inset 0 2px 2px rgba(255,255,255,.9), inset 0 -4px 7px rgba(0,0,0,.3), 0 7px 14px rgba(15,23,42,.3); }
+        .pop-btn::after { content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+            background:linear-gradient(112deg, rgba(255,255,255,0) 25%, rgba(255,255,255,.16) 46%, rgba(255,255,255,.03) 60%, rgba(255,255,255,0) 78%); }
+        .pop-btn:active { transform:translateY(2px); }
+        .pop-glow { background:linear-gradient(180deg,#FFFFD8 0%,#F5F52E 45%,#F0F000 70%,#CFCF00 100%); color:#3A3400; }
+        .pop-klow { background:linear-gradient(180deg,#FFE9D2 0%,#FFC79A 45%,#FFB066 70%,#FF9A3D 100%); color:#3B0764; text-shadow:0 1px 0 rgba(255,255,255,.4); }
+        .pop-ghk  { background:linear-gradient(180deg,#8FC6FF 0%,#2E8FFF 45%,#0070D0 70%,#005AA8 100%); color:#0F172A; }
+
+        .slu-stage { width:100%; max-width:340px; margin:0 auto; }
+        .slu-stage svg { width:100%; height:auto; display:block; }
+        /* ─── §36 SECTION VARIANTS (Weight Mgmt / Wakefulness / Supplies) ─── */
+        .card.wm .card-title, .card.wm .punch { color:#4C1D95; }
+        .card.wake .card-title, .card.wake .punch { color:#9A3412; }
+        .card.sup .card-title, .card.sup .punch { color:#004E96; }
+        .metal-btn.metal-tang { background:linear-gradient(180deg,#FFF6DE 0%,#FFDCA6 32%,#FFC384 68%,#FFB066 100%); border-color:#9A3412; color:#3B0764;
+            text-shadow:0 1px 0 rgba(255,255,255,.4);
+            box-shadow: inset 0 2px 2px rgba(255,255,255,.9), inset 0 -5px 8px rgba(154,52,18,.4), inset 2px 0 4px rgba(255,255,255,.3), inset -2px 0 4px rgba(154,52,18,.25), 0 8px 16px rgba(154,52,18,.35); }
+        .metal-btn.metal-tang:active { box-shadow: inset 0 3px 8px rgba(0,0,0,.5), 0 2px 4px rgba(154,52,18,.35); }
+        .metal-btn.metal-cob { background:linear-gradient(180deg,#D8ECFF 0%,#7DB9F5 32%,#2E8FFF 68%,#0070D0 100%); border-color:#004E96; color:#FFFFFF;
+            text-shadow:0 1px 2px rgba(0,0,0,.3);
+            box-shadow: inset 0 2px 2px rgba(255,255,255,.9), inset 0 -5px 8px rgba(0,78,150,.4), inset 2px 0 4px rgba(255,255,255,.3), inset -2px 0 4px rgba(0,78,150,.25), 0 8px 16px rgba(0,78,150,.35); }
+        .metal-btn.metal-cob:active { box-shadow: inset 0 3px 8px rgba(0,0,0,.5), 0 2px 4px rgba(0,78,150,.35); }
+        .viz-stage { width:100%; max-width:340px; margin:0 auto; }
+        .viz-stage svg { width:100%; height:auto; display:block; }
+</style>
+<style>
+/* ===== Dark theme — orders page content (toggle in header; visit-only, never persisted) ===== */
+html.dark{--bg-page:#0B1220;--t1:#F1F5F9;--t2:#B6C2D4;--slate:#94A3B8}
+html.dark body{background:#0B1220}
+html.dark .cat-purple{background-color:#1D1430}
+html.dark .cat-emerald{background-color:#0B241B}
+html.dark .cat-orange{background-color:#2A1A0D}
+html.dark .cat-slate{background-color:#141E2E}
+html.dark .card{background:#131E30;border-color:#2A3B55;box-shadow:0 2px 6px rgba(0,0,0,.4)}
+html.dark .cat-purple .card.neo .card-title,html.dark .cat-purple .card.neo .punch{color:#C4B5FD}
+html.dark .cat-emerald .card.neo .card-title,html.dark .cat-emerald .card.neo .punch{color:#34D399}
+html.dark .cat-orange .card.neo .card-title,html.dark .cat-orange .card.neo .punch{color:#FDBA74}
+html.dark .cat-slate .card.neo .card-title,html.dark .cat-slate .card.neo .punch{color:#CBD5E1}
+html.dark mark,html.dark .mark-o{color:#0F172A}
+html.dark text[fill="#475569"]{fill:#9FB0C9}
+html.dark .footer-banner{background:#131E30;border-color:#2A3B55}
+html.dark .buy-pop-card{background:#16233A;color:#F1F5F9}
+html.dark .hero p{color:var(--t2)}
+</style>
+<style id="wm-compact-row">
+.cat-purple .btn-col{flex-direction:column;width:max-content;max-width:100%;margin-left:auto;margin-right:auto;margin-top:auto;padding-top:12px}
+.cat-purple .btn-col .metal-btn{flex:0 1 auto;padding:11px 26px}
+.cat-purple .viz-stage{max-width:none}
+</style><style id="wm-graphics-85">
+.cat-purple .viz-stage, .cat-purple .bpc-stage{width:85%;margin:0 auto}
+</style></head>
+<body>
+
+    <header class="peptopia-hdr">
+<a class="peptopia-brand" href="https://x-peps.com/">
+<img class="peptopia-logo logo-dark" src="https://x-peps.com/X-Peps/IMG_3345.png" alt="Peptopia Health &amp; Wellness"><img class="peptopia-logo logo-light" src="https://x-peps.com/X-Peps/IMG_3346.png" alt="Peptopia Health &amp; Wellness">
+<span class="peptopia-wordmark">PEPTOPIA<span class="peptopia-tagline">HEALTH &amp; WELLNESS</span></span>
+</a>
+<nav class="peptopia-nav" aria-label="Site">
+<a href="https://x-peps.com/">HOME</a>
+<a href="https://x-peps.com/X-Peps/orders/">ORDERS</a>
+<button type="button" class="peptopia-iconbtn peptopia-theme-toggle" onclick="toggleTheme()" title="Toggle light / dark" aria-label="Toggle theme"><svg class="pp-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="pp-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></button>
+</nav>
+</header>
+
+    <section class="hero">
+        <h1>Place Your Order</h1>
+        <p>Select a product below and request your order.<br>Every order is reviewed personally &mdash; if accepted, we&rsquo;ll email you a secure payment link.</p>
+    </section>
+
+    <!-- ─── WEIGHT MANAGEMENT ─── -->
+    <div class="cat-wrap cat-purple">
+        <h2 class="cat-title" style="color:var(--purple)">Weight Management Agents</h2>
+        <div class="grid">
+            <div class="card accent-purple neo wm">
+                <div class="card-title">Tirzepatide (30mg)</div>
+                <div class="punch">The Dual Agonist</div>
+                <p class="card-desc">A <span class="mark-o">dual agonist</span> hitting GIP and GLP-1 at once — stronger <mark>weight loss</mark> than any single-pathway treatment.</p>
+                <div class="viz-stage" role="img" aria-label="Tirzepatide dual-agonist diagram: one core with two receptor satellites, GLP-1 and GIP"><svg viewBox="69 9 202 246" fill="none" stroke-linecap="round" stroke-linejoin="round"><defs><radialGradient id="tirz2-core" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#FFFFC8"/><stop offset="0.55" stop-color="#F0F000"/><stop offset="1" stop-color="#D8D800"/></radialGradient><radialGradient id="tirz2-glp" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#ECFEFF"/><stop offset="0.55" stop-color="#67E8F9"/><stop offset="1" stop-color="#22BEDD"/></radialGradient><radialGradient id="tirz2-gip" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#7CF29A"/><stop offset="0.55" stop-color="#10C000"/><stop offset="1" stop-color="#0B8A00"/></radialGradient></defs><circle cx="170" cy="140" r="92" fill="none" stroke="#C9BDF0" stroke-width="2" stroke-dasharray="3 7"/><path d="M138 108 L128 98" stroke="#7C3AED" stroke-width="3" stroke-dasharray="0.5 5"/><path d="M202 108 L212 98" stroke="#7C3AED" stroke-width="3" stroke-dasharray="0.5 5"/><circle cx="105" cy="75" r="29" fill="url(#tirz2-glp)" stroke="#0F172A" stroke-width="3"/><text x="105" y="81" text-anchor="middle" font-family="Outfit, sans-serif" font-size="14" font-weight="800" fill="#0B2B36">GLP-1</text><circle cx="235" cy="75" r="29" fill="url(#tirz2-gip)" stroke="#0F172A" stroke-width="3"/><text x="235" y="82" text-anchor="middle" font-family="Outfit, sans-serif" font-size="15" font-weight="800" fill="#0F172A">GIP</text><circle cx="170" cy="140" r="46" fill="url(#tirz2-core)" stroke="#0F172A" stroke-width="3"/><ellipse cx="154" cy="118" rx="16" ry="9" fill="#FFFFFF" opacity="0.45" transform="rotate(-24 154 118)"/><text x="170" y="152" text-anchor="middle" font-family="Outfit, sans-serif" font-size="30" font-weight="800" fill="#3A3400">2×</text></svg>
+                </div>
+                <div class="btn-col">
+                    <button type="button" class="metal-btn metal-lav order-gate-btn" data-og-product="Tirzepatide (30mg)" data-og-price="395" data-og-code="6QZmSfMm" aria-haspopup="dialog">Order &mdash; $395</button>
+                    <a class="metal-btn metal-lav" href="https://x-peps.com/X-Peps/tirzepatide_guide.html" target="_blank" rel="noopener">Guide</a>
+                </div>
+            </div>
+            
+            <div class="card accent-purple neo wm">
+                <div class="card-title">Semaglutide (10mg)</div>
+                <div class="punch">The Gold Standard</div>
+                <p class="card-desc">The original <span class="mark-o">GLP-1 agonist</span> — it slows stomach emptying for deep <mark>appetite control</mark> and proven, lasting <mark>weight loss</mark>.</p>
+                <div class="viz-stage" role="img" aria-label="Semaglutide single-agonist diagram: one core with one receptor satellite, GLP-1"><svg viewBox="69 9 202 246" fill="none" stroke-linecap="round" stroke-linejoin="round"><defs><radialGradient id="sema2-core" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#D8CCFF"/><stop offset="0.55" stop-color="#7C3AED"/><stop offset="1" stop-color="#5B21B6"/></radialGradient><radialGradient id="sema2-glp" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#ECFEFF"/><stop offset="0.55" stop-color="#67E8F9"/><stop offset="1" stop-color="#22BEDD"/></radialGradient></defs><circle cx="170" cy="140" r="92" fill="none" stroke="#C9BDF0" stroke-width="2" stroke-dasharray="3 7"/><path d="M170 94 L170 82" stroke="#7C3AED" stroke-width="3" stroke-dasharray="0.5 5"/><circle cx="170" cy="49" r="33" fill="url(#sema2-glp)" stroke="#0F172A" stroke-width="3"/><text x="170" y="56" text-anchor="middle" font-family="Outfit, sans-serif" font-size="15" font-weight="800" fill="#0B2B36">GLP-1</text><circle cx="170" cy="140" r="46" fill="url(#sema2-core)" stroke="#0F172A" stroke-width="3"/><ellipse cx="154" cy="118" rx="16" ry="9" fill="#FFFFFF" opacity="0.38" transform="rotate(-24 154 118)"/><text x="170" y="152" text-anchor="middle" font-family="Outfit, sans-serif" font-size="30" font-weight="800" fill="#0F172A">1×</text></svg>
+                </div>
+                <div class="btn-col">
+                    <button type="button" class="metal-btn metal-lav order-gate-btn" data-og-product="Semaglutide (10mg)" data-og-price="285" data-og-code="nBxV33Sv" aria-haspopup="dialog">Order &mdash; $285</button>
+                    <a class="metal-btn metal-lav" href="https://x-peps.com/X-Peps/semaglutide_guide.html" target="_blank" rel="noopener">Guide</a>
+                </div>
+            </div>
+            
+            <div class="card accent-purple neo reta">
+                <div class="card-title">Retatrutide (20mg)</div>
+                <div class="punch">The Triple Threat</div>
+                <p class="card-desc">A <span class="mark-o">triple agonist</span> hitting GLP-1, GIP, and Glucagon all at once — maximum <mark>fat burning</mark> and <mark>metabolism</mark>.</p>
+                <div class="bpc-stage" role="img" aria-label="Retatrutide triple-agonist diagram: one core with three receptor satellites, GLP-1, GIP, and glucagon"><svg viewBox="69 9 202 246" fill="none" stroke-linecap="round" stroke-linejoin="round"><defs><radialGradient id="reta2-core" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#FFB37A"/><stop offset="0.55" stop-color="#F06000"/><stop offset="1" stop-color="#C24E00"/></radialGradient><radialGradient id="reta2-glp" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#ECFEFF"/><stop offset="0.55" stop-color="#67E8F9"/><stop offset="1" stop-color="#22BEDD"/></radialGradient><radialGradient id="reta2-gip" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#7CF29A"/><stop offset="0.55" stop-color="#10C000"/><stop offset="1" stop-color="#0B8A00"/></radialGradient><radialGradient id="reta2-glu" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#FFE0C2"/><stop offset="0.55" stop-color="#F97316"/><stop offset="1" stop-color="#C2410C"/></radialGradient></defs><circle cx="170" cy="140" r="92" fill="none" stroke="#C9BDF0" stroke-width="2" stroke-dasharray="3 7"/><path d="M170 94 L170 82" stroke="#7C3AED" stroke-width="3" stroke-dasharray="0.5 5"/><path d="M138 172 L128 182" stroke="#7C3AED" stroke-width="3" stroke-dasharray="0.5 5"/><path d="M202 172 L212 182" stroke="#7C3AED" stroke-width="3" stroke-dasharray="0.5 5"/><circle cx="170" cy="49" r="29" fill="url(#reta2-glp)" stroke="#0F172A" stroke-width="3"/><text x="170" y="55" text-anchor="middle" font-family="Outfit, sans-serif" font-size="14" font-weight="800" fill="#0B2B36">GLP-1</text><circle cx="105" cy="205" r="29" fill="url(#reta2-gip)" stroke="#0F172A" stroke-width="3"/><text x="105" y="212" text-anchor="middle" font-family="Outfit, sans-serif" font-size="15" font-weight="800" fill="#0F172A">GIP</text><circle cx="235" cy="205" r="29" fill="url(#reta2-glu)" stroke="#0F172A" stroke-width="3"/><path d="M235 219 L235 195 M224 206 L235 192 L246 206" stroke="#0F172A" stroke-width="5.5"/><text x="235" y="248" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.05em" fill="#475569">GLUCAGON</text><circle cx="170" cy="140" r="46" fill="url(#reta2-core)" stroke="#0F172A" stroke-width="3"/><ellipse cx="154" cy="118" rx="16" ry="9" fill="#FFFFFF" opacity="0.42" transform="rotate(-24 154 118)"/><text x="170" y="152" text-anchor="middle" font-family="Outfit, sans-serif" font-size="30" font-weight="800" fill="#0F172A">3×</text></svg>
+                </div>
+                <div class="btn-col">
+                    <button type="button" class="metal-btn metal-lav order-gate-btn" data-og-product="Retatrutide (20mg)" data-og-price="435" data-og-code="qxDOn9GB" aria-haspopup="dialog">Order &mdash; $435</button>
+                    <a class="metal-btn metal-lav" href="https://x-peps.com/X-Peps/glps_and_aging.html" target="_blank" rel="noopener">Guide</a>
+                </div>
+            </div>
+            
+            <!-- Centered 4th Tile -->
+            <div class="card accent-purple neo wm">
+                <div class="card-title">Cagrilintide (10mg)</div>
+                <div class="punch">The Plateau Breaker</div>
+                <p class="card-desc">A <span class="mark-o">long-acting amylin analog</span> — it deepens fullness through the brain’s appetite centers and <mark>breaks through plateaus</mark> when GLP-1 alone stalls.</p>
+                <div class="viz-stage" role="img" aria-label="Cagrilintide single-target diagram: one core with one receptor satellite, amylin"><svg viewBox="69 9 202 246" fill="none" stroke-linecap="round" stroke-linejoin="round"><defs><radialGradient id="cag2-core" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#FFFFC8"/><stop offset="0.55" stop-color="#F0F000"/><stop offset="1" stop-color="#D8D800"/></radialGradient><radialGradient id="cag2-amy" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#E9E2FF"/><stop offset="0.55" stop-color="#A78BFA"/><stop offset="1" stop-color="#7C3AED"/></radialGradient></defs><circle cx="170" cy="140" r="92" fill="none" stroke="#C9BDF0" stroke-width="2" stroke-dasharray="3 7"/><path d="M170 94 L170 82" stroke="#7C3AED" stroke-width="3" stroke-dasharray="0.5 5"/><circle cx="170" cy="49" r="33" fill="url(#cag2-amy)" stroke="#0F172A" stroke-width="3"/><text x="170" y="55" text-anchor="middle" font-family="Outfit, sans-serif" font-size="12.5" font-weight="800" fill="#0F172A">AMYLIN</text><circle cx="170" cy="140" r="46" fill="url(#cag2-core)" stroke="#0F172A" stroke-width="3"/><ellipse cx="154" cy="118" rx="16" ry="9" fill="#FFFFFF" opacity="0.45" transform="rotate(-24 154 118)"/><text x="170" y="152" text-anchor="middle" font-family="Outfit, sans-serif" font-size="30" font-weight="800" fill="#3A3400">1×</text></svg>
+                </div>
+                <div class="btn-col">
+                    <button type="button" class="metal-btn metal-lav order-gate-btn" data-og-product="Cagrilintide (10mg)" data-og-price="295" data-og-code="Vk730Uf7" aria-haspopup="dialog">Order &mdash; $295</button>
+                    <a class="metal-btn metal-lav" href="https://x-peps.com/X-Peps/cagrilintide-guide.html" target="_blank" rel="noopener">Guide</a>
+                </div>
+            </div>
+            <div class="card accent-purple neo wm">
+                <div class="card-title">CagriSema</div>
+                <div class="punch">The One-Two Punch</div>
+                <p class="card-desc">Two heavy hitters in one shot — <span class="mark-o">amylin plus GLP-1</span> — delivering <mark>weight loss</mark> neither one reaches alone.</p>
+                <div class="viz-stage" role="img" aria-label="CagriSema dual-target diagram: one core with two receptor satellites, GLP-1 and amylin"><svg viewBox="69 9 202 246" fill="none" stroke-linecap="round" stroke-linejoin="round"><defs><radialGradient id="cs2-core" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#D8CCFF"/><stop offset="0.55" stop-color="#7C3AED"/><stop offset="1" stop-color="#5B21B6"/></radialGradient><radialGradient id="cs2-glp" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#ECFEFF"/><stop offset="0.55" stop-color="#67E8F9"/><stop offset="1" stop-color="#22BEDD"/></radialGradient><radialGradient id="cs2-amy" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#E9E2FF"/><stop offset="0.55" stop-color="#A78BFA"/><stop offset="1" stop-color="#7C3AED"/></radialGradient></defs><circle cx="170" cy="140" r="92" fill="none" stroke="#C9BDF0" stroke-width="2" stroke-dasharray="3 7"/><path d="M138 108 L128 98" stroke="#7C3AED" stroke-width="3" stroke-dasharray="0.5 5"/><path d="M202 108 L212 98" stroke="#7C3AED" stroke-width="3" stroke-dasharray="0.5 5"/><circle cx="105" cy="75" r="29" fill="url(#cs2-glp)" stroke="#0F172A" stroke-width="3"/><text x="105" y="81" text-anchor="middle" font-family="Outfit, sans-serif" font-size="14" font-weight="800" fill="#0B2B36">GLP-1</text><circle cx="235" cy="75" r="29" fill="url(#cs2-amy)" stroke="#0F172A" stroke-width="3"/><text x="235" y="81" text-anchor="middle" font-family="Outfit, sans-serif" font-size="11.5" font-weight="800" fill="#0F172A">AMYLIN</text><circle cx="170" cy="140" r="46" fill="url(#cs2-core)" stroke="#0F172A" stroke-width="3"/><ellipse cx="154" cy="118" rx="16" ry="9" fill="#FFFFFF" opacity="0.38" transform="rotate(-24 154 118)"/><text x="170" y="152" text-anchor="middle" font-family="Outfit, sans-serif" font-size="30" font-weight="800" fill="#0F172A">2×</text></svg>
+                </div>
+                <div class="btn-col">
+                    <!-- PRICE NEEDED FROM DAVID: no catalog price/code exists; enable when set -->
+                    <button type="button" class="metal-btn metal-lav order-gate-btn og-nosell" data-og-product="CagriSema" data-og-price="" data-og-code="" aria-haspopup="dialog" disabled>Order &mdash; coming soon</button>
+                    <button type="button" class="og-addcart" disabled>Add to cart</button>
+                    <a class="metal-btn metal-lav" href="https://x-peps.com/X-Peps/cagrisema-guide.html" target="_blank" rel="noopener">Guide</a>
+                </div>
+            </div>
+            <div class="card accent-purple neo wm">
+                <div class="card-title">Eloralintide</div>
+                <div class="punch">The Next-Gen Amylin</div>
+                <p class="card-desc">A next-generation <span class="mark-o">amylin analog</span> dosed once a week — strong <mark>appetite control</mark> with a gentler side-effect profile.</p>
+                <div class="viz-stage" role="img" aria-label="Eloralintide single-target diagram: one core with one receptor satellite, amylin"><svg viewBox="69 9 202 246" fill="none" stroke-linecap="round" stroke-linejoin="round"><defs><radialGradient id="elo2-core" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#B9FBC9"/><stop offset="0.55" stop-color="#10C000"/><stop offset="1" stop-color="#0B8A00"/></radialGradient><radialGradient id="elo2-amy" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#E9E2FF"/><stop offset="0.55" stop-color="#A78BFA"/><stop offset="1" stop-color="#7C3AED"/></radialGradient></defs><circle cx="170" cy="140" r="92" fill="none" stroke="#C9BDF0" stroke-width="2" stroke-dasharray="3 7"/><path d="M170 94 L170 82" stroke="#7C3AED" stroke-width="3" stroke-dasharray="0.5 5"/><circle cx="170" cy="49" r="33" fill="url(#elo2-amy)" stroke="#0F172A" stroke-width="3"/><text x="170" y="55" text-anchor="middle" font-family="Outfit, sans-serif" font-size="12.5" font-weight="800" fill="#0F172A">AMYLIN</text><circle cx="170" cy="140" r="46" fill="url(#elo2-core)" stroke="#0F172A" stroke-width="3"/><ellipse cx="154" cy="118" rx="16" ry="9" fill="#FFFFFF" opacity="0.38" transform="rotate(-24 154 118)"/><text x="170" y="152" text-anchor="middle" font-family="Outfit, sans-serif" font-size="30" font-weight="800" fill="#0F172A">1×</text></svg>
+                </div>
+                <div class="btn-col">
+                    <!-- PRICE NEEDED FROM DAVID: no catalog price/code exists; enable when set -->
+                    <button type="button" class="metal-btn metal-lav order-gate-btn og-nosell" data-og-product="Eloralintide" data-og-price="" data-og-code="" aria-haspopup="dialog" disabled>Order &mdash; coming soon</button>
+                    <button type="button" class="og-addcart" disabled>Add to cart</button>
+                    <a class="metal-btn metal-lav" href="https://x-peps.com/X-Peps/eloralintide-guide.html" target="_blank" rel="noopener">Guide</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── BIOENHANCEMENT ─── -->
+    <div class="cat-wrap cat-emerald">
+        <h2 class="cat-title" style="color:var(--emerald)">Bioenhancement Agents</h2>
+        <div class="grid">
+            <div class="card accent-emerald neo">
+                <div class="card-title">SLU-PP-332 (20mg)</div>
+                <div class="punch">The Exercise Mimetic</div>
+                <p class="card-desc">A compound that switches on the muscle’s own exercise pathways — <mark>the benefits of training</mark>, without the physical stress.</p>
+                <div class="slu-stage" role="img" aria-label="SLU-PP-332 energy medallion with burn, muscle, and stamina satellites">
+                <svg viewBox="34 2 272 250" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <defs>
+            <radialGradient id="coreg" cx="0.35" cy="0.3" r="0.95">
+              <stop offset="0" stop-color="#8FC6FF"/><stop offset="0.55" stop-color="#0070D0"/><stop offset="1" stop-color="#005AA8"/>
+            </radialGradient>
+            <radialGradient id="satgold" cx="0.35" cy="0.3" r="0.95">
+              <stop offset="0" stop-color="#FFFFC8"/><stop offset="0.55" stop-color="#F0F000"/><stop offset="1" stop-color="#D8D800"/>
+            </radialGradient>
+            <radialGradient id="satgreen" cx="0.35" cy="0.3" r="0.95">
+              <stop offset="0" stop-color="#7CF29A"/><stop offset="0.55" stop-color="#10C000"/><stop offset="1" stop-color="#0B8A00"/>
+            </radialGradient>
+            <radialGradient id="satorange" cx="0.35" cy="0.3" r="0.95">
+              <stop offset="0" stop-color="#FFB37A"/><stop offset="0.55" stop-color="#F06000"/><stop offset="1" stop-color="#C24E00"/>
+            </radialGradient>
+          </defs>
+          <path d="M104 54 C 122 64, 132 74, 140 84" stroke="#0070D0" stroke-width="3" stroke-dasharray="0.5 5.5"/>
+          <path d="M236 54 C 218 64, 208 74, 200 84" stroke="#0070D0" stroke-width="3" stroke-dasharray="0.5 5.5"/>
+          <path d="M170 182 C 170 184, 170 185, 170 186" stroke="#0070D0" stroke-width="3" stroke-dasharray="0.5 3.5"/>
+          <!-- center energy medallion -->
+          <circle cx="170" cy="117" r="58" fill="url(#coreg)" stroke="#0F172A" stroke-width="3"/>
+          <ellipse cx="146" cy="82" rx="20" ry="11" fill="#FFFFFF" opacity="0.35" transform="rotate(-24 146 82)"/>
+          <path d="M178 66 L146 122 h20 L158 168 L196 104 h-21 Z" fill="#F0F000" stroke="#B8860B" stroke-width="2"/>
+          <!-- satellite: burn (gold, flame) -->
+          <circle cx="80" cy="46" r="27" fill="url(#satgold)" stroke="rgba(0,0,0,.28)" stroke-width="3"/>
+          <path d="M80 30c4 7 10 11 10 18a10 10 0 1 1-20 0c0-4 2-7 4-10 1 2 2 3 3 4-1-5 0-9 3-12Z" fill="#F06000" stroke="#9A3412" stroke-width="1.8"/>
+          <text x="80" y="88" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">BURN</text>
+          <!-- satellite: muscle (green, fibers) -->
+          <circle cx="260" cy="46" r="27" fill="url(#satgreen)" stroke="rgba(0,0,0,.28)" stroke-width="3"/>
+          <path d="M248 36c4 3 8 4 12 4s8-1 12-4M248 46c4 3 8 4 12 4s8-1 12-4M248 56c4 3 8 4 12 4s8-1 12-4" stroke="#FFFFFF" stroke-width="3"/>
+          <text x="260" y="88" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">MUSCLE</text>
+          <!-- satellite: stamina (tangerine, gauge) -->
+          <circle cx="170" cy="208" r="23" fill="url(#satorange)" stroke="rgba(0,0,0,.28)" stroke-width="3"/>
+          <path d="M157 214a14 14 0 1 1 26 0" stroke="#FFFFFF" stroke-width="3"/>
+          <path d="M170 214 L179 203" stroke="#FFFFFF" stroke-width="3"/>
+          <circle cx="170" cy="214" r="2.6" fill="#FFFFFF"/>
+          <text x="170" y="246" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">STAMINA</text>
+        </svg>
+                </div>
+                <div class="btn-col">
+                    <button type="button" class="metal-btn order-gate-btn" data-og-product="SLU-PP-332 (20mg)" data-og-price="95" data-og-code="R1X4VS9q" aria-haspopup="dialog">Order &mdash; $95</button>
+                    <a class="metal-btn" href="https://x-peps.com/X-Peps/slu_pp_332_guide.html" target="_blank" rel="noopener">SLU-PP-332 — Guide</a>
+                </div>
+            </div>
+            
+            <div class="card accent-emerald neo">
+                <div class="card-title">BPC-157</div>
+                <div class="punch">The Body Shield</div>
+                <p class="card-desc">A repair peptide that speeds healing of <mark>tissue, tendons, gut, and muscle</mark> while calming inflammation.</p>
+                <div class="bpc-stage" role="img" aria-label="BPC-157 repair shield with joint, gut, and muscle satellites">
+                <svg viewBox="34 2 272 250" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <defs>
+            <linearGradient id="shieldg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#3B9BFF"/><stop offset="1" stop-color="#005AA8"/>
+            </linearGradient>
+            <radialGradient id="satgold" cx="0.35" cy="0.3" r="0.95">
+              <stop offset="0" stop-color="#FFFFC8"/><stop offset="0.55" stop-color="#F0F000"/><stop offset="1" stop-color="#D8D800"/>
+            </radialGradient>
+            <radialGradient id="satgreen" cx="0.35" cy="0.3" r="0.95">
+              <stop offset="0" stop-color="#7CF29A"/><stop offset="0.55" stop-color="#10C000"/><stop offset="1" stop-color="#0B8A00"/>
+            </radialGradient>
+            <radialGradient id="satorange" cx="0.35" cy="0.3" r="0.95">
+              <stop offset="0" stop-color="#FFB37A"/><stop offset="0.55" stop-color="#F06000"/><stop offset="1" stop-color="#C24E00"/>
+            </radialGradient>
+          </defs>
+
+          <!-- dotted connector arcs -->
+          <path d="M112 58 C 132 68, 142 78, 150 90" stroke="#0070D0" stroke-width="3" stroke-dasharray="0.5 5.5"/>
+          <path d="M228 58 C 208 68, 198 78, 190 90" stroke="#0070D0" stroke-width="3" stroke-dasharray="0.5 5.5"/>
+          <path d="M170 182 C 170 184, 170 185, 170 186" stroke="#0070D0" stroke-width="3" stroke-dasharray="0.5 3.5"/>
+
+          <!-- center shield medallion -->
+          <path d="M170 52 L216 69 V114 C216 149 197 169 170 181 C143 169 124 149 124 114 V69 Z" fill="url(#shieldg)" stroke="#0F172A" stroke-width="3"/>
+          <ellipse cx="151" cy="80" rx="16" ry="9" fill="#FFFFFF" opacity="0.35" transform="rotate(-24 151 80)"/>
+          <path d="M170 78 v42 M149 99 h42" stroke="#E01020" stroke-width="11"/>
+          <path d="M134 124 h17 l5-9 7 18 6-9 h37" stroke="#F0F000" stroke-width="4" fill="none"/>
+
+          <!-- satellite: joints & tendons (gold) -->
+          <circle cx="86" cy="50" r="27" fill="url(#satgold)" stroke="rgba(0,0,0,.28)" stroke-width="3"/>
+          <path d="M78 36 l16 7 -16 7 16 7 -16 7" stroke="#3A3400" stroke-width="3.4" fill="none"/>
+          <text x="86" y="92" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">JOINTS</text>
+
+          <!-- satellite: gut (green) -->
+          <circle cx="254" cy="50" r="27" fill="url(#satgreen)" stroke="rgba(0,0,0,.28)" stroke-width="3"/>
+          <path d="M254 38a12 12 0 1 1-12 12 9.5 9.5 0 1 0 9.5-9.5 7 7 0 1 1-7 7" stroke="#FFFFFF" stroke-width="3.2" fill="none"/>
+          <text x="254" y="92" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">GUT</text>
+
+          <!-- satellite: muscle (tangerine) -->
+          <circle cx="170" cy="208" r="23" fill="url(#satorange)" stroke="rgba(0,0,0,.28)" stroke-width="3"/>
+          <path d="M158 198c4 3 8 4 12 4s8-1 12-4M158 208c4 3 8 4 12 4s8-1 12-4M158 218c4 3 8 4 12 4s8-1 12-4" stroke="#FFFFFF" stroke-width="3"/>
+          <text x="170" y="246" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">MUSCLE</text>
+        </svg>
+                </div>
+                <div class="btn-col">
+                    <button type="button" class="metal-btn order-gate-btn" data-og-product="BPC-157" data-og-price="265" data-og-code="gRT22jih" aria-haspopup="dialog">Order &mdash; $265</button>
+                    <a class="metal-btn" href="https://x-peps.com/X-Peps/bpc_157_kpv_guide.html" target="_blank" rel="noopener">BPC-157 — Guide</a>
+                </div>
+            </div>
+            
+            <div class="card accent-emerald neo">
+                
+                <div class="card-title">GLOW, KLOW, & GHK-Cu</div>
+                <div class="punch">The Glow Trio</div>
+                <p class="card-desc">Three copper-peptide blends that <mark>rejuvenate skin, restore hair, strengthen nails</mark>, and heal tissue damage.</p>
+                <div class="glow-stage">
+                <div class="glow-benefits glow-benefits-labeled" aria-hidden="true">
+                <!-- hair: lady with highlighted hair -->
+                <span class="bic-unit"><svg class="bic" viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <defs><linearGradient id="hairg" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#F59E0B"/><stop offset="1" stop-color="#EA580C"/>
+                  </linearGradient></defs>
+                  <path d="M24 2.5c8.5 0 14 6.2 14 15.5 0 5.5-1 9.5.2 15 .8 3.6.2 7.5-1.7 11H11.5C9.6 40.5 9 36.6 9.8 33c1.2-5.5.2-9.5.2-15C10 8.7 15.5 2.5 24 2.5Z" fill="url(#hairg)" stroke="#9A3412" stroke-width="1.8"/>
+                  <ellipse cx="24" cy="21" rx="7.6" ry="9.2" fill="#FFF7ED" stroke="#0F172A" stroke-width="1.6"/>
+                  <path d="M20 20.5c.8-1 2.2-1 3 0M25 20.5c.8-1 2.2-1 3 0" stroke="#0F172A" stroke-width="1.5"/>
+                  <path d="M21.5 26.5c1.6 1.3 3.4 1.3 5 0" stroke="#0F172A" stroke-width="1.5"/>
+                  <path d="M14.5 10c-1.8 2.5-2.4 5.5-2.2 9M33.5 10c1.8 2.5 2.4 5.5 2.2 9" stroke="#FFF7ED" stroke-width="2" opacity="0.75"/>
+                </svg><span class="bic-lab">HAIR</span></span>
+<svg class="plus" viewBox="0 0 24 24" fill="none"><path d="M12 3.5v17M3.5 12h17" stroke="#E01020" stroke-width="2.5" stroke-linecap="round"/></svg>
+                <!-- nails: fingertip with nail (kept) -->
+                <span class="bic-unit"><svg class="bic" viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <g transform="translate(24 24) scale(1.22) translate(-24 -27.5)"><defs><linearGradient id="nailg" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#FDA4AF"/><stop offset="1" stop-color="#F97316"/>
+                  </linearGradient></defs>
+                  <path d="M14 45V20a10 10 0 0 1 20 0v25" fill="#FFDDBB" stroke="#0F172A" stroke-width="2.2"/>
+                  <path d="M18.5 21.5a5.5 7.5 0 0 1 11 0v6.5a5.5 5.5 0 0 1-11 0Z" fill="url(#nailg)" stroke="#9A3412" stroke-width="1.8"/>
+                  <path d="M21 24.5c-.6 1.8-.6 3.8 0 5.5" stroke="#FFF7ED" stroke-width="1.8" opacity="0.85"/>
+                  <path d="M18 36.5h12" stroke="#0F172A" stroke-width="2"/>
+                </g></svg><span class="bic-lab">NAILS</span></span>
+<svg class="plus" viewBox="0 0 24 24" fill="none"><path d="M12 3.5v17M3.5 12h17" stroke="#E01020" stroke-width="2.5" stroke-linecap="round"/></svg>
+                <!-- tissue repair: bandage (kept) -->
+                <span class="bic-unit"><svg class="bic" viewBox="0 0 64 48" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <g transform="translate(32 24) scale(1.55) translate(-24 -24)"><defs><linearGradient id="bandg" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#FDBA74"/><stop offset="1" stop-color="#FB923C"/>
+                  </linearGradient></defs>
+                  <rect x="7" y="17" width="34" height="14" rx="7" transform="rotate(-24 24 24)" fill="url(#bandg)" stroke="#9A3412" stroke-width="2"/>
+                  <rect x="19" y="18.5" width="10" height="11" rx="2.5" transform="rotate(-24 24 24)" fill="#FFEDD5" stroke="#9A3412" stroke-width="1.6"/>
+                  <circle cx="13.5" cy="28" r="1.3" fill="#9A3412"/><circle cx="34.5" cy="20" r="1.3" fill="#9A3412"/>
+                  <circle cx="30.5" cy="30.5" r="1.3" fill="#9A3412"/><circle cx="17.5" cy="17.5" r="1.3" fill="#9A3412"/>
+                </g></svg><span class="bic-lab">TISSUE</span></span>
+      </div>
+                <div class="glow-venn">
+                <button type="button" class="glow-orb orb-glow"><span class="nm">GLOW</span><span class="pr">$325</span></button>
+                <button type="button" class="glow-orb orb-klow"><span class="nm">KLOW</span><span class="pr">$375</span></button>
+                <button type="button" class="glow-orb orb-ghk"><span class="nm">GHK-Cu</span><span class="pr">$285</span></button>
+      </div>
+                
+                <div class="btn-col">
+                    <button type="button" class="metal-btn order-gate-btn" data-og-product="GLOW" data-og-price="325" data-og-code="oNYFMvtQ" aria-haspopup="dialog">Order &middot; GLOW &mdash; $325</button>
+                    <button type="button" class="metal-btn order-gate-btn" data-og-product="KLOW" data-og-price="375" data-og-code="bXCJ6r1s" aria-haspopup="dialog">Order &middot; KLOW &mdash; $375</button>
+                    <button type="button" class="metal-btn order-gate-btn" data-og-product="GHK-Cu" data-og-price="285" data-og-code="nBxV33Sv" aria-haspopup="dialog">Order &middot; GHK-Cu &mdash; $285</button>
+                    <a class="metal-btn metal-btn-sm" href="https://x-peps.com/X-Peps/glow_klow_guide.html" target="_blank" rel="noopener">GLOW / KLOW — Guide</a>
+                </div>
+            </div>
+            </div>
+</div>
+        </div>
+    </div>
+
+    <!-- ─── WAKEFULNESS ─── -->
+    <div class="cat-wrap cat-orange">
+        <h2 class="cat-title" style="color:var(--orange)">Wakefulness Agents</h2>
+        <div class="grid">
+            <div class="card accent-orange neo wake">
+                <div class="card-title">Modafinil (200mg)</div>
+                <div class="punch">The Clean Focus</div>
+                <p class="card-desc">A <span class="mark-o">wakefulness agent</span> that sharpens alertness without amphetamine jitters — clean, <mark>steady focus</mark> all shift long.</p>
+                <div class="viz-stage" role="img" aria-label="Modafinil alertness medallion with alert, steady, and duration satellites">
+<svg viewBox="34 2 272 250" fill="none" stroke-linecap="round" stroke-linejoin="round"><defs><radialGradient id="mod-core" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#FFB37A"/><stop offset="0.55" stop-color="#F06000"/><stop offset="1" stop-color="#C24E00"/></radialGradient><radialGradient id="mod-tl" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#FFFFC8"/><stop offset="0.55" stop-color="#F0F000"/><stop offset="1" stop-color="#D8D800"/></radialGradient><radialGradient id="mod-tr" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#7CF29A"/><stop offset="0.55" stop-color="#10C000"/><stop offset="1" stop-color="#0B8A00"/></radialGradient><radialGradient id="mod-b" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#FFB37A"/><stop offset="0.55" stop-color="#F06000"/><stop offset="1" stop-color="#C24E00"/></radialGradient></defs><path d="M104 54 C 122 64, 132 74, 140 84" stroke="#EA580C" stroke-width="3" stroke-dasharray="0.5 5.5"/><path d="M236 54 C 218 64, 208 74, 200 84" stroke="#EA580C" stroke-width="3" stroke-dasharray="0.5 5.5"/><path d="M170 182 C 170 184, 170 185, 170 186" stroke="#EA580C" stroke-width="3" stroke-dasharray="0.5 3.5"/><circle cx="170" cy="117" r="58" fill="url(#mod-core)" stroke="#0F172A" stroke-width="3"/><ellipse cx="146" cy="82" rx="20" ry="11" fill="#FFFFFF" opacity="0.35" transform="rotate(-24 146 82)"/><g transform="translate(170 117) scale(1.0)"><path d="M-38 0 C-26 -15 -13 -21 0 -21 C13 -21 26 -15 38 0 C26 15 13 21 0 21 C-13 21 -26 15 -38 0 Z" fill="none" stroke="#FFFFFF" stroke-width="4"/><circle r="10" fill="none" stroke="#FFFFFF" stroke-width="4"/><circle r="4" fill="#FFFFFF"/></g><circle cx="80" cy="46" r="27" fill="url(#mod-tl)" stroke="rgba(0,0,0,.28)" stroke-width="3"/><g transform="translate(80 46)"><circle r="5.5" fill="none" stroke="#3A3400" stroke-width="3"/><path d="M0 -13 v4 M0 9 v4 M-13 0 h4 M9 0 h4 M-9.5 -9.5 l3 3 M6.5 -6.5 l3 -3 M9.5 9.5 l-3 -3 M-6.5 6.5 l-3 3" stroke="#3A3400" stroke-width="3"/></g><text x="80" y="88" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">ALERT</text><circle cx="260" cy="46" r="27" fill="url(#mod-tr)" stroke="rgba(0,0,0,.28)" stroke-width="3"/><g transform="translate(260 46)"><path d="M-14 0 h28" stroke="#FFFFFF" stroke-width="3.5"/><circle r="2.4" fill="#FFFFFF"/></g><text x="260" y="88" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">STEADY</text><circle cx="170" cy="208" r="23" fill="url(#mod-b)" stroke="rgba(0,0,0,.28)" stroke-width="3"/><g transform="translate(170 208) scale(0.88)"><circle r="11" fill="none" stroke="#FFFFFF" stroke-width="3"/><path d="M0 0 v-6 M0 0 h5" stroke="#FFFFFF" stroke-width="3" fill="none"/></g><text x="170" y="246" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">DURATION</text></svg>
+                </div>
+                <div class="btn-col">
+                    <button type="button" class="metal-btn metal-tang order-gate-btn" data-og-product="Modafinil (200mg)" data-og-price="280" data-og-code="FpWU3zTM" aria-haspopup="dialog">Order &mdash; $280</button>
+                    <a class="metal-btn metal-tang" href="https://x-peps.com/X-Peps/modafinil_guide.html" target="_blank" rel="noopener">Modafinil — Guide</a>
+                </div>
+            </div>
+            
+            <div class="card accent-orange neo wake">
+                <div class="card-title">Armodafinil</div>
+                <div class="punch">The Long Shift</div>
+                <p class="card-desc">The <span class="mark-o">long-acting R-form</span> of Modafinil — <mark>sustained focus</mark> that holds late into the day and through extended shifts.</p>
+                <div class="viz-stage" role="img" aria-label="Armodafinil long-duration medallion with duration, focus, and shifts satellites">
+<svg viewBox="34 2 272 250" fill="none" stroke-linecap="round" stroke-linejoin="round"><defs><radialGradient id="arm-core" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#FFB37A"/><stop offset="0.55" stop-color="#F06000"/><stop offset="1" stop-color="#C24E00"/></radialGradient><radialGradient id="arm-tl" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#FFFFC8"/><stop offset="0.55" stop-color="#F0F000"/><stop offset="1" stop-color="#D8D800"/></radialGradient><radialGradient id="arm-tr" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#7CF29A"/><stop offset="0.55" stop-color="#10C000"/><stop offset="1" stop-color="#0B8A00"/></radialGradient><radialGradient id="arm-b" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#FFB37A"/><stop offset="0.55" stop-color="#F06000"/><stop offset="1" stop-color="#C24E00"/></radialGradient></defs><path d="M104 54 C 122 64, 132 74, 140 84" stroke="#EA580C" stroke-width="3" stroke-dasharray="0.5 5.5"/><path d="M236 54 C 218 64, 208 74, 200 84" stroke="#EA580C" stroke-width="3" stroke-dasharray="0.5 5.5"/><path d="M170 182 C 170 184, 170 185, 170 186" stroke="#EA580C" stroke-width="3" stroke-dasharray="0.5 3.5"/><circle cx="170" cy="117" r="58" fill="url(#arm-core)" stroke="#0F172A" stroke-width="3"/><ellipse cx="146" cy="82" rx="20" ry="11" fill="#FFFFFF" opacity="0.35" transform="rotate(-24 146 82)"/><g transform="translate(170 117) scale(2.1)"><circle r="11" fill="none" stroke="#FFFFFF" stroke-width="3"/><path d="M0 0 v-6 M0 0 h5" stroke="#FFFFFF" stroke-width="3" fill="none"/></g><circle cx="80" cy="46" r="27" fill="url(#arm-tl)" stroke="rgba(0,0,0,.28)" stroke-width="3"/><g transform="translate(80 46)"><circle r="11" fill="none" stroke="#3A3400" stroke-width="3"/><path d="M0 0 v-6 M0 0 h5" stroke="#3A3400" stroke-width="3" fill="none"/></g><text x="80" y="88" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">DURATION</text><circle cx="260" cy="46" r="27" fill="url(#arm-tr)" stroke="rgba(0,0,0,.28)" stroke-width="3"/><g transform="translate(260 46)"><circle r="10" fill="none" stroke="#FFFFFF" stroke-width="3"/><circle r="4.5" fill="none" stroke="#FFFFFF" stroke-width="3"/></g><text x="260" y="88" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">FOCUS</text><circle cx="170" cy="208" r="23" fill="url(#arm-b)" stroke="rgba(0,0,0,.28)" stroke-width="3"/><g transform="translate(170 208) scale(0.88)"><path d="M11 -12 A14.5 14.5 0 1 0 11 12 A17.5 17.5 0 1 1 11 -12 Z" fill="#FFFFFF"/></g><text x="170" y="246" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">SHIFTS</text></svg>
+                </div>
+                <div class="btn-col">
+                    <button type="button" class="metal-btn metal-tang order-gate-btn" data-og-product="Armodafinil" data-og-price="280" data-og-code="FpWU3zTM" aria-haspopup="dialog">Order &mdash; $280</button>
+                    <a class="metal-btn metal-tang" href="https://x-peps.com/X-Peps/armodafinil-guide.html" target="_blank" rel="noopener">Armodafinil — Guide</a>
+                </div>
+            </div>
+            
+            <div class="card accent-orange neo wake">
+                <div class="card-title">Tesofensine</div>
+                <div class="punch">The Cognitive Edge</div>
+                <p class="card-desc">A <span class="mark-o">triple reuptake inhibitor</span> — dopamine, noradrenaline, and serotonin at once — for sharp <mark>cognition</mark> and real <mark>metabolic</mark> drive.</p>
+                <div class="viz-stage" role="img" aria-label="Tesofensine multi-transmitter medallion with cognition, metabolism, and multi-pathway satellites">
+<svg viewBox="34 2 272 250" fill="none" stroke-linecap="round" stroke-linejoin="round"><defs><radialGradient id="tes-core" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#FFB37A"/><stop offset="0.55" stop-color="#F06000"/><stop offset="1" stop-color="#C24E00"/></radialGradient><radialGradient id="tes-tl" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#FFFFC8"/><stop offset="0.55" stop-color="#F0F000"/><stop offset="1" stop-color="#D8D800"/></radialGradient><radialGradient id="tes-tr" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#7CF29A"/><stop offset="0.55" stop-color="#10C000"/><stop offset="1" stop-color="#0B8A00"/></radialGradient><radialGradient id="tes-b" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#FFB37A"/><stop offset="0.55" stop-color="#F06000"/><stop offset="1" stop-color="#C24E00"/></radialGradient></defs><path d="M104 54 C 122 64, 132 74, 140 84" stroke="#EA580C" stroke-width="3" stroke-dasharray="0.5 5.5"/><path d="M236 54 C 218 64, 208 74, 200 84" stroke="#EA580C" stroke-width="3" stroke-dasharray="0.5 5.5"/><path d="M170 182 C 170 184, 170 185, 170 186" stroke="#EA580C" stroke-width="3" stroke-dasharray="0.5 3.5"/><circle cx="170" cy="117" r="58" fill="url(#tes-core)" stroke="#0F172A" stroke-width="3"/><ellipse cx="146" cy="82" rx="20" ry="11" fill="#FFFFFF" opacity="0.35" transform="rotate(-24 146 82)"/><g transform="translate(170 117) scale(1.5)"><path d="M-16 10 L0 -14 M0 -14 L16 10 M-16 10 L16 10" stroke="#FFFFFF" stroke-width="3"/><circle cx="-16" cy="10" r="5.5" fill="#FFFFFF"/><circle cx="16" cy="10" r="5.5" fill="#FFFFFF"/><circle cy="-14" r="5.5" fill="#FFFFFF"/></g><circle cx="80" cy="46" r="27" fill="url(#tes-tl)" stroke="rgba(0,0,0,.28)" stroke-width="3"/><g transform="translate(80 46)"><path d="M3 -13 L-9 3 h6 L-4 13 L10 -4 H3 Z" fill="#9A3412"/></g><text x="80" y="88" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">COGNITION</text><circle cx="260" cy="46" r="27" fill="url(#tes-tr)" stroke="rgba(0,0,0,.28)" stroke-width="3"/><g transform="translate(260 46)"><path d="M0 -16 c4 7 10 11 10 18 a10 10 0 1 1 -20 0 c0-4 2-7 4-10 1 2 2 3 3 4 -1-5 0-9 3-12 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.8"/></g><text x="260" y="88" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">METABOLISM</text><circle cx="170" cy="208" r="23" fill="url(#tes-b)" stroke="rgba(0,0,0,.28)" stroke-width="3"/><g transform="translate(170 208) scale(0.88)"><circle cx="-8" r="8" fill="none" stroke="#FFFFFF" stroke-width="3"/><circle cx="8" r="8" fill="none" stroke="#FFFFFF" stroke-width="3"/></g><text x="170" y="246" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">MULTI</text></svg>
+                </div>
+                <div class="btn-col">
+                    <button type="button" class="metal-btn metal-tang order-gate-btn" data-og-product="Tesofensine" data-og-price="260" data-og-code="DlXBBC4Z" aria-haspopup="dialog">Order &mdash; $260</button>
+                    <a class="metal-btn metal-tang" href="https://x-peps.com/X-Peps/tesofensine.html" target="_blank" rel="noopener">Tesofensine — Guide</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── SUPPLIES ─── -->
+    <div class="cat-wrap cat-slate">
+        <h2 class="cat-title" style="color:var(--slate)">Supplies</h2>
+        <div class="grid">
+            <div class="card accent-slate neo sup">
+                <div class="card-title">Bacteriostatic Water</div>
+                <div class="punch">The Essential Diluent</div>
+                <p class="card-desc">This sterile diluent is absolutely essential for all injectable peptide and compound research — the mandatory component for the <mark>precise and safe reconstitution</mark> of your testing compounds.</p>
+                <div class="viz-stage" role="img" aria-label="Bacteriostatic water medallion with sterile, precise, and diluent satellites">
+<svg viewBox="34 2 272 250" fill="none" stroke-linecap="round" stroke-linejoin="round"><defs><radialGradient id="bac-core" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#8FC6FF"/><stop offset="0.55" stop-color="#0070D0"/><stop offset="1" stop-color="#005AA8"/></radialGradient><radialGradient id="bac-tl" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#FFFFC8"/><stop offset="0.55" stop-color="#F0F000"/><stop offset="1" stop-color="#D8D800"/></radialGradient><radialGradient id="bac-tr" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#7CF29A"/><stop offset="0.55" stop-color="#10C000"/><stop offset="1" stop-color="#0B8A00"/></radialGradient><radialGradient id="bac-b" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#FFB37A"/><stop offset="0.55" stop-color="#F06000"/><stop offset="1" stop-color="#C24E00"/></radialGradient></defs><path d="M104 54 C 122 64, 132 74, 140 84" stroke="#0070D0" stroke-width="3" stroke-dasharray="0.5 5.5"/><path d="M236 54 C 218 64, 208 74, 200 84" stroke="#0070D0" stroke-width="3" stroke-dasharray="0.5 5.5"/><path d="M170 182 C 170 184, 170 185, 170 186" stroke="#0070D0" stroke-width="3" stroke-dasharray="0.5 3.5"/><circle cx="170" cy="117" r="58" fill="url(#bac-core)" stroke="#0F172A" stroke-width="3"/><ellipse cx="146" cy="82" rx="20" ry="11" fill="#FFFFFF" opacity="0.35" transform="rotate(-24 146 82)"/><g transform="translate(170 117) scale(2.0)"><path d="M0 -13 C7 -3 10 2 10 7 a10 10 0 1 1 -20 0 C-10 2 -7 -3 0 -13 Z" fill="#FFFFFF"/></g><circle cx="80" cy="46" r="27" fill="url(#bac-tl)" stroke="rgba(0,0,0,.28)" stroke-width="3"/><g transform="translate(80 46)"><path d="M-9 0 l6 7 L10 -8" stroke="#3A3400" stroke-width="4" fill="none"/></g><text x="80" y="88" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">STERILE</text><circle cx="260" cy="46" r="27" fill="url(#bac-tr)" stroke="rgba(0,0,0,.28)" stroke-width="3"/><g transform="translate(260 46)"><circle r="9" fill="none" stroke="#FFFFFF" stroke-width="3"/><path d="M0 -14 v5 M0 9 v5 M-14 0 h5 M9 0 h5" stroke="#FFFFFF" stroke-width="3"/></g><text x="260" y="88" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">PRECISE</text><circle cx="170" cy="208" r="23" fill="url(#bac-b)" stroke="rgba(0,0,0,.28)" stroke-width="3"/><g transform="translate(170 208) scale(0.88)"><path d="M-5 -12 h10 M-3 -12 v8 l-7 13 a2.5 2.5 0 0 0 2 3 h12 a2.5 2.5 0 0 0 2 -3 L3 -4 v-8" stroke="#FFFFFF" stroke-width="3" fill="none"/><path d="M-6 4 h12" stroke="#FFFFFF" stroke-width="3"/></g><text x="170" y="246" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">DILUENT</text></svg>
+                </div>
+                <div class="btn-col">
+                    <button type="button" class="metal-btn metal-cob order-gate-btn" data-og-product="Bacteriostatic Water" data-og-price="70" data-og-code="ffkbgis3" aria-haspopup="dialog">Order &mdash; $70</button>
+                </div>
+            </div>
+            
+            <div class="card accent-slate neo sup">
+                <div class="card-title">Syringes</div>
+                <div class="punch">The Precision Dose</div>
+                <p class="card-desc">High-precision insulin syringes expertly designed for <mark>accurate and consistent clinical dosing</mark>. Every unit comes fully guaranteed with secure, sterile, individual packaging.</p>
+                <div class="viz-stage" role="img" aria-label="Syringes medallion with accurate, consistent, and sterile satellites">
+<svg viewBox="34 2 272 250" fill="none" stroke-linecap="round" stroke-linejoin="round"><defs><radialGradient id="syr-core" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#8FC6FF"/><stop offset="0.55" stop-color="#0070D0"/><stop offset="1" stop-color="#005AA8"/></radialGradient><radialGradient id="syr-tl" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#FFFFC8"/><stop offset="0.55" stop-color="#F0F000"/><stop offset="1" stop-color="#D8D800"/></radialGradient><radialGradient id="syr-tr" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#7CF29A"/><stop offset="0.55" stop-color="#10C000"/><stop offset="1" stop-color="#0B8A00"/></radialGradient><radialGradient id="syr-b" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#FFB37A"/><stop offset="0.55" stop-color="#F06000"/><stop offset="1" stop-color="#C24E00"/></radialGradient></defs><path d="M104 54 C 122 64, 132 74, 140 84" stroke="#0070D0" stroke-width="3" stroke-dasharray="0.5 5.5"/><path d="M236 54 C 218 64, 208 74, 200 84" stroke="#0070D0" stroke-width="3" stroke-dasharray="0.5 5.5"/><path d="M170 182 C 170 184, 170 185, 170 186" stroke="#0070D0" stroke-width="3" stroke-dasharray="0.5 3.5"/><circle cx="170" cy="117" r="58" fill="url(#syr-core)" stroke="#0F172A" stroke-width="3"/><ellipse cx="146" cy="82" rx="20" ry="11" fill="#FFFFFF" opacity="0.35" transform="rotate(-24 146 82)"/><g transform="translate(170 117) scale(1.0)"><g transform="rotate(-45)"><rect x="-16" y="-5" width="24" height="10" rx="2" fill="none" stroke="#FFFFFF" stroke-width="3.5"/><path d="M8 0 h15 M-16 0 h-8 M-24 -7 v14 M-13 -8 v16" stroke="#FFFFFF" stroke-width="3.5"/><path d="M-8 -5 v5 M-2 -5 v5 M4 -5 v5" stroke="#FFFFFF" stroke-width="2.5"/></g></g><circle cx="80" cy="46" r="27" fill="url(#syr-tl)" stroke="rgba(0,0,0,.28)" stroke-width="3"/><g transform="translate(80 46)"><circle r="10" fill="none" stroke="#3A3400" stroke-width="3"/><circle r="4.5" fill="none" stroke="#3A3400" stroke-width="3"/></g><text x="80" y="88" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">ACCURATE</text><circle cx="260" cy="46" r="27" fill="url(#syr-tr)" stroke="rgba(0,0,0,.28)" stroke-width="3"/><g transform="translate(260 46)"><path d="M-12 -10 c4 3 8 4 12 4 s8 -1 12 -4 M-12 0 c4 3 8 4 12 4 s8 -1 12 -4 M-12 10 c4 3 8 4 12 4 s8 -1 12 -4" stroke="#FFFFFF" stroke-width="3" fill="none"/></g><text x="260" y="88" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">CONSISTENT</text><circle cx="170" cy="208" r="23" fill="url(#syr-b)" stroke="rgba(0,0,0,.28)" stroke-width="3"/><g transform="translate(170 208) scale(0.88)"><path d="M-9 0 l6 7 L10 -8" stroke="#FFFFFF" stroke-width="4" fill="none"/></g><text x="170" y="246" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">STERILE</text></svg>
+                </div>
+                <div class="btn-col">
+                    <button type="button" class="metal-btn metal-cob order-gate-btn" data-og-product="Syringes" data-og-price="110" data-og-code="ytQ3dqvF" aria-haspopup="dialog">Order &mdash; $110</button>
+                </div>
+            </div>
+            
+            <div class="card accent-slate neo sup">
+                <div class="card-title">Alcohol Pads</div>
+                <div class="punch">The Clean Start</div>
+                <p class="card-desc">Professional-grade alcohol prep pads for <mark>thorough and rapid site sterilization</mark>. Proper surface preparation is mandatory for maintaining the cleanest possible research protocols.</p>
+                <div class="viz-stage" role="img" aria-label="Alcohol pads medallion with rapid, clean, and sterile satellites">
+<svg viewBox="34 2 272 250" fill="none" stroke-linecap="round" stroke-linejoin="round"><defs><radialGradient id="pad-core" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#8FC6FF"/><stop offset="0.55" stop-color="#0070D0"/><stop offset="1" stop-color="#005AA8"/></radialGradient><radialGradient id="pad-tl" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#FFFFC8"/><stop offset="0.55" stop-color="#F0F000"/><stop offset="1" stop-color="#D8D800"/></radialGradient><radialGradient id="pad-tr" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#7CF29A"/><stop offset="0.55" stop-color="#10C000"/><stop offset="1" stop-color="#0B8A00"/></radialGradient><radialGradient id="pad-b" cx="0.35" cy="0.3" r="0.95"><stop offset="0" stop-color="#FFB37A"/><stop offset="0.55" stop-color="#F06000"/><stop offset="1" stop-color="#C24E00"/></radialGradient></defs><path d="M104 54 C 122 64, 132 74, 140 84" stroke="#0070D0" stroke-width="3" stroke-dasharray="0.5 5.5"/><path d="M236 54 C 218 64, 208 74, 200 84" stroke="#0070D0" stroke-width="3" stroke-dasharray="0.5 5.5"/><path d="M170 182 C 170 184, 170 185, 170 186" stroke="#0070D0" stroke-width="3" stroke-dasharray="0.5 3.5"/><circle cx="170" cy="117" r="58" fill="url(#pad-core)" stroke="#0F172A" stroke-width="3"/><ellipse cx="146" cy="82" rx="20" ry="11" fill="#FFFFFF" opacity="0.35" transform="rotate(-24 146 82)"/><g transform="translate(170 117) scale(1.0)"><rect x="-17" y="-17" width="34" height="34" rx="7" fill="none" stroke="#FFFFFF" stroke-width="3.5"/><path d="M0 -11 L2.3 -2.7 L11 0 L2.3 2.7 L0 11 L-2.3 2.7 L-11 0 L-2.3 -2.7 Z" fill="#FFFFFF"/></g><circle cx="80" cy="46" r="27" fill="url(#pad-tl)" stroke="rgba(0,0,0,.28)" stroke-width="3"/><g transform="translate(80 46)"><path d="M3 -13 L-9 3 h6 L-4 13 L10 -4 H3 Z" fill="#9A3412"/></g><text x="80" y="88" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">RAPID</text><circle cx="260" cy="46" r="27" fill="url(#pad-tr)" stroke="rgba(0,0,0,.28)" stroke-width="3"/><g transform="translate(260 46)"><path d="M0 -11 L2.3 -2.7 L11 0 L2.3 2.7 L0 11 L-2.3 2.7 L-11 0 L-2.3 -2.7 Z" fill="#FFFFFF"/></g><text x="260" y="88" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">CLEAN</text><circle cx="170" cy="208" r="23" fill="url(#pad-b)" stroke="rgba(0,0,0,.28)" stroke-width="3"/><g transform="translate(170 208) scale(0.88)"><path d="M-9 0 l6 7 L10 -8" stroke="#FFFFFF" stroke-width="4" fill="none"/></g><text x="170" y="246" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.06em" fill="#475569">STERILE</text></svg>
+                </div>
+                <div class="btn-col">
+                    <button type="button" class="metal-btn metal-cob order-gate-btn" data-og-product="Alcohol Pads" data-og-price="25" data-og-code="gxlrmvzV" aria-haspopup="dialog">Order &mdash; $25</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-banner">
+        Payments processed securely by Square.<br>
+        Peptopia NEVER stores your financial information.<br>
+        Contact by <a href="https://wa.me/13046202576" target="_blank">WhatsApp at 1-304-620-2576</a> or email <a href="mailto:Peptopia@X-Peps.com">Peptopia@X-Peps.com</a><br>
+        We'd love to hear from you!
+    </div>
+
+<footer class="peptopia-ftr">
+<div>&copy; 2026 Peptopia Health &bull; All rights reserved</div>
+<div class="ftr-email-line"><a href="mailto:Peptopia@x-peps.com?subject=From%20the%20Peptopia%20Health%20Website">Peptopia@x-peps.com</a></div>
+<div class="peptopia-ftr-icons">
+<a class="ftr-logo" href="https://x-peps.com/" title="Home" aria-label="Home"><img src="https://x-peps.com/X-Peps/IMG_3345.png" alt="Peptopia home" class="logo-dark"><img src="https://x-peps.com/X-Peps/IMG_3346.png" alt="Peptopia home" class="logo-light"></a>
+<a href="https://x-peps.com/X-Peps/orders/" title="Shop" aria-label="Shop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></a>
+<a href="https://discord.gg/sHAYkB5NAM" target="_blank" rel="noopener" title="Discord" aria-label="Discord"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.93-1.51 1.98 1.98 0 0 0-.08 1.53 19.5 19.5 0 0 0-5.9 0A1.98 1.98 0 0 0 9.34 2.86a19.8 19.8 0 0 0-4.93 1.51A20.3 20.3 0 0 0 .1 18.06a19.9 19.9 0 0 0 6.07 3.03c.46-.63.87-1.3 1.22-2a12.9 12.9 0 0 1-1.93-.92c.16-.12.32-.24.47-.37a14.2 14.2 0 0 0 12.14 0c.15.13.31.25.47.37-.61.36-1.26.68-1.93.92.35.7.76 1.37 1.22 2a19.8 19.8 0 0 0 6.07-3.03 20.2 20.2 0 0 0-4.29-13.69ZM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42s.95-2.42 2.16-2.42 2.18 1.09 2.16 2.42c0 1.34-.95 2.42-2.16 2.42Zm7.97 0c-1.18 0-2.16-1.08-2.16-2.42s.95-2.42 2.16-2.42 2.18 1.09 2.16 2.42c0 1.34-.95 2.42-2.16 2.42Z"/></svg></a>
+<a href="https://youtube.com/playlist?list=PLJI0wP-Amc5mLaPG7sDBdRTYVvCOA7DUR&si=a0xNfjs4uDrBzKHh" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81ZM9.55 15.57V8.43L15.82 12l-6.27 3.57Z"/></svg></a>
+</div>
+</footer>
+<script>
+/* Peptopia theme: light default, toggle persists via localStorage */
+var ppStore=(function(){try{if(window.self!==window.top)return null;var s=window.localStorage;s.setItem('__pp_t','1');s.removeItem('__pp_t');return s}catch(e){return null}})();
+function toggleTheme(){document.documentElement.classList.toggle('dark');return false}
+
+</script>
+
+<script>
+(function(){
+  var pop = document.getElementById('glowBuyPop');
+  if(!pop) return;
+  function open(){ pop.hidden = false; }
+  function close(){ pop.hidden = true; }
+  document.querySelectorAll('[data-buy-open]').forEach(function(el){ el.addEventListener('click', open); });
+  pop.querySelectorAll('[data-buy-close]').forEach(function(el){ el.addEventListener('click', close); });
+  pop.addEventListener('click', function(e){ if(e.target === pop) close(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+})();
+</script>
+
+<div id="tbdModal" style="display:none;position:fixed;inset:0;background:rgba(15,10,40,.55);z-index:999;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#fff;border-radius:18px;max-width:400px;width:100%;padding:28px 26px 24px;text-align:center;box-shadow:0 18px 50px rgba(30,10,80,.35);border:2px solid #E4DEF5;">
+    <div style="font-size:34px;line-height:1;">&#128230;</div>
+    <div style="font-family:Outfit,sans-serif;font-weight:800;font-size:22px;color:#6D28D9;margin:10px 0 6px;">Coming to market soon</div>
+    <p style="font-family:'DM Sans',sans-serif;font-size:15.5px;color:#3F3F46;margin:0 0 18px;">We are bringing <b id="tbdName">this product</b> to market soon &mdash; it is not on sale yet. The guide below has everything we know so far.</p>
+    <button onclick="tbdClose()" style="font-family:Outfit,sans-serif;font-weight:800;font-size:15px;color:#3B0764;background:linear-gradient(180deg,#EDE9FE,#C4B5FD);border:2px solid #5B21B6;border-radius:999px;padding:10px 30px;cursor:pointer;box-shadow:0 3px 0 #5B21B6;">Got it</button>
+  </div>
+</div>
+<script>
+function tbdPop(name){document.getElementById('tbdName').textContent=name;var m=document.getElementById('tbdModal');m.style.display='flex';}
+function tbdClose(){document.getElementById('tbdModal').style.display='none';}
+document.getElementById('tbdModal').addEventListener('click',function(e){if(e.target===this)tbdClose();});
+</script>
+
+
+<style id="cart-v2-css">
+/* ===== Cart v2 (Nov 7, 2026) — staged, not yet published ===== */
+.og-addcart{font-family:Outfit,sans-serif;font-weight:700;font-size:13.5px;color:#0F172A;background:linear-gradient(180deg,#FFFFFF,#E2E8F0);border:2px solid #64748B;border-radius:999px;padding:7px 14px;cursor:pointer;box-shadow:0 2px 0 #64748B;margin-top:8px}
+.og-addcart:active{transform:translateY(2px);box-shadow:0 0 0 #64748B}
+.og-addcart.added{background:linear-gradient(180deg,#DCFCE7,#BBF7D0);border-color:#15803D;box-shadow:0 2px 0 #15803D}
+html.dark .og-addcart{color:#F1F5F9;background:linear-gradient(180deg,#334155,#1E293B);border-color:#94A3B8;box-shadow:0 2px 0 #94A3B8}
+html.dark .og-addcart.added{background:linear-gradient(180deg,#14532D,#166534);border-color:#4ADE80;box-shadow:0 2px 0 #4ADE80}
+/* Cart-uniform (Nov 7, 2026): coming-soon disabled purchase buttons */
+.og-addcart[disabled]{opacity:.55;cursor:not-allowed;box-shadow:0 2px 0 #64748B}
+.metal-btn.og-nosell[disabled]{opacity:.65;cursor:not-allowed;filter:saturate(.35)}
+#cartBar{position:fixed;left:50%;transform:translateX(-50%) translateY(140%);bottom:16px;z-index:990;background:#0F172A;color:#F8FAFC;border:2px solid #6C4FE0;border-radius:999px;padding:10px 12px 10px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 14px 40px rgba(15,10,40,.45);font-family:'DM Sans',sans-serif;transition:transform .25s ease;max-width:94vw}
+#cartBar.show{transform:translateX(-50%) translateY(0)}
+#cartBar .cb-count{font-weight:700;font-size:15px;white-space:nowrap}
+#cartBar .cb-total{font-family:Outfit,sans-serif;font-weight:800;font-size:17px;white-space:nowrap}
+#cartCheckout{font-family:Outfit,sans-serif;font-weight:800;font-size:15px;color:#3B0764;background:linear-gradient(180deg,#EDE9FE,#C4B5FD);border:2px solid #5B21B6;border-radius:999px;padding:9px 20px;cursor:pointer;box-shadow:0 3px 0 #5B21B6;white-space:nowrap}
+#cartCheckout:active{transform:translateY(2px);box-shadow:0 1px 0 #5B21B6}
+#cartView{font-family:Outfit,sans-serif;font-weight:700;font-size:14px;color:#F8FAFC;background:transparent;border:2px solid #64748B;border-radius:999px;padding:8px 16px;cursor:pointer;white-space:nowrap}
+.og-cartlist{margin:4px 0 6px;text-align:left}
+.og-cartrow{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #E2E8F0;font-size:14.5px}
+html.dark .og-cartrow{border-color:#2A3B55}
+.og-cartrow .nm{flex:1;font-weight:600}
+.og-cartrow .pr{font-weight:700;white-space:nowrap}
+.og-qty{display:flex;align-items:center;gap:6px}
+.og-qty button{width:26px;height:26px;border-radius:50%;border:2px solid #64748B;background:transparent;color:inherit;font-weight:800;cursor:pointer;line-height:1;font-size:15px}
+.og-rm{border:none;background:transparent;color:#B91C1C;font-size:17px;cursor:pointer;padding:2px 4px}
+html.dark .og-rm{color:#FCA5A5}
+.og-carttotal{font-family:Outfit,sans-serif;font-weight:800;font-size:18px;text-align:right;margin:12px 0 2px}
+.og-empty{font-size:15px;color:#475569;margin:8px 0 4px}
+html.dark .og-empty{color:#B6C2D4}
+</style>
+
+
+<div id="cartBar" aria-live="polite">
+  <span class="cb-count" id="cartCount">Cart: 0 items</span>
+  <span class="cb-total" id="cartTotal">$0</span>
+  <button type="button" id="cartView">View cart</button>
+  <button type="button" id="cartCheckout">Check out</button>
+</div>
+
+<div id="cartModal" class="og-overlay" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+  <div class="og-card">
+    <form id="cartForm" novalidate>
+      <h3 id="cartTitle">Your cart</h3>
+      <div class="og-cartlist" id="cartList"></div>
+      <p class="og-empty" id="cartEmpty">Your cart is empty &mdash; add items from the products above.</p>
+      <div class="og-carttotal" id="cartFormTotal"></div>
+      <p class="og-note">One order, one payment. Every order is reviewed personally before payment. If your order is accepted, we&rsquo;ll email your single payment link for the full total &mdash; nothing is charged now.</p>
+      <label for="cartName">Your name</label>
+      <input id="cartName" name="name" type="text" autocomplete="name" required>
+      <label for="cartEmail">Your email</label>
+      <input id="cartEmail" name="email" type="email" autocomplete="email" required>
+      <div class="og-err" id="cartError"></div>
+      <div class="og-actions">
+        <button type="button" class="og-cancel" id="cartCancel">Keep shopping</button>
+        <button type="submit" class="og-submit" id="cartSubmit">Request order</button>
+      </div>
+    </form>
+    <div class="og-thanks" id="cartThanks">
+      <div class="og-check">&#128230;</div>
+      <h3>Request received</h3>
+      <p>Thank you &mdash; every order is reviewed personally. If your order is accepted, we&rsquo;ll email your single payment link for the full cart total to <b id="cartThanksEmail"></b> shortly.</p>
+      <div class="og-actions"><button type="button" class="og-submit" id="cartDone">Done</button></div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+/* ===== Cart v2: add items, one checkout, ONE Web3Forms submission =====
+   A 1-item cart submits the classic single-item fields (fixed-link flow);
+   a multi-item (or qty>1) cart submits name/email + cart JSON + cart_total
+   and the processor creates one custom payment link for the exact total. */
+(function(){
+  var KEY='c3378175-a412-4313-bf5b-12fae9f925f3';
+  var cart={}; /* code -> {product, price, code, qty} */
+  function money(n){return '$'+n;}
+  function totals(){var c=0,t=0;for(var k in cart){c+=cart[k].qty;t+=cart[k].price*cart[k].qty;}return{count:c,total:t};}
+  function entries(){var a=[];for(var k in cart)a.push(cart[k]);return a;}
+  function isCartSubmission(){var a=entries();return a.length>1||(a.length===1&&a[0].qty>1);}
+  function render(){
+    var tt=totals(),bar=document.getElementById('cartBar');
+    document.getElementById('cartCount').textContent='Cart: '+tt.count+(tt.count===1?' item':' items');
+    document.getElementById('cartTotal').textContent=money(tt.total);
+    bar.classList.toggle('show',tt.count>0);
+    var list=document.getElementById('cartList');list.innerHTML='';
+    entries().forEach(function(it){
+      var row=document.createElement('div');row.className='og-cartrow';
+      row.innerHTML='<span class="nm"></span><span class="og-qty"><button type="button" data-dec aria-label="Decrease quantity">\u2212</button><span></span><button type="button" data-inc aria-label="Increase quantity">+</button></span><span class="pr"></span><button type="button" class="og-rm" data-rm aria-label="Remove item">\u00D7</button>';
+      row.querySelector('.nm').textContent=it.product;
+      row.querySelector('.og-qty span').textContent=it.qty;
+      row.querySelector('.pr').textContent=money(it.price*it.qty);
+      row.querySelector('[data-inc]').addEventListener('click',function(){it.qty++;render();});
+      row.querySelector('[data-dec]').addEventListener('click',function(){it.qty--;if(it.qty<=0)delete cart[it.code];render();});
+      row.querySelector('[data-rm]').addEventListener('click',function(){delete cart[it.code];render();});
+      list.appendChild(row);
+    });
+    document.getElementById('cartEmpty').style.display=tt.count?'none':'block';
+    document.getElementById('cartFormTotal').textContent=tt.count?('Total: '+money(tt.total)):'';
+    document.getElementById('cartSubmit').disabled=!tt.count;
+  }
+  document.querySelectorAll('.order-gate-btn:not(.og-nosell)').forEach(function(b){
+    var add=document.createElement('button');
+    add.type='button';add.className='og-addcart';add.textContent='Add to cart';
+    add.addEventListener('click',function(){
+      var code=b.getAttribute('data-og-code')+'|'+b.getAttribute('data-og-product');
+      if(!cart[code])cart[code]={product:b.getAttribute('data-og-product'),price:parseInt(b.getAttribute('data-og-price'),10),code:b.getAttribute('data-og-code'),qty:0};
+      cart[code].qty++;render();
+      add.textContent='Added \u2713';add.classList.add('added');
+      setTimeout(function(){add.textContent='Add to cart';add.classList.remove('added');},1200);
+    });
+    b.parentNode.insertBefore(add,b.nextSibling);
+  });
+  var modal=document.getElementById('cartModal'),form=document.getElementById('cartForm'),
+      thanks=document.getElementById('cartThanks'),err=document.getElementById('cartError');
+  function openCart(){render();form.style.display='block';thanks.style.display='none';err.style.display='none';modal.classList.add('open');setTimeout(function(){document.getElementById('cartName').focus();},50);}
+  function closeCart(){modal.classList.remove('open');}
+  document.getElementById('cartCheckout').addEventListener('click',openCart);
+  document.getElementById('cartView').addEventListener('click',openCart);
+  document.getElementById('cartCancel').addEventListener('click',closeCart);
+  document.getElementById('cartDone').addEventListener('click',closeCart);
+  modal.addEventListener('click',function(e){if(e.target===modal)closeCart();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeCart();});
+  form.addEventListener('submit',function(ev){
+    ev.preventDefault();
+    var name=document.getElementById('cartName').value.trim(),
+        email=document.getElementById('cartEmail').value.trim();
+    if(name.length<2||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      err.textContent='Please enter your name and a valid email address.';err.style.display='block';return;
+    }
+    var tt=totals();if(!tt.count){err.textContent='Your cart is empty.';err.style.display='block';return;}
+    var btn=document.getElementById('cartSubmit');btn.disabled=true;btn.textContent='Sending\u2026';
+    var payload;
+    if(isCartSubmission()){
+      payload={access_key:KEY,subject:'Peptopia Order Request',from_name:'Peptopia Order Gate',
+        name:name,email:email,replyto:email,
+        cart:JSON.stringify(entries().map(function(it){return{product:it.product,price:it.price,link_code:it.code,qty:it.qty};})),
+        cart_total:money(tt.total)};
+    }else{
+      var it=entries()[0];
+      payload={access_key:KEY,subject:'Peptopia Order Request',from_name:'Peptopia Order Gate',
+        name:name,email:email,replyto:email,product:it.product,price:money(it.price),link_code:it.code};
+    }
+    fetch('https://api.web3forms.com/submit',{method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify(payload)})
+    .then(function(r){if(!r.ok)throw new Error('send failed');return r.json();})
+    .then(function(j){if(j&&j.success===false)throw new Error('send failed');})
+    .then(function(){
+      document.getElementById('cartThanksEmail').textContent=email;
+      form.style.display='none';thanks.style.display='block';
+      cart={};render();
+    })
+    .catch(function(){
+      err.textContent='Something went wrong sending your request. Please try again, or reach us on WhatsApp at 1-304-620-2576.';
+      err.style.display='block';
+    })
+    .finally(function(){btn.disabled=false;btn.textContent='Request order';});
+  });
+  render();
+})();
+</script>
+
+<style id="order-gate-css">
+.og-overlay{position:fixed;inset:0;background:rgba(15,10,40,.55);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}
+.og-overlay.open{display:flex}
+.og-card{background:#FFFFFF;color:#0F172A;border-radius:18px;max-width:420px;width:100%;padding:28px 26px 24px;box-shadow:0 18px 50px rgba(30,10,80,.35);border:2px solid #E4DEF5;font-family:'DM Sans',sans-serif;max-height:92vh;overflow:auto}
+html.dark .og-card{background:#131E30;color:#F1F5F9;border-color:#2A3B55}
+.og-card h3{font-family:Outfit,sans-serif;font-weight:800;font-size:22px;margin:0 0 2px;color:#6D28D9}
+html.dark .og-card h3{color:#C4B5FD}
+.og-prod{font-family:Outfit,sans-serif;font-weight:700;font-size:17px;margin:6px 0 2px}
+.og-price{font-size:15px;color:#475569;margin:0 0 14px}
+html.dark .og-price{color:#B6C2D4}
+.og-note{font-size:14px;color:#475569;margin:0 0 16px}
+html.dark .og-note{color:#B6C2D4}
+.og-card label{display:block;font-weight:600;font-size:14px;margin:12px 0 5px;text-align:left}
+.og-card input{width:100%;box-sizing:border-box;padding:11px 12px;border:2px solid #CBD5E1;border-radius:10px;font-size:16px;font-family:'DM Sans',sans-serif;background:#FFFFFF;color:#0F172A}
+html.dark .og-card input{background:#0B1220;color:#F1F5F9;border-color:#2A3B55}
+.og-card input:focus{outline:none;border-color:#7C3AED}
+.og-err{display:none;color:#B91C1C;font-size:13.5px;margin-top:10px}
+html.dark .og-err{color:#FCA5A5}
+.og-actions{display:flex;gap:10px;margin-top:20px}
+.og-submit{flex:1;font-family:Outfit,sans-serif;font-weight:800;font-size:15.5px;color:#3B0764;background:linear-gradient(180deg,#EDE9FE,#C4B5FD);border:2px solid #5B21B6;border-radius:999px;padding:11px 18px;cursor:pointer;box-shadow:0 3px 0 #5B21B6}
+.og-submit:active{transform:translateY(2px);box-shadow:0 1px 0 #5B21B6}
+.og-submit:disabled{opacity:.6;cursor:wait}
+.og-cancel{font-family:Outfit,sans-serif;font-weight:700;font-size:15px;color:#475569;background:transparent;border:2px solid #CBD5E1;border-radius:999px;padding:11px 18px;cursor:pointer}
+html.dark .og-cancel{color:#B6C2D4;border-color:#2A3B55}
+.og-thanks{display:none;text-align:center}
+.og-thanks .og-check{font-size:38px;line-height:1}
+.og-thanks p{font-size:15.5px;margin:10px 0 18px}
+</style>
+<div id="orderGateModal" class="og-overlay" role="dialog" aria-modal="true" aria-labelledby="ogTitle">
+  <div class="og-card">
+    <form id="ogForm" novalidate>
+      <h3 id="ogTitle">Request your order</h3>
+      <div class="og-prod" id="ogProduct"></div>
+      <p class="og-price" id="ogPriceLine"></p>
+      <p class="og-note">Every order is reviewed personally before payment. If your order is accepted, we&rsquo;ll email your payment link &mdash; nothing is charged now.</p>
+      <label for="ogName">Your name</label>
+      <input id="ogName" name="name" type="text" autocomplete="name" required>
+      <label for="ogEmail">Your email</label>
+      <input id="ogEmail" name="email" type="email" autocomplete="email" required>
+      <div class="og-err" id="ogError"></div>
+      <div class="og-actions">
+        <button type="button" class="og-cancel" id="ogCancel">Cancel</button>
+        <button type="submit" class="og-submit" id="ogSubmit">Request order</button>
+      </div>
+    </form>
+    <div class="og-thanks" id="ogThanks">
+      <div class="og-check">&#128230;</div>
+      <h3>Request received</h3>
+      <p>Thank you &mdash; every order is reviewed personally. If your order is accepted, we&rsquo;ll email your payment link to <b id="ogThanksEmail"></b> shortly.</p>
+      <div class="og-actions"><button type="button" class="og-submit" id="ogDone">Done</button></div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var modal=document.getElementById('orderGateModal'),form=document.getElementById('ogForm'),
+      thanks=document.getElementById('ogThanks'),err=document.getElementById('ogError'),
+      cur={product:'',price:'',code:''};
+  function open(btn){
+    cur={product:btn.getAttribute('data-og-product'),price:btn.getAttribute('data-og-price'),code:btn.getAttribute('data-og-code')};
+    document.getElementById('ogProduct').textContent=cur.product;
+    document.getElementById('ogPriceLine').textContent='$'+cur.price+' \u2014 Peptopia Health \u2014 Order';
+    form.style.display='block';thanks.style.display='none';err.style.display='none';
+    modal.classList.add('open');
+    setTimeout(function(){document.getElementById('ogName').focus();},50);
+  }
+  function close(){modal.classList.remove('open');}
+  document.querySelectorAll('.order-gate-btn').forEach(function(b){b.addEventListener('click',function(){open(b);});});
+  document.getElementById('ogCancel').addEventListener('click',close);
+  document.getElementById('ogDone').addEventListener('click',close);
+  modal.addEventListener('click',function(e){if(e.target===modal)close();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+  form.addEventListener('submit',function(ev){
+    ev.preventDefault();
+    var name=document.getElementById('ogName').value.trim(),
+        email=document.getElementById('ogEmail').value.trim();
+    if(name.length<2||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      err.textContent='Please enter your name and a valid email address.';err.style.display='block';return;
+    }
+    var btn=document.getElementById('ogSubmit');btn.disabled=true;btn.textContent='Sending\u2026';
+    fetch('https://api.web3forms.com/submit',{method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({access_key:'c3378175-a412-4313-bf5b-12fae9f925f3',subject:'Peptopia Order Request',
+        from_name:'Peptopia Order Gate',name:name,email:email,product:cur.product,price:'$'+cur.price,link_code:cur.code,replyto:email})})
+    .then(function(r){if(!r.ok)throw new Error('send failed');return r.json();})
+    .then(function(j){if(j&&j.success===false)throw new Error('send failed');})
+    .then(function(){
+      document.getElementById('ogThanksEmail').textContent=email;
+      form.style.display='none';thanks.style.display='block';
+    })
+    .catch(function(){
+      err.textContent='Something went wrong sending your request. Please try again, or reach us on WhatsApp at 1-304-620-2576.';
+      err.style.display='block';
+    })
+    .finally(function(){btn.disabled=false;btn.textContent='Request order';});
+  });
+})();
+</script>
+
+</body>
+</html>
