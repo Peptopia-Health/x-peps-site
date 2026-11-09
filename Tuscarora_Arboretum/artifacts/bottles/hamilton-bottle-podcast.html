@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The 1937 Hamilton Bottle — Podcast · Tuscarora Arboretum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFF9F2;color:#1C1917;font-family:"DM Sans",system-ui,sans-serif;line-height:1.62}
+.wrap{max-width:760px;margin:0 auto;padding:28px 20px 56px}
+h1{font-family:"Outfit","DM Sans",sans-serif;color:#EA580C;font-size:30px;font-weight:800;line-height:1.2;margin:14px 0 4px}
+.sub{color:#57534E;font-style:italic;margin:0 0 18px}
+.card{background:#fff;border:1px solid #F1E3D3;border-radius:14px;padding:22px;box-shadow:0 1px 4px rgba(120,60,0,.05)}
+audio{width:100%;margin-top:8px}
+a{color:#C2410C}
+.meta{font-size:.8rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#A8A29E}
+#status{font-size:.9rem;color:#57534E;margin-top:10px}
+</style>
+</head>
+<body> <div style="font-family:'DM Sans',sans-serif;font-size:.85rem;padding:12px 20px;background:#FFF7ED;border-bottom:1px solid #F1E3D3"><a href="../../index.html" style="color:#C2410C;text-decoration:none;font-weight:600">Tuscarora Arboretum</a> &nbsp;/&nbsp; <a href="../index.html" style="color:#C2410C;text-decoration:none;font-weight:600">Artifacts</a> &nbsp;/&nbsp; <a href="index.html" style="color:#C2410C;text-decoration:none;font-weight:600">Bottles</a> &nbsp;/&nbsp; The 1937 Hamilton Bottle — Podcast</div> 
+
+<div class="wrap">
+<p class="meta">Artifact No. 1 · Audio Brief · 1 minute 33 seconds</p>
+<h1>The 1937 Hamilton Bottle — Podcast</h1>
+<p class="sub">A two-minute fireside brief on Artifact No. 1: a Pittsburgh design patent, a crowded drugstore shelf, and a small glass flask from Irish Hill, along the Tuscarora Creek.</p>
+<div class="card">
+<audio id="pod" controls preload="none">Your browser does not support the audio element.</audio>
+<p id="status">Loading the audio&hellip;</p>
+<p style="margin:14px 0 0">Prefer reading? <a href="hamilton-bottle-guide.html">Open the full study guide</a>.</p>
+</div>
+</div>
+<script>
+(function(){
+var parts=["hamilton-bottle-brief.part1.txt", "hamilton-bottle-brief.part2.txt", "hamilton-bottle-brief.part3.txt", "hamilton-bottle-brief.part4.txt", "hamilton-bottle-brief.part5.txt"];
+var status=document.getElementById('status');
+Promise.all(parts.map(function(p){return fetch(p).then(function(r){if(!r.ok)throw new Error(r.status);return r.text();});}))
+.then(function(chunks){
+var b64=chunks.join('').replace(/\s/g,'');
+var bin=atob(b64);var bytes=new Uint8Array(bin.length);
+for(var i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
+var a=document.getElementById('pod');
+a.src=URL.createObjectURL(new Blob([bytes],{type:'audio/mpeg'}));
+status.textContent='Audio ready — press play.';
+})
+.catch(function(e){status.textContent='The audio could not be loaded in this browser. You can still read the full study guide linked below.';});
+})();
+</script>
+</body>
+</html>

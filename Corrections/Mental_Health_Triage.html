@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Triage & Screening Study Guide - Peptopia Health</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        html { font-size: 13px; } @media (min-width: 768px) { html { font-size: 14px; } }
+        :root {
+            /* Standard Guide Theme */
+            --primary-dark: #2c3e50;
+            --secondary-blue: #2980b9;
+            --accent-orange: #e67e22;
+            --danger-red: #e74c3c;
+            --success-teal: #1abc9c;
+            --warning-yellow: #f1c40f;
+            --bg-light: #f4f7f6;
+            --white: #ffffff;
+            --drug-blue: #0000FF;
+
+            /* Mapped variables for the Quiz Engine */
+            --bg: var(--bg-light); 
+            --surface: var(--white);
+            --surface-alt: #f8fafc;
+            --border: #cbd5e1;
+            --text: #333333;
+            --text-muted: #7f8c8d;
+            --accent: #3b82f6; /* Blue accent for theme */
+            --accent-light: #eff6ff;
+            --header-bg: #1e3a8a;
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            .page-break {
+                page-break-before: always;
+                break-before: page;
+            }
+            body {
+                background-color: white !important;
+                color: black !important;
+            }
+            .content-card {
+                box-shadow: none !important;
+                border: none !important;
+            }
+        }
+        
+        body {
+            background-color: var(--bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text);
+        }
+
+        .drug-name { color: #2563eb; font-weight: bold; }
+        .disease-must-know { color: #ea580c; font-weight: bold; }
+        .time-frame { font-weight: bold; }
+
+        .pastel-pink { background-color: #fff0f3; }
+        .pastel-blue { background-color: #eef2ff; }
+        .pastel-green { background-color: #f0fdf4; }
+        .pastel-purple { background-color: #f5f3ff; }
+        .pastel-orange { background-color: #fff7ed; }
+        .pastel-yellow { background-color: #fefce8; }
+        .pastel-teal { background-color: #f0f9ff; }
+
+        /* === LETHAL CONDITION ICON === */
+        .lethal-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #000000;
+            border: 2px solid #ff0000;
+            border-radius: 50%;
+            min-width: 1.6em;
+            min-height: 1.6em;
+            font-size: 1.25em; /* A couple font points larger */
+            line-height: 1;
+            vertical-align: middle;
+            margin-right: 0.35rem;
+            margin-left: 0.15rem;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(255,0,0,0.3);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .lethal-icon {
+                background-color: #39ff14; /* Neon green */
+            }
+        }
+
+        /* === QUIZ BUTTON STYLES === */
+        .quiz-badge-btn { 
+            background: var(--white); 
+            border: 2px solid var(--accent); 
+            padding: 0.6rem 1.5rem; 
+            border-radius: 2rem; 
+            font-size: 1.15rem; 
+            font-weight: 800; 
+            color: var(--accent); 
+            cursor: pointer; 
+            transition: all 0.2s; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+        }
+        .quiz-badge-btn:hover { 
+            background: var(--accent); 
+            color: white; 
+            transform: translateY(-2px); 
+        }
+
+        /* === QUIZ OVERLAY UI === */
+        .hidden { display: none !important; }
+        .quiz-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 2000; overflow-y: auto; display: flex; flex-direction: column; cursor: pointer; }
+        .quiz-header { 
+            max-width: 860px; width: 100%; margin: 0 auto;
+            padding: 0.75rem 1.5rem; background: var(--header-bg); color: #fff; 
+            display: flex; justify-content: space-between; align-items: center; 
+            position: sticky; top: 0; z-index: 2001; border: 2.5px solid var(--accent); border-radius: 0 0 1.25rem 1.25rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .quiz-body { max-width: 860px; margin: 1.5rem auto; width: 100%; padding: 0 1.5rem; flex-grow: 1; cursor: default; }
+        .q-card { background: var(--surface); border: 2px solid var(--border); border-radius: 1.5rem; padding: 2.5rem; box-shadow: 0 15px 40px rgba(0,0,0,0.15); transition: border-color 0.3s; }
+        .q-text { font-size: 1.75rem; font-weight: 800; margin-bottom: 2rem; color: var(--text); line-height: 1.4; }
+
+        .choice-row { display: flex; align-items: center; gap: 1.25rem; padding: 1.1rem 1.5rem; border: 2px solid var(--border); border-radius: 1rem; cursor: pointer; transition: all 0.2s; margin-bottom: 0.75rem; background: var(--surface-alt); color: var(--text); font-weight: 600;}
+        .choice-row:hover:not(.disabled) { border-color: var(--accent); transform: translateX(5px); background: var(--accent-light); }
+        .choice-row.correct { background: rgba(26, 188, 156, 0.15) !important; border-color: var(--success-teal) !important; color: var(--success-teal) !important; font-weight: 800; opacity: 1 !important; transform: scale(1.02); }
+        .choice-row.incorrect { background: rgba(231, 76, 60, 0.15) !important; border-color: var(--danger-red) !important; color: var(--danger-red) !important; font-weight: 800; opacity: 1 !important; }
+        .choice-row.disabled { pointer-events: none; opacity: 0.6; }
+        .q-ans-icon { margin-left: auto; font-weight: 900; font-size: 1.65rem; }
+
+        .q-rationale { display: none; margin-top: 2rem; border-radius: 1rem; overflow: hidden; border: 2px solid var(--accent); background: var(--surface-alt); animation: fadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .q-rationale.visible { display: block; }
+        .q-rat-hdr { padding: 1.25rem 1.5rem; font-weight: 900; font-size: 1.35rem; color: white; display: flex; align-items: center; gap: 0.5rem;}
+        .q-rat-hdr.correct { background: linear-gradient(135deg, var(--success-teal), #16a085); }
+        .q-rat-hdr.incorrect { background: linear-gradient(135deg, var(--danger-red), #c0392b); }
+        .q-rat-body { padding: 1.25rem; color: var(--text); line-height: 1.6; }
+        .q-rat-label { font-weight: 900; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; font-size: 1.1rem; letter-spacing: 1px; }
+
+        /* === SATA STYLES === */
+        .choice-row.sata-mode { justify-content: flex-start; }
+        .choice-row.selected { border-color: var(--accent); background: var(--accent-light); transform: translateX(5px); }
+        .checkbox-mock { width: 28px; height: 28px; border: 2px solid var(--text-muted); border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; margin-right: 0.5rem; transition: all 0.2s; flex-shrink: 0; }
+        .choice-row.selected .checkbox-mock { background: var(--accent); border-color: var(--accent); }
+        .choice-row.selected .checkbox-mock::after { content: '✓'; color: white; font-size: 18px; font-weight: 900; }
+        .sata-submit-btn { margin-top: 1.5rem; width: 100%; padding: 1.35rem; background: var(--accent); color: white; border: none; border-radius: 1rem; font-weight: 900; font-size: 1.35rem; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); transition: all 0.2s; }
+        .sata-submit-btn:hover { filter: brightness(1.1); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .exit-btn { background: var(--danger-red); color: white; border-radius: 2rem; padding: 0.75rem 1.5rem; border: 2px solid #c0392b; font-weight: 900; font-size: 1.05rem; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 1px;}
+        .exit-btn:hover { background: #c0392b; transform: scale(1.05); }
+
+        /* === ROBUST RESULTS OVERLAY === */
+        .quiz-completion { background: linear-gradient(135deg, var(--surface-alt), var(--surface)); border-radius: 1.5rem; border: 2px solid var(--accent); padding: 2.5rem 2rem; box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+        .qc-title { font-size: 2.5rem; font-weight: 900; color: var(--header-bg); text-align: center; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 0.75rem; }
+        .qc-unanswered { background: #fffbeb; border: 2px solid var(--warning-yellow); border-radius: 1rem; padding: 1rem 1.25rem; margin-bottom: 2rem; text-align: center; color: #b45309; font-weight: 800; font-size: 1.25rem; box-shadow: 0 4px 12px rgba(241, 196, 15, 0.15); }
+        .qc-perf { background: var(--surface); border-radius: 1.25rem; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid var(--border); box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .qc-perf-hdr, .qc-weak-hdr, .qc-retest-hdr { font-size: 1.45rem; font-weight: 900; color: var(--accent); margin-bottom: 1rem; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+
+        .qc-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        @media (max-width: 600px) { .qc-stats-grid { grid-template-columns: repeat(2, 1fr); } }
+
+        .qc-stat { background: var(--surface-alt); border: 2px solid var(--border); border-radius: 1rem; padding: 1.25rem 0.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; transition: transform 0.2s; }
+        .qc-stat:hover { transform: translateY(-4px); }
+        .qc-stat-total { border-color: rgba(59, 130, 246, 0.4); } 
+        .qc-stat-correct { border-color: rgba(26, 188, 156, 0.4); } 
+        .qc-stat-wrong { border-color: rgba(231, 76, 60, 0.4); } 
+        .qc-stat-score { border-color: rgba(241, 196, 15, 0.4); } 
+
+        .qc-stat-icon { font-size: 2.25rem; margin-bottom: 0.5rem; line-height: 1; }
+        .qc-stat-val { font-size: 2.5rem; font-weight: 900; color: var(--text); line-height: 1; }
+        .qc-stat-correct .qc-stat-val { color: var(--success-teal); } 
+        .qc-stat-wrong .qc-stat-val { color: var(--danger-red); } 
+        .qc-stat-score .qc-stat-val { color: var(--accent-orange); } 
+        .qc-stat-lbl { font-size: 1rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 0.5rem; font-weight: 800; }
+
+        .qc-weak { background: var(--surface); border-radius: 1.25rem; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid var(--border); }
+        .qc-weak-item { background: rgba(231, 76, 60, 0.08); border-left: 6px solid var(--danger-red); border-radius: 0.75rem; padding: 1rem 1.25rem; margin-bottom: 0.75rem; }
+        .qc-weak-q { font-weight: 800; color: #c0392b; font-size: 1.25rem; line-height: 1.4; }
+        .qc-weak-a { font-size: 1.15rem; color: var(--text-muted); margin-top: 0.4rem; font-weight: 600;}
+
+        .qc-no-weak { text-align: center; color: var(--success-teal); font-size: 1.45rem; padding: 1.5rem; font-weight: 900; background: rgba(26, 188, 156, 0.1); border-radius: 1rem; border: 2px dashed var(--success-teal);}
+        .qc-divider { height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); margin: 2rem 0; opacity: 0.5;}
+        .qc-retest-desc { color: var(--text-muted); font-size: 1.25rem; text-align: center; margin-bottom: 1.5rem; line-height: 1.5; font-weight: 500;}
+
+        .qc-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; padding-top: 1.5rem; border-top: 2px solid var(--border); }
+        .qc-btn { padding: 0.85rem 1.75rem; border: none; border-radius: 2rem; font-size: 1.25rem; font-weight: 800; cursor: pointer; transition: all 0.2s; color: white; display: inline-flex; align-items: center; gap: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .qc-btn:hover { transform: translateY(-3px); filter: brightness(1.1); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .qc-btn-retest { background: linear-gradient(135deg, #8b5cf6, #6366f1); }
+        .qc-btn-reset { background: linear-gradient(135deg, var(--accent-orange), #d35400); }
+        .qc-btn-home { background: linear-gradient(135deg, #3b82f6, #1e3a8a); }
+
+        #nav-container { padding: 1.5rem; text-align: center; animation: fadeIn 0.5s ease; margin-top: 1rem;}
+        .click-continue-pulse { display: inline-block; font-weight: 800; font-size: 1.35rem; color: white; background: var(--accent); padding: 0.75rem 2rem; border-radius: 2rem; box-shadow: 0 0 15px var(--accent); animation: pulseBtn 2s infinite; cursor: pointer;}
+        @keyframes pulseBtn { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(59, 130, 246, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); } }
+    /* ===== Peptopia site chrome: logo / nav / print / theme toggle / footer ===== */
+.peptopia-hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1200px;margin:0 auto;padding:14px 24px;position:relative;z-index:50}
+.peptopia-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.peptopia-logo{width:46px;height:46px;border-radius:50%;flex:none;box-shadow:0 0 10px 2px rgba(236,72,153,.55),0 0 26px 8px rgba(236,72,153,.18)}
+.peptopia-wordmark{display:flex;flex-direction:column;font:800 1.02rem/1.15 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.14em;color:#1e1b4b}
+html.dark .peptopia-wordmark{color:#f1f5f9}
+.peptopia-tagline{font-size:.6rem;font-weight:600;letter-spacing:.3em;color:#64748b}
+html.dark .peptopia-tagline{color:#94a3b8}
+.peptopia-nav{display:flex;align-items:center;gap:1.25rem}
+.peptopia-nav>a{font:700 .8rem/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.12em;color:#334155;text-decoration:none}
+html.dark .peptopia-nav>a{color:#cbd5e1}
+.peptopia-nav>a:hover{color:#be185d}
+.peptopia-iconbtn{width:38px;height:38px;border-radius:50%;border:1px solid rgba(15,23,42,.12);background:#fff;color:#475569;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+html.dark .peptopia-iconbtn{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:#cbd5e1}
+.peptopia-iconbtn:hover{border-color:#ec4899;color:#be185d}
+.peptopia-iconbtn svg{width:17px;height:17px}
+.peptopia-theme-toggle .pp-sun{display:none}
+html.dark .peptopia-theme-toggle .pp-sun{display:block}
+html.dark .peptopia-theme-toggle .pp-moon{display:none}
+.peptopia-ftr{border-top:1px solid rgba(15,23,42,.08);margin-top:48px;padding:22px 24px;text-align:center;font:500 .8rem/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#64748b}
+html.dark .peptopia-ftr{border-color:rgba(255,255,255,.08);color:#94a3b8}
+.peptopia-ftr .peptopia-ftr-icons{display:flex;gap:16px;justify-content:center;margin-top:10px}
+.peptopia-ftr .peptopia-ftr-icons a{color:#64748b;display:inline-flex}
+html.dark .peptopia-ftr .peptopia-ftr-icons a{color:#94a3b8}
+.peptopia-ftr .peptopia-ftr-icons a:hover{color:#be185d}
+.peptopia-ftr .peptopia-ftr-icons svg{width:18px;height:18px}
+.peptopia-ftr .ftr-logo img{width:18px;height:18px;border-radius:50%;filter:grayscale(1);opacity:.55}
+.peptopia-ftr .ftr-logo:hover img{filter:none;opacity:1}
+html.dark .peptopia-ftr .ftr-logo img{filter:grayscale(1) invert(1);opacity:.75}
+html.dark .peptopia-ftr .ftr-logo:hover img{filter:none;opacity:1}
+.peptopia-ftr a.ftr-email{color:inherit;text-decoration:none}
+.peptopia-ftr a.ftr-email:hover{color:#be185d;text-decoration:underline}
+@media print{.peptopia-nav .peptopia-iconbtn,.peptopia-ftr-icons{display:none!important}.statcard,.statgrid,table,thead,tbody,tr,figure,figcaption,blockquote,.coa-callout,.card,.strain-card,pre,.callout,img{break-inside:avoid!important;page-break-inside:avoid!important}h1,h2,h3,h4,h5,h6{break-after:avoid!important;page-break-after:avoid!important}p,li{orphans:3;widows:3}a{color:inherit;text-decoration:none}body{background:#fff!important}}
+
+</style>
+</head>
+<body class="p-4 md:p-8 text-xl">
+
+    <div id="view-study" class="guide-container">
+        <!-- Header & Print Button -->
+        <div class="max-w-5xl mx-auto flex justify-end items-center mb-8 no-print gap-4">
+            <button onclick="startQuiz(event)" class="quiz-badge-btn">
+                📝 Take Quiz (50 Qs)
+            </button>
+            <button onclick="window.print()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all flex items-center gap-2 text-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                Print Study Guide
+            </button>
+        </div>
+
+        <div class="max-w-5xl mx-auto space-y-8 content-card">
+            
+            <!-- Title Section -->
+            <header class="peptopia-hdr">
+<a class="peptopia-brand" href="https://x-peps.com/">
+<img class="peptopia-logo" src="data:image/png;base64,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" alt="Peptopia Health &amp; Wellness">
+<span class="peptopia-wordmark">PEPTOPIA<span class="peptopia-tagline">HEALTH &amp; WELLNESS</span></span>
+</a>
+<nav class="peptopia-nav" aria-label="Site">
+<a href="https://x-peps.com/">HOME</a>
+<a href="https://x-peps.com/X-Peps/orders/">ORDERS</a>
+<button type="button" class="peptopia-iconbtn" onclick="window.print()" title="Print / Save as PDF" aria-label="Print this page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>
+<button type="button" class="peptopia-iconbtn peptopia-theme-toggle" onclick="toggleTheme()" title="Toggle light / dark" aria-label="Toggle theme"><svg class="pp-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="pp-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></button>
+</nav>
+</header>
+
+            <!-- Section I -->
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-purple-100">
+                <h2 class="text-4xl font-semibold text-purple-700 mb-4 flex items-center gap-2">
+                    <span>📋</span> Section I: Triage Framework & Communication
+                </h2>
+                <p class="mb-4 text-gray-700">Triage is a dynamic, ongoing process used to determine clinical priority based on safety and acuity. Its primary purpose is to manage <strong>Limited Facility Resources</strong> efficiently while identifying immediate risks.</p>
+                
+                <div class="space-y-4 text-lg text-gray-700">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-3 bg-white border border-gray-200 rounded-lg shadow-sm">
+                            <p class="font-bold text-gray-800">🗣️ Therapeutic Communication</p>
+                            <p class="text-base mt-1"><strong>Goal:</strong> Promote patient autonomy and healthy coping.<br><strong>Techniques:</strong> Involves active listening, therapeutic silence, reflection of feelings, and using open-ended questions like <em>"Tell me more about that experience."</em></p>
+                        </div>
+                        <div class="p-3 bg-red-50 border border-red-200 rounded-lg shadow-sm">
+                            <p class="font-bold text-red-800">🚫 Non-Therapeutic Barriers</p>
+                            <p class="text-base mt-1 text-gray-800">Avoid giving personal advice, offering false reassurance, or asking demanding <em>"Why"</em> questions, as these shut down therapeutic rapport.</p>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-white border border-gray-200 rounded-xl shadow-sm">
+                        <p class="font-bold text-gray-800 mb-2">🛠️ C-SSRS Tool</p>
+                        <p>The <strong>Columbia–Suicide Severity Rating Scale (C-SSRS)</strong> is an evidence-supported screening tool. A key benefit is that it requires <strong>no special mental health training</strong> for basic administration by nursing or intake staff.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section II: Comparative Chart -->
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-blue-100">
+                <h2 class="text-4xl font-semibold text-blue-700 mb-4 flex items-center gap-2">
+                    <span>📊</span> Section II: Risk Stratification & Defense Mechanisms
+                </h2>
+                <p class="mb-4 text-lg text-gray-700">Evaluating mental health acuity requires categorizing presentation into strict risk levels to dictate operational response times.</p>
+                <div class="overflow-x-auto mb-6">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b-2 border-blue-200">
+                                <th class="py-3 px-2 font-bold text-xl">Risk Tier</th>
+                                <th class="py-3 px-2 font-bold text-xl">Clinical Presentation</th>
+                                <th class="py-3 px-2 font-bold text-xl">Mandatory Evaluation Window</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-lg">
+                            <tr class="border-b border-gray-100 pastel-pink">
+                                <td class="p-3 font-bold text-red-700"><span class="lethal-icon" title="Potentially Lethal Condition">💀</span> High Risk</td>
+                                <td class="p-3">Active suicidal ideation, threats of harm, or self-injury.</td>
+                                <td class="p-3"><strong>Emergent Evaluation:</strong> Immediate specialty transfer or Suicide Watch. Immediate Priority.</td>
+                            </tr>
+                            <tr class="border-b border-gray-100 pastel-orange">
+                                <td class="p-3 font-bold text-orange-700">🟡 Moderate Risk</td>
+                                <td class="p-3">Active Psychosis (delusions/hallucinations), severe ADL decline, or confusion.</td>
+                                <td class="p-3"><strong>Urgent Evaluation:</strong> QMHP assessment within <span class="time-frame">24 to 72 hours</span>. Secondary Priority.</td>
+                            </tr>
+                            <tr class="border-b border-gray-100 pastel-green">
+                                <td class="p-3 font-bold text-green-700">🟢 Low Risk</td>
+                                <td class="p-3">New mental health complaints or minor symptom changes.</td>
+                                <td class="p-3"><strong>Routine Evaluation:</strong> Assessment within <span class="time-frame">7 to 14 working days</span>. Routine Priority.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="p-4 bg-purple-50 rounded-xl border border-purple-100">
+                    <p class="font-bold text-purple-800 uppercase text-base mb-2">🧠 Psychological Defense Mechanisms</p>
+                    <ul class="list-disc pl-5 space-y-2 text-lg text-gray-700">
+                        <li><strong>Reaction Formation:</strong> Expressing the exact opposite of true unacceptable feelings.</li>
+                        <li><strong>Sublimation:</strong> Channeling unacceptable impulses into constructive, socially acceptable activities.</li>
+                        <li><strong>Projection:</strong> Attributing one's own traits or feelings to others (e.g., <em>"The nurse hates me"</em> when the patient is actually angry).</li>
+                        <li><strong>Displacement:</strong> Shifting anger or impulses to a less-threatening target.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- FORCED PAGE BREAK -->
+            <div class="page-break"></div>
+
+            <!-- Section III -->
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-pink-100 mt-8">
+                <h2 class="text-4xl font-semibold text-pink-700 mb-6 flex items-center gap-2">
+                    <span>🛡️</span> Section III: Clinical Operations & Safety Standards
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="font-bold text-gray-800 border-b border-pink-200 pb-1 mb-2 uppercase text-base">🗓️ SCR & Clinical Encounters</h3>
+                            <ul class="list-disc ml-5 text-gray-700 text-lg space-y-2">
+                                <li><strong>Daily Access:</strong> All patients must have the opportunity DAILY to request mental health care via Sick Call.</li>
+                                <li><strong>Encounter Timeframe:</strong> If a request describes clinical symptoms, a face-to-face encounter must occur within <span class="time-frame">24 hours</span>.</li>
+                                <li><strong>Documentation:</strong> Any triage of a request MUST include a review of the patient's health record. Ensure accurate <strong>SOAPE Notes</strong> (Subjective, Objective, Assessment, Plan, Education).</li>
+                                <li><strong>SCR Logs:</strong> Must track the date of receipt, the date of triage (< <span class="time-frame">24h</span>), and the date of completion.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="font-bold text-gray-800 border-b border-pink-200 pb-1 mb-2 uppercase text-base">⚖️ Safety & Restraints</h3>
+                            <ul class="list-disc ml-5 text-gray-700 text-lg space-y-2">
+                                <li><strong>Restraints:</strong> Used strictly as a last resort for imminent physical danger. Adult orders must be renewed every <span class="time-frame">4 hours</span>. Monitor physical needs and circulation every <span class="time-frame">15-30 minutes</span>.</li>
+                                <li><strong>Rule of Caution:</strong> Always err on the side of caution with interventions and watch levels.</li>
+                                <li><strong>Referrals:</strong> All emergent referrals must be <strong>CALLED</strong> to the provider immediately.</li>
+                                <li><strong>Conflict:</strong> If clinicians disagree on triage level: Talk it out first → then seek supervisor guidance.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section IV -->
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-orange-100">
+                <h2 class="text-4xl font-semibold text-orange-700 mb-4 flex items-center gap-2">
+                    <span>💊</span> Section IV: Pharmacological Pearls
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-lg text-gray-700 mb-6">
+                    <div class="p-4 bg-white border border-gray-200 rounded-xl shadow-sm">
+                        <p class="font-bold text-gray-800 mb-2"><span class="lethal-icon" title="Potentially Lethal Condition">💀</span> Lithium Toxicity Risk</p>
+                        <p class="mb-1"><strong>Therapeutic Range:</strong> 0.6 – 1.2 mEq/L.</p>
+                        <p><strong>Toxicity Signs:</strong> Coarse tremors, ataxia, slurred speech, and severe diarrhea. Monitor closely for dehydration, which increases toxicity risk.</p>
+                    </div>
+                    <div class="p-4 bg-white border border-gray-200 rounded-xl shadow-sm">
+                        <p class="font-bold text-gray-800 mb-2"><span class="lethal-icon" title="Potentially Lethal Condition">💀</span> <span class="disease-must-know">Serotonin Syndrome</span></p>
+                        <p class="mb-1"><strong>Hallmark Signs:</strong> Hyperreflexia, high fever, tachycardia, and rapid mental status changes.</p>
+                        <p><strong>Standard Intervention:</strong> Discontinue all serotonergic agents immediately and notify the provider.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MUST KNOW -->
+            <section class="bg-white p-6 rounded-2xl shadow-sm border-2 border-pink-400">
+                <h2 class="text-4xl font-bold text-pink-600 mb-6 flex items-center gap-2">
+                    <span>🌸</span> MUST KNOW
+                </h2>
+                <div class="space-y-3 text-lg">
+                    <p>🎯 <strong>NEED TO KNOW:</strong> Triage is a dynamic, ongoing process used to manage limited facility resources while ensuring clinical safety.</p>
+                    <p>🎯 <strong>NEED TO KNOW:</strong> The C-SSRS is an evidence-supported suicide severity scale that does not require special mental health training to administer.</p>
+                    <p>🎯 <strong>NEED TO KNOW:</strong> Active suicidal ideation or self-injury is a <span class="lethal-icon" title="Potentially Lethal Condition">💀</span> <strong>High Risk</strong> emergency requiring immediate Suicide Watch or transfer.</p>
+                    <p>🎯 <strong>NEED TO KNOW:</strong> Active psychosis (delusions/hallucinations) and severe ADL decline are <strong>Moderate Risk</strong> requiring an urgent eval within <span class="time-frame">24 to 72 hours</span>.</p>
+                    <p>🎯 <strong>NEED TO KNOW:</strong> New routine mental health complaints require assessment within <span class="time-frame">7 to 14 working days</span>.</p>
+                    <p>🎯 <strong>NEED TO KNOW:</strong> All patients must have the opportunity DAILY to request mental health care.</p>
+                    <p>🎯 <strong>NEED TO KNOW:</strong> If a sick call request describes clinical symptoms, a face-to-face encounter must occur within <span class="time-frame">24 hours</span>.</p>
+                    <p>🎯 <strong>NEED TO KNOW:</strong> In SOAPE documentation, the 'E' stands for Education provided to the patient.</p>
+                    <p>🎯 <strong>NEED TO KNOW:</strong> Restraints are a last resort; adult orders expire every <span class="time-frame">4 hours</span>, and circulation must be checked every <span class="time-frame">15-30 minutes</span>.</p>
+                    <p>🎯 <strong>NEED TO KNOW:</strong> Always err on the "Rule of Caution" when assigning watch levels or interventions.</p>
+                    <p>🎯 <strong>NEED TO KNOW:</strong> Asking "Why" questions is a non-therapeutic communication barrier that puts patients on the defensive.</p>
+                    <p>🎯 <strong>NEED TO KNOW:</strong> Open-ended statements like "Tell me more about that experience" promote therapeutic autonomy.</p>
+                    <p>🎯 <strong>NEED TO KNOW:</strong> Reaction Formation is a defense mechanism where the patient expresses the exact opposite of their true feelings.</p>
+                    <p>🎯 <strong>NEED TO KNOW:</strong> Sublimation is a healthy defense mechanism that channels unacceptable impulses into constructive activities.</p>
+                    <p>🎯 <strong>NEED TO KNOW:</strong> Projection involves attributing one's own unacceptable traits or feelings onto others.</p>
+                    <p>🎯 <strong>NEED TO KNOW:</strong> <span class="drug-name">Lithium</span> has a narrow therapeutic range of 0.6 – 1.2 mEq/L.</p>
+                    <p>🎯 <strong>NEED TO KNOW:</strong> Coarse tremors, ataxia, and severe diarrhea indicate <span class="lethal-icon" title="Potentially Lethal Condition">💀</span> life-threatening <span class="drug-name">Lithium</span> toxicity.</p>
+                    <p>🎯 <strong>NEED TO KNOW:</strong> <span class="lethal-icon" title="Potentially Lethal Condition">💀</span> <span class="disease-must-know">Serotonin Syndrome</span> presents with hyperreflexia, fever, and tachycardia; all serotonergic agents must be stopped immediately.</p>
+                    <p>🎯 <strong>NEED TO KNOW:</strong> If clinicians disagree on a triage priority, they must discuss it professionally first, then seek supervisor guidance.</p>
+                    <p>🎯 <strong>NEED TO KNOW:</strong> All emergent referrals must be immediately CALLED to the provider, not just documented.</p>
+                </div>
+            </section>
+
+        </div>
+
+        <footer class="peptopia-ftr">
+<div>&copy; 2026 Peptopia Health &bull; All rights reserved &bull; <a class="ftr-email" href="mailto:Peptopia@x-peps.com?subject=From%20the%20Peptopia%20Health%20Website">Peptopia@x-peps.com</a></div>
+<div class="peptopia-ftr-icons">
+<a class="ftr-logo" href="https://x-peps.com/" title="Home" aria-label="Home"><img src="data:image/png;base64,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" alt="Peptopia home"></a>
+<a href="https://x-peps.com/X-Peps/orders/" title="Shop" aria-label="Shop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></a>
+<a href="https://discord.gg/sHAYkB5NAM" target="_blank" rel="noopener" title="Discord" aria-label="Discord"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.93-1.51 1.98 1.98 0 0 0-.08 1.53 19.5 19.5 0 0 0-5.9 0A1.98 1.98 0 0 0 9.34 2.86a19.8 19.8 0 0 0-4.93 1.51A20.3 20.3 0 0 0 .1 18.06a19.9 19.9 0 0 0 6.07 3.03c.46-.63.87-1.3 1.22-2a12.9 12.9 0 0 1-1.93-.92c.16-.12.32-.24.47-.37a14.2 14.2 0 0 0 12.14 0c.15.13.31.25.47.37-.61.36-1.26.68-1.93.92.35.7.76 1.37 1.22 2a19.8 19.8 0 0 0 6.07-3.03 20.2 20.2 0 0 0-4.29-13.69ZM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42s.95-2.42 2.16-2.42 2.18 1.09 2.16 2.42c0 1.34-.95 2.42-2.16 2.42Zm7.97 0c-1.18 0-2.16-1.08-2.16-2.42s.95-2.42 2.16-2.42 2.18 1.09 2.16 2.42c0 1.34-.95 2.42-2.16 2.42Z"/></svg></a>
+<a href="https://youtube.com/playlist?list=PLJI0wP-Amc5mLaPG7sDBdRTYVvCOA7DUR&si=a0xNfjs4uDrBzKHh" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81ZM9.55 15.57V8.43L15.82 12l-6.27 3.57Z"/></svg></a>
+</div>
+</footer>
+    </div> <!-- End view-study -->
+
+    <!-- QUIZ OVERLAY -->
+    <div id="view-quiz" class="quiz-overlay hidden">
+      <header class="quiz-header">
+        <button class="exit-btn" onclick="exitQuiz(event)">❌ Exit</button>
+        <div id="q-count-display" style="font-weight:900; font-size:1.35rem; letter-spacing: 1px;">Question 1 / 50</div>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div id="score-circle" class="score-indicator-circle" style="font-weight:800; padding: 5px 10px; border: 2px solid white; border-radius: 20px; font-size: 1.25rem;">0%</div>
+          <button class="quiz-badge-btn" style="background: white; color: var(--header-bg); border: none;" onclick="showResults(event)">Results</button>
+        </div>
+      </header>
+      <div class="quiz-body">
+        <div id="q-container"></div>
+        <div id="nav-container" class="hidden">
+            <div class="click-continue-pulse" onclick="advanceQ(event)">Click here to continue ➡️</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROBUST RESULTS OVERLAY -->
+    <div id="view-results" class="quiz-overlay hidden">
+      <header class="quiz-header">
+        <button class="exit-btn" onclick="exitQuiz(event)">❌ Exit</button>
+        <div style="flex:1; text-align:center; font-weight:900; font-size:1.45rem; text-transform:uppercase; letter-spacing: 1px;">📊 Mental Health Assessment</div>
+      </header>
+      
+      <div class="quiz-body">
+        <div id="quiz-completion" class="quiz-completion visible">
+          <div class="qc-title" id="qc-title">📊 Assessment Complete</div>
+          
+          <div class="qc-unanswered" id="qc-unanswered" style="display:none;">
+            ⚠️ You have <span id="qc-unanswered-ct">0</span> unanswered questions remaining.
+          </div>
+          
+          <div class="qc-perf">
+            <div class="qc-perf-hdr">Performance Summary</div>
+            <div class="qc-stats-grid">
+              <div class="qc-stat qc-stat-total">
+                <div class="qc-stat-icon">🎯</div>
+                <div class="qc-stat-val" id="qc-total">0/50</div>
+                <div class="qc-stat-lbl">Answered</div>
+              </div>
+              <div class="qc-stat qc-stat-correct">
+                <div class="qc-stat-icon">✅</div>
+                <div class="qc-stat-val" id="qc-correct">0</div>
+                <div class="qc-stat-lbl">Correct</div>
+              </div>
+              <div class="qc-stat qc-stat-wrong">
+                <div class="qc-stat-icon">📝</div>
+                <div class="qc-stat-val" id="qc-wrong">0</div>
+                <div class="qc-stat-lbl">Incorrect</div>
+              </div>
+              <div class="qc-stat qc-stat-score">
+                <div class="qc-stat-icon">🔥</div>
+                <div class="qc-stat-val" id="qc-pct">0%</div>
+                <div class="qc-stat-lbl">Score</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="qc-weak" id="qc-weak">
+            <div class="qc-weak-hdr">🎯 Areas to Focus On</div>
+            <div id="qc-weak-body"></div>
+          </div>
+
+          <div id="qc-retest" style="display:none;">
+            <div class="qc-divider"></div>
+            <div class="qc-retest-hdr">🔄 Ready to Improve?</div>
+            <div class="qc-retest-desc">Retake the questions you missed to strengthen your knowledge and boost your score.</div>
+            <div style="text-align:center;">
+              <button class="qc-btn qc-btn-retest" onclick="retestMissed()">📝 Retest Missed (<span id="qc-missed">0</span>)</button>
+            </div>
+          </div>
+
+          <div class="qc-actions">
+            <button class="qc-btn qc-btn-reset" onclick="startQuiz(event)">🔄 Reset Quiz</button>
+            <button class="qc-btn qc-btn-home" onclick="exitQuiz(event)">🏠 Back to Study Guide</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<script>
+// Comprehensive Mental Health Triage Question Bank (50 Questions mapped strictly from source)
+const QUESTIONS = [
+  { id: 1, topic: 'Therapeutic Communication', text: "Which of the following is a primary goal of therapeutic communication?", type: 'MC', options: ["To provide rapid personal advice", "To promote patient autonomy and healthy coping", "To diagnose mental illness accurately", "To offer reassurance that everything will be fine"], answer: 1, rationale: "Correct! The goal of therapeutic communication is to promote patient autonomy and encourage healthy coping mechanisms." },
+  { id: 2, topic: 'Therapeutic Techniques', text: "Which statement is an example of an open-ended, therapeutic question?", type: 'MC', options: ["'Why did you stop taking your medication?'", "'Are you feeling sad today?'", "'Tell me more about that experience.'", "'Don't you think you should try to sleep?'"], answer: 2, rationale: "Correct! 'Tell me more...' is an open-ended statement that encourages the patient to elaborate without feeling judged." },
+  { id: 3, topic: 'Communication Barriers', text: "Asking 'Why' questions is considered an effective therapeutic technique because it quickly gets to the root of the problem.", type: 'TF', answer: false, rationale: "Incorrect. Asking 'Why' questions is a non-therapeutic barrier because it often makes patients feel defensive and judged." },
+  { id: 4, topic: 'Communication Barriers', text: "Which of the following are considered barriers to therapeutic communication? (Select All That Apply)", type: 'SATA', options: ["Active listening", "Giving advice", "False reassurance", "Asking 'Why' questions", "Reflection of feelings"], answer: [1, 2, 3], rationale: "Correct! Giving advice, offering false reassurance, and asking 'why' questions shut down therapeutic rapport and act as barriers." },
+  { id: 5, topic: 'Defense Mechanisms', text: "A patient who harbors intense, unacceptable anger toward their family constantly expresses overwhelming, exaggerated love for them instead. This is an example of:", type: 'MC', options: ["Sublimation", "Projection", "Reaction Formation", "Displacement"], answer: 2, rationale: "Correct! Reaction Formation is expressing the exact opposite of true unacceptable feelings." },
+  { id: 6, topic: 'Defense Mechanisms', text: "Sublimation is considered a healthy defense mechanism because it channels unacceptable impulses into constructive activities.", type: 'TF', answer: true, rationale: "Correct! Sublimation turns negative impulses into socially acceptable, constructive actions." },
+  { id: 7, topic: 'Defense Mechanisms', text: "A patient angrily shouts, 'The nurse hates me and wants to ruin my life!' when in reality, the patient is angry at the nurse. This is an example of:", type: 'MC', options: ["Projection", "Displacement", "Reaction Formation", "Sublimation"], answer: 0, rationale: "Correct! Projection involves attributing one's own unacceptable traits or feelings onto someone else." },
+  { id: 8, topic: 'Defense Mechanisms', text: "Shifting anger or impulses from a threatening target to a less-threatening target is the definition of:", type: 'MC', options: ["Projection", "Displacement", "Reaction Formation", "Sublimation"], answer: 1, rationale: "Correct! Displacement is shifting emotions to a safer, less-threatening target (e.g., yelling at a wall instead of a boss)." },
+  { id: 9, topic: 'Lithium Pharmacology', text: "What is the normal therapeutic range for Lithium?", type: 'MC', options: ["0.1 - 0.5 mEq/L", "0.6 - 1.2 mEq/L", "1.5 - 2.5 mEq/L", "2.0 - 3.0 mEq/L"], answer: 1, rationale: "Correct! The narrow therapeutic range for Lithium is 0.6 – 1.2 mEq/L." },
+  { id: 10, topic: 'Lithium Toxicity', text: "Which of the following are hallmark clinical signs of Lithium toxicity? (Select All That Apply)", type: 'SATA', options: ["Coarse tremors", "Severe diarrhea", "Slurred speech", "Hyperreflexia", "Ataxia (loss of coordination)"], answer: [0, 1, 2, 4], rationale: "Correct! Coarse tremors, severe diarrhea, slurred speech, and ataxia are key signs of Lithium toxicity. Hyperreflexia is typically seen in Serotonin Syndrome." },
+  { id: 11, topic: 'Serotonin Syndrome', text: "A patient on multiple antidepressants develops hyperreflexia, a high fever, and tachycardia. The nurse suspects:", type: 'MC', options: ["Lithium toxicity", "Serotonin Syndrome", "Neuroleptic Malignant Syndrome", "Acute Dystonia"], answer: 1, rationale: "Correct! Hyperreflexia, fever, tachycardia, and mental status changes are hallmark signs of Serotonin Syndrome." },
+  { id: 12, topic: 'Serotonin Syndrome', text: "What is the immediate standard intervention for suspected Serotonin Syndrome?", type: 'MC', options: ["Administer more SSRIs to balance levels", "Discontinue all serotonergic agents immediately", "Place the patient in restraints", "Administer Lithium"], answer: 1, rationale: "Correct! The immediate priority is to discontinue all offending serotonergic agents and notify the provider." },
+  { id: 13, topic: 'Triage Framework', text: "Mental health triage is a static, one-time process completed only upon the patient's arrival.", type: 'TF', answer: false, rationale: "Incorrect. Triage is a dynamic, ongoing process used to determine clinical priority based on safety and changing acuity." },
+  { id: 14, topic: 'Triage Objectives', text: "The primary operational purpose of the triage framework is to:", type: 'MC', options: ["Diagnose the exact mental illness", "Manage limited facility resources efficiently while identifying risks", "Discharge patients quickly", "Ensure every patient sees a psychiatrist daily"], answer: 1, rationale: "Correct! The primary operational purpose is to manage limited facility resources efficiently while prioritizing immediate safety risks." },
+  { id: 15, topic: 'C-SSRS Tool', text: "The Columbia–Suicide Severity Rating Scale (C-SSRS) requires advanced psychiatric training to be administered.", type: 'TF', answer: false, rationale: "Incorrect. A key benefit of the C-SSRS is that it is evidence-supported and requires NO special mental health training for basic administration." },
+  { id: 16, topic: 'Risk Stratification', text: "A patient expressing active suicidal ideation or self-injury is classified at which risk tier?", type: 'MC', options: ["Low Risk", "Moderate Risk", "High Risk", "Non-priority"], answer: 2, rationale: "Correct! Active suicidal ideation and self-injury are High Risk and require immediate, emergent evaluation." },
+  { id: 17, topic: 'High Risk Protocols', text: "For a patient classified as High Risk, the evaluation is considered 'Emergent' and requires immediate specialty transfer or Suicide Watch.", type: 'TF', answer: true, rationale: "Correct! High Risk is an immediate life-safety priority requiring emergent intervention." },
+  { id: 18, topic: 'Moderate Risk', text: "Which clinical presentations fall under the Moderate Risk (Urgent) tier? (Select All That Apply)", type: 'SATA', options: ["Active Psychosis (delusions/hallucinations)", "Active suicidal threats", "Severe ADL decline", "Confusion", "Minor mood changes"], answer: [0, 2, 3], rationale: "Correct! Active psychosis, confusion, and ADL decline are Moderate Risk. Active suicidal threats are High Risk, and minor mood changes are Low Risk." },
+  { id: 19, topic: 'Evaluation Timeframes', text: "A patient classified as Moderate Risk requires an urgent QMHP assessment within what timeframe?", type: 'MC', options: ["Immediately", "24 to 72 hours", "7 to 14 days", "1 month"], answer: 1, rationale: "Correct! Moderate Risk triggers an Urgent Evaluation that must occur within 24 to 72 hours." },
+  { id: 20, topic: 'Low Risk Priority', text: "New mental health complaints or minor symptom changes are considered Routine Priority (Low Risk).", type: 'TF', answer: true, rationale: "Correct! Routine priority issues are classified as Low Risk." },
+  { id: 21, topic: 'Evaluation Timeframes', text: "A patient classified as Low Risk requires a routine assessment within what timeframe?", type: 'MC', options: ["24 hours", "24 to 72 hours", "7 to 14 working days", "30 days"], answer: 2, rationale: "Correct! Low Risk/Routine Priority dictates assessment within 7 to 14 working days." },
+  { id: 22, topic: 'Clinical Access', text: "All patients must have the opportunity to request mental health care via Sick Call how often?", type: 'MC', options: ["Weekly", "Monthly", "Daily", "Upon intake only"], answer: 2, rationale: "Correct! All patients have the right to request mental health care DAILY." },
+  { id: 23, topic: 'Sick Call Encounters', text: "If a patient's request describes clinical symptoms, a face-to-face encounter must occur within 48 hours.", type: 'TF', answer: false, rationale: "Incorrect. If a request describes clinical symptoms, the face-to-face encounter must occur within 24 hours." },
+  { id: 24, topic: 'Triage Record Review', text: "Any triage of a mental health request MUST include a review of the patient's health record.", type: 'TF', answer: true, rationale: "Correct! Reviewing the health record is a mandatory step in the triage process." },
+  { id: 25, topic: 'SOAPE Notes', text: "In the SOAPE documentation framework, what does the 'E' stand for?", type: 'MC', options: ["Emergency", "Evaluation", "Education", "Evidence"], answer: 2, rationale: "Correct! SOAPE stands for Subjective, Objective, Assessment, Plan, and Education." },
+  { id: 26, topic: 'SCR Logs', text: "Which of the following data points must be tracked in the SCR (Sick Call Request) logs? (Select All That Apply)", type: 'SATA', options: ["Date of receipt", "Patient's favorite color", "Date of triage (<24h)", "Date of completion", "Provider's home phone"], answer: [0, 2, 3], rationale: "Correct! SCR logs must track the date of receipt, the date of triage (which must be <24 hours), and the date of completion." },
+  { id: 27, topic: 'Safety & Restraints', text: "Physical restraints are used routinely as a first-line intervention for uncooperative patients.", type: 'TF', answer: false, rationale: "Incorrect. Restraints are strictly a LAST RESORT for imminent physical danger." },
+  { id: 28, topic: 'Restraint Orders', text: "For adult patients, restraint orders must be renewed every:", type: 'MC', options: ["1 hour", "4 hours", "12 hours", "24 hours"], answer: 1, rationale: "Correct! Adult restraint orders expire and must be renewed every 4 hours." },
+  { id: 29, topic: 'Restraint Monitoring', text: "When a patient is in restraints, physical needs and circulation must be monitored every:", type: 'MC', options: ["15-30 minutes", "1 hour", "2 hours", "4 hours"], answer: 0, rationale: "Correct! Close monitoring for circulation and basic physical needs must occur every 15 to 30 minutes." },
+  { id: 30, topic: 'Clinical Judgment', text: "The 'Rule of Caution' dictates that nurses should always err on the side of caution when assigning watch levels or interventions.", type: 'TF', answer: true, rationale: "Correct! Erring on the side of caution ensures patient safety is prioritized over minimizing interventions." },
+  { id: 31, topic: 'Conflict Resolution', text: "If clinicians disagree on a patient's triage priority, what is the protocol step?", type: 'MC', options: ["Immediately escalate to the facility warden", "Talk it out professionally first, then seek supervisor guidance", "Let security decide", "Ignore the disagreement and discharge the patient"], answer: 1, rationale: "Correct! Clinicians should discuss the matter professionally first, and if unresolved, seek supervisor guidance." },
+  { id: 32, topic: 'Emergent Referrals', text: "All emergent referrals can simply be documented in the EMR; direct provider notification is not required.", type: 'TF', answer: false, rationale: "Incorrect! All emergent referrals must be immediately CALLED to the provider to ensure rapid intervention." },
+  { id: 33, topic: 'Therapeutic Communication', text: "Therapeutic silence is a technique used to:", type: 'MC', options: ["Ignore the patient until they calm down", "Give the patient time to organize their thoughts and reflect", "Show the patient you are in charge", "Speed up the assessment process"], answer: 1, rationale: "Correct! Therapeutic silence allows the patient time to think, process emotions, and speak at their own pace." },
+  { id: 34, topic: 'Defense Mechanisms', text: "A patient diagnosed with terminal cancer focuses entirely on researching the biochemical pathways of the disease instead of processing their grief. This may be an example of:", type: 'MC', options: ["Sublimation", "Projection", "Intellectualization", "Reaction Formation"], answer: 2, rationale: "Correct! While not explicitly listed in the main four, this is classic Intellectualization (though questions typically focus on the main 4 from the guide)." },
+  { id: 35, topic: 'Lithium Toxicity Risk', text: "Which physical condition significantly increases the risk of Lithium toxicity?", type: 'MC', options: ["Hyperglycemia", "Dehydration", "Hypertension", "Asthma"], answer: 1, rationale: "Correct! Because Lithium is a salt, dehydration causes the body to retain it, rapidly leading to toxicity." },
+  { id: 36, topic: 'Serotonin Syndrome', text: "A patient begins experiencing hyperreflexia, tachycardia, and a fever shortly after starting an SSRI. This is a medical emergency.", type: 'TF', answer: true, rationale: "Correct! These are the hallmark signs of Serotonin Syndrome, which is a life-threatening medical emergency." },
+  { id: 37, topic: 'Triage Fundamentals', text: "The primary focus of mental health triage is to determine the definitive psychiatric diagnosis.", type: 'TF', answer: false, rationale: "Incorrect. The primary focus of triage is safety, acuity, and prioritization, not making a definitive psychiatric diagnosis." },
+  { id: 38, topic: 'Moderate Risk Timeframes', text: "A patient experiencing active hallucinations but who is not currently suicidal requires an urgent evaluation within:", type: 'MC', options: ["Immediately", "24 to 72 hours", "7 days", "14 days"], answer: 1, rationale: "Correct! Active psychosis is Moderate Risk (Urgent), requiring an evaluation within 24 to 72 hours." },
+  { id: 39, topic: 'High Risk Protocols', text: "Suicide Watch is a potential mandatory outcome for a patient categorized as High Risk.", type: 'TF', answer: true, rationale: "Correct! High Risk presentations (active SI, self-harm) dictate emergent evaluation, which often includes initiating a Suicide Watch." },
+  { id: 40, topic: 'SOAPE Framework', text: "In SOAPE documentation, the 'S' (Subjective) data includes:", type: 'MC', options: ["The patient's vital signs", "The patient's direct quotes and reported symptoms", "The nurse's clinical diagnosis", "The patient's lab results"], answer: 1, rationale: "Correct! Subjective data is what the patient says or reports feeling." },
+  { id: 41, topic: 'Clinical Encounters', text: "If a sick call request says 'I need a refill' but describes no clinical symptoms, a face-to-face encounter is still mandatory within 24 hours.", type: 'TF', answer: false, rationale: "Incorrect. The 24-hour face-to-face rule specifically applies if the request describes clinical symptoms." },
+  { id: 42, topic: 'Restraint Safety', text: "Why must circulation be checked every 15-30 minutes for a patient in restraints?", type: 'MC', options: ["To prevent deep vein thrombosis", "To ensure the restraints haven't compromised neurovascular integrity", "To keep the patient awake", "To document their pulse rate"], answer: 1, rationale: "Correct! Frequent checks are required to ensure the restraints are not cutting off blood flow or causing nerve damage." },
+  { id: 43, topic: 'Conflict Resolution', text: "It is acceptable for nurses to independently downgrade a suicide watch level if they feel the provider was too cautious.", type: 'TF', answer: false, rationale: "Incorrect. The Rule of Caution applies, and clinicians should talk out disagreements or consult supervisors; they cannot unilaterally downgrade safety orders." },
+  { id: 44, topic: 'Therapeutic Communication', text: "Which of the following represents a barrier to therapeutic communication?", type: 'MC', options: ["'It must be very difficult for you right now.'", "'Everything happens for a reason; you will be fine.'", "'I am here to listen.'", "'Tell me more about what triggered this.'"], answer: 1, rationale: "Correct! 'Everything will be fine' is false reassurance, which invalidates the patient's feelings and acts as a barrier." },
+  { id: 45, topic: 'Defense Mechanisms', text: "A patient who is secretly angry at their spouse instead yells at their dog. This is:", type: 'MC', options: ["Sublimation", "Reaction Formation", "Displacement", "Projection"], answer: 2, rationale: "Correct! Shifting anger to a less-threatening target is Displacement." },
+  { id: 46, topic: 'Lithium Toxicity', text: "Severe diarrhea can be both a symptom of Lithium toxicity and a cause of it (due to dehydration).", type: 'TF', answer: true, rationale: "Correct! Diarrhea is a toxicity sign, and it also causes fluid loss (dehydration), which concentrates Lithium levels further, creating a vicious cycle." },
+  { id: 47, topic: 'C-SSRS Usage', text: "The C-SSRS is utilized specifically to evaluate:", type: 'MC', options: ["Schizophrenia severity", "Suicide severity and risk", "Lithium levels", "Serotonin Syndrome"], answer: 1, rationale: "Correct! The Columbia–Suicide Severity Rating Scale evaluates suicidal ideation and behavior." },
+  { id: 48, topic: 'Risk Stratification', text: "A patient reports feeling 'a little more anxious than usual' over the past few weeks but denies any thoughts of self-harm or psychosis. This is triaged as:", type: 'MC', options: ["High Risk", "Moderate Risk", "Low Risk", "Non-clinical"], answer: 2, rationale: "Correct! Minor symptom changes without acute safety markers are triaged as Low Risk (Routine)." },
+  { id: 49, topic: 'Operations: Logs', text: "A properly maintained SCR log must show that a triage decision occurred within how many hours of receiving the request?", type: 'MC', options: ["12 hours", "24 hours", "48 hours", "72 hours"], answer: 1, rationale: "Correct! The triage decision must occur <24 hours from the receipt of the request." },
+  { id: 50, topic: 'Safety Principles', text: "When in doubt about a patient's safety risk, the nurse should employ the 'Rule of Caution' and implement the higher level of observation.", type: 'TF', answer: true, rationale: "Correct! The Rule of Caution mandates erring on the side of safety and implementing tighter observation if risk is ambiguous." }
+];
+
+let state = { idx: 0, correct: 0, incorrect: 0, isGrading: false, missedTopics: new Set(), answered: {}, sataSelections: new Set(), questionsToAsk: QUESTIONS };
+
+function startQuiz(e) {
+  if(e) e.stopPropagation();
+  state = { idx: 0, correct: 0, incorrect: 0, isGrading: false, missedTopics: new Set(), answered: {}, sataSelections: new Set(), questionsToAsk: QUESTIONS };
+  document.getElementById('view-study').classList.add('hidden');
+  document.getElementById('view-results').classList.add('hidden');
+  document.getElementById('view-quiz').classList.remove('hidden');
+  renderQ();
+}
+
+function exitQuiz(e) {
+  if(e) e.stopPropagation();
+  document.getElementById('view-quiz').classList.add('hidden');
+  document.getElementById('view-results').classList.add('hidden');
+  document.getElementById('view-study').classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+
+function renderQ() {
+  state.isGrading = false;
+  state.sataSelections = new Set();
+  const q = state.questionsToAsk[state.idx];
+  document.getElementById('q-count-display').innerText = `Question ${state.idx + 1} / ${state.questionsToAsk.length}`;
+  document.getElementById('nav-container').classList.add('hidden');
+
+  let html = `<div class="q-card" data-answered="false"><div style="color:var(--accent); font-weight:900; font-size:1.1rem; margin-bottom:1rem; text-transform:uppercase; letter-spacing:1px;">${q.topic}</div><div class="q-text">${q.text}</div>`;
+  
+  if (q.type === 'TF') {
+    html += `<div class="choice-row" onclick="processAnswer(true, this, event)">True</div><div class="choice-row" onclick="processAnswer(false, this, event)">False</div>`;
+  } else if (q.type === 'MC') {
+    html += q.options.map((o, i) => `<div class="choice-row" onclick="processAnswer(${i}, this, event)">${o}</div>`).join('');
+  } else if (q.type === 'SATA') {
+    html += q.options.map((o, i) => `<div class="choice-row sata-mode" onclick="toggleSATA(${i}, this, event)"><div class="checkbox-mock"></div>${o}</div>`).join('');
+    html += `<button class="sata-submit-btn" onclick="submitSATA(event)">Submit Answer</button>`;
+  }
+  document.getElementById('q-container').innerHTML = html + `<div id="rationale-box"></div></div>`;
+  updateScoreCircle();
+}
+
+function toggleSATA(idx, el, e) {
+  if (state.isGrading) return;
+  if(e) e.stopPropagation();
+  if (state.sataSelections.has(idx)) {
+      state.sataSelections.delete(idx);
+      el.classList.remove('selected');
+  } else {
+      state.sataSelections.add(idx);
+      el.classList.add('selected');
+  }
+}
+
+function submitSATA(e) {
+  if (state.isGrading) return;
+  if(e) e.stopPropagation();
+  state.isGrading = true;
+  
+  const q = state.questionsToAsk[state.idx];
+  const correctSet = new Set(q.answer);
+  
+  let isCorrect = (state.sataSelections.size === correctSet.size) && [...state.sataSelections].every(val => correctSet.has(val));
+  state.answered[q.id] = Array.from(state.sataSelections);
+
+  if (isCorrect) {
+      state.correct++;
+  } else {
+      state.incorrect++;
+      state.missedTopics.add(q.topic);
+  }
+
+  const buttons = document.querySelectorAll('.choice-row');
+  buttons.forEach((btn, i) => {
+      btn.classList.add('disabled');
+      let isSelected = state.sataSelections.has(i);
+      let isActuallyCorrect = correctSet.has(i);
+
+      if (isActuallyCorrect) {
+          btn.classList.add('correct');
+          if(!btn.querySelector('.q-ans-icon')) btn.innerHTML += '<span class="q-ans-icon" style="color:var(--success-teal);">✓ Required</span>';
+      } else if (isSelected && !isActuallyCorrect) {
+          btn.classList.add('incorrect');
+          if(!btn.querySelector('.q-ans-icon')) btn.innerHTML += '<span class="q-ans-icon" style="color:var(--danger-red);">✗ Wrong</span>';
+      }
+  });
+
+  const submitBtn = document.querySelector('.sata-submit-btn');
+  if (submitBtn) submitBtn.style.display = 'none';
+
+  const ratContainer = document.getElementById('rationale-box');
+  ratContainer.innerHTML = `
+      <div class="q-rationale visible">
+          <div class="q-rat-hdr ${isCorrect ? 'correct' : 'incorrect'}">
+              ${isCorrect ? '✔️ Correct!' : '❌ Incorrect'}
+          </div>
+          <div class="q-rat-body">
+              <div class="q-rat-label">🤓 Rationale:</div>
+              <div class="q-rat-text">${q.rationale}</div>
+          </div>
+      </div>
+  `;
+
+  const qCard = document.querySelector('.q-card');
+  if (qCard) {
+      qCard.style.cursor = 'pointer';
+      qCard.setAttribute('data-answered', 'true');
+  }
+
+  updateScoreCircle();
+  document.getElementById('nav-container').classList.remove('hidden');
+}
+
+function processAnswer(val, el, e) {
+  if (state.isGrading) return;
+  if(e) e.stopPropagation();
+  state.isGrading = true;
+  
+  const q = state.questionsToAsk[state.idx];
+  let isCorrect = (val === q.answer);
+  state.answered[q.id] = val;
+
+  if (isCorrect) {
+      state.correct++;
+  } else {
+      state.incorrect++;
+      state.missedTopics.add(q.topic);
+  }
+
+  const buttons = document.querySelectorAll('.choice-row');
+  buttons.forEach((btn, i) => {
+      btn.classList.add('disabled');
+      let btnVal = (q.type === 'TF') ? (i === 0 ? true : false) : i;
+
+      if (btnVal === q.answer) {
+          btn.classList.add('correct');
+          btn.innerHTML += '<span class="q-ans-icon" style="color:var(--success-teal);">✓</span>';
+      } else if (btnVal === val && val !== q.answer) {
+          btn.classList.add('incorrect');
+          btn.innerHTML += '<span class="q-ans-icon" style="color:var(--danger-red);">✗</span>';
+      }
+  });
+
+  const ratContainer = document.getElementById('rationale-box');
+  ratContainer.innerHTML = `
+      <div class="q-rationale visible">
+          <div class="q-rat-hdr ${isCorrect ? 'correct' : 'incorrect'}">
+              ${isCorrect ? '✔️ Correct!' : '❌ Incorrect'}
+          </div>
+          <div class="q-rat-body">
+              <div class="q-rat-label">🤓 Rationale:</div>
+              <div class="q-rat-text">${q.rationale}</div>
+          </div>
+      </div>
+  `;
+
+  const qCard = document.querySelector('.q-card');
+  if (qCard) {
+      qCard.style.cursor = 'pointer';
+      qCard.setAttribute('data-answered', 'true');
+  }
+
+  updateScoreCircle();
+  document.getElementById('nav-container').classList.remove('hidden');
+}
+
+function updateScoreCircle() {
+  const answered = state.correct + state.incorrect;
+  const pct = answered > 0 ? Math.round((state.correct / answered) * 100) : 0;
+  const circle = document.getElementById('score-circle');
+  if(circle) {
+      circle.innerText = `${pct}%`;
+  }
+}
+
+function advanceQ(e) {
+  if(e) e.stopPropagation();
+  if (state.idx < state.questionsToAsk.length - 1) { 
+      state.idx++; 
+      renderQ(); 
+  } else { 
+      showResults(); 
+  }
+}
+
+document.addEventListener('click', function(e) {
+  if (!state.isGrading) return;
+  const qCard = document.querySelector('.q-card');
+  if (!qCard || qCard.getAttribute('data-answered') !== 'true') return;
+  if (e.target.closest('.exit-btn') || e.target.closest('.quiz-badge-btn') || e.target.closest('.theme-toggle-btn') || e.target.closest('.click-continue-pulse')) return;
+  advanceQ();
+});
+
+function retestMissed() {
+    if (state.incorrect === 0) return;
+    
+    // Filter to only missed questions
+    const missedQuestions = state.questionsToAsk.filter(q => {
+      let isCorrect = false;
+      const userAns = state.answered[q.id];
+      if (q.type === 'SATA') {
+          const correctSet = new Set(q.answer);
+          isCorrect = userAns && (userAns.length === correctSet.size) && userAns.every(val => correctSet.has(val));
+      } else {
+          isCorrect = userAns === q.answer;
+      }
+      return !isCorrect;
+    });
+
+    state = { idx: 0, correct: 0, incorrect: 0, isGrading: false, missedTopics: new Set(), answered: {}, sataSelections: new Set(), questionsToAsk: missedQuestions };
+    
+    document.getElementById('view-results').classList.add('hidden');
+    document.getElementById('view-quiz').classList.remove('hidden');
+    renderQ();
+}
+
+function showResults(e) {
+  if(e) e.stopPropagation();
+  document.getElementById('view-quiz').classList.add('hidden');
+  document.getElementById('view-results').classList.remove('hidden');
+  
+  const total = state.correct + state.incorrect;
+  const unanswered = state.questionsToAsk.length - total;
+  const score = total > 0 ? Math.round((state.correct / state.questionsToAsk.length) * 100) : 0;
+
+  const unEl = document.getElementById('qc-unanswered');
+  if (unanswered > 0) {
+    unEl.classList.remove('hidden');
+    document.getElementById('qc-unanswered-ct').innerText = unanswered;
+  } else {
+    unEl.classList.add('hidden');
+  }
+
+  document.getElementById('qc-total').innerText = `${total}/${state.questionsToAsk.length}`;
+  document.getElementById('qc-correct').innerText = state.correct;
+  document.getElementById('qc-wrong').innerText = state.incorrect;
+  document.getElementById('qc-pct').innerText = `${score}%`;
+
+  const weakBody = document.getElementById('qc-weak-body');
+  if (state.incorrect > 0) {
+    let wHtml = '';
+    const letters = ['A','B','C','D','E','F','G', 'H'];
+    
+    state.questionsToAsk.forEach((itm, index) => {
+        const userAns = state.answered[itm.id];
+        let isCorrect = false;
+        
+        if (itm.type === 'SATA') {
+             const correctSet = new Set(itm.answer);
+             isCorrect = userAns && (userAns.length === correctSet.size) && userAns.every(val => correctSet.has(val));
+        } else {
+             isCorrect = userAns === itm.answer;
+        }
+
+        if (userAns !== undefined && !isCorrect) {
+            let qTxt = itm.text.length > 80 ? itm.text.substring(0, 80) + '...' : itm.text;
+            let userAnsStr = '';
+            let corrAnsStr = '';
+            
+            if(itm.type === 'TF') {
+                userAnsStr = userAns ? 'True' : 'False';
+                corrAnsStr = itm.answer ? 'True' : 'False';
+            } else if (itm.type === 'MC') {
+                userAnsStr = letters[userAns] || 'Unknown';
+                corrAnsStr = letters[itm.answer] || 'Unknown';
+            } else if (itm.type === 'SATA') {
+                userAnsStr = 'Missed Selections';
+                corrAnsStr = 'Multiple Required';
+            }
+            
+            wHtml += `<div class="qc-weak-item"><div class="qc-weak-q">Q${index+1}: ${qTxt}</div>` +
+                     `<div class="qc-weak-a">Your answer: ${userAnsStr} — Correct: ${corrAnsStr}</div></div>`;
+        }
+    });
+    
+    weakBody.innerHTML = wHtml;
+    
+    document.getElementById('qc-missed').innerText = state.incorrect;
+    document.getElementById('qc-retest').style.display = 'block';
+  } else if (total > 0) {
+    weakBody.innerHTML = '<div class="qc-no-weak">🎉 Perfect score! No weak areas identified.</div>';
+    document.getElementById('qc-retest').style.display = 'none';
+  } else {
+    weakBody.innerHTML = '<div class="qc-no-weak" style="color:var(--text-muted); border-color:var(--border); background:var(--surface-alt)">No questions answered yet.</div>';
+    document.getElementById('qc-retest').style.display = 'none';
+  }
+}
+</script>
+<script>
+/* Peptopia theme: light default, toggle persists via localStorage */
+var ppStore=(function(){try{if(window.self!==window.top)return null;var s=window.localStorage;s.setItem('__pp_t','1');s.removeItem('__pp_t');return s}catch(e){return null}})();
+function toggleTheme(){var d=document.documentElement.classList.toggle('dark');if(ppStore){try{ppStore.setItem('peptopia-theme',d?'dark':'light')}catch(e){}}return false}
+(function(){try{var t=ppStore&&ppStore.getItem('peptopia-theme');if(t==='dark')document.documentElement.classList.add('dark')}catch(e){}})();
+</script>
+</body>
+</html>

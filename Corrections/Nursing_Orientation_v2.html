@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harrassment, Incivility & Violence</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script>
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    document.documentElement.classList.add('dark');
+  }
+</script>
+<style>
+/* === CSS VARIABLES & THEMING === */
+:root {
+  --bg: #f3f1f8; 
+  --surface: #ffffff;
+  --surface-alt: #f8fafc;
+  --border: #cbd5e1;
+  --text: #0f172a;
+  --text-muted: #475569;
+  --accent: #2563eb;
+  --accent-light: #eff6ff;
+  --correct: #10b981;
+  --incorrect: #ef4444;
+  --header-bg: #1e3a8a;
+}
+
+.dark {
+  --bg: #0a0a1a;
+  --surface: #0f172a;
+  --surface-alt: #1e293b;
+  --border: #334155;
+  --text: #e2e8f0;
+  --text-muted: #94a3b8;
+  --accent: #3b82f6;
+  --accent-light: rgba(59, 130, 246, 0.1);
+  --header-bg: #0c2461;
+}
+
+/* === CORE STYLES === */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  line-height:1.75;
+  padding:0;
+  font-size:1.05rem;
+  transition: background 0.3s, color 0.3s;
+}
+
+body::before{
+  content:'';position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(37,99,235,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 90%, rgba(99,102,241,0.06) 0%, transparent 60%);
+  pointer-events:none;
+}
+
+.guide-container { max-width: 1050px; margin: 0 auto; padding: 1.5rem 1.4rem 5rem; }
+.hidden { display: none !important; }
+
+/* === HERO HEADER === */
+.hero {
+  position:relative;
+  background:linear-gradient(135deg, #0c2461 0%, #1e3a8a 40%, #2563eb 100%);
+  border-radius: 1.25rem;
+  padding: 2rem 2.5rem;
+  margin-bottom: 2.5rem;
+  border: 2px solid var(--accent);
+  color: #fff;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(37,99,235,0.15);
+}
+.hero h1 { font-size:2.2rem; font-weight:900; letter-spacing:-0.01em; margin-bottom: 0.25rem; text-shadow:0 2px 12px rgba(0,0,0,0.4); }
+.hero .subtitle { font-size:1.15rem; color:#bfdbfe; line-height:1.4; font-weight:500; max-width: 80%; }
+
+.header-controls { position: absolute; top: 1.25rem; right: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+
+.badge-row { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:1.5rem; }
+.badge {
+  display:inline-flex; align-items:center; gap:0.3rem;
+  padding:0.35rem 0.85rem; border-radius:2rem; font-size:0.8rem; font-weight:800;
+  text-transform:uppercase; backdrop-filter:blur(4px); cursor:pointer; transition:all 0.2s; text-decoration:none;
+  letter-spacing: 0.5px;
+}
+.bdg-1 { background:rgba(34,211,238,0.2); color:#67e8f9; border:1px solid rgba(34,211,238,0.4); }
+.bdg-2 { background:rgba(251,146,60,0.2); color:#fdba74; border:1px solid rgba(251,146,60,0.4); }
+.bdg-3 { background:rgba(167,139,250,0.2); color:#c4b5fd; border:1px solid rgba(167,139,250,0.4); }
+.bdg-4 { background:rgba(248,113,113,0.2); color:#fca5a5; border:1px solid rgba(248,113,113,0.4); }
+.bdg-5 { background:rgba(20,184,166,0.2); color:#5eead4; border:1px solid rgba(20,184,166,0.4); }
+
+.quiz-badge-btn { background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.4); padding: 0.4rem 1rem; border-radius: 2rem; font-size: 0.8rem; font-weight: 800; color: white; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.quiz-badge-btn:hover { background: white; color: var(--header-bg); transform: translateY(-2px); }
+.theme-toggle-btn { background:rgba(255,255,255,0.2); border:2px solid rgba(255,255,255,0.4); border-radius:0.75rem; padding:0.35rem 0.6rem; cursor:pointer; font-size:1.2rem; transition: all 0.2s;}
+.theme-toggle-btn:hover { background: white; color: var(--header-bg); }
+
+/* === ENHANCED UI ARCHITECTURE === */
+.section-hdr { position:relative; margin:3rem 0 0; padding:1.25rem 1.75rem; border-radius:1rem 1rem 0 0; font-size:1.6rem; font-weight:900; display:flex; align-items:center; overflow:hidden; border:2px solid; letter-spacing: -0.01em; }
+.sec-num { display:inline-flex; align-items:center; justify-content:center; width:42px; height:42px; border-radius:50%; font-size:1.1rem; font-weight:900; margin-right:1rem; box-shadow:0 4px 12px rgba(0,0,0,0.25); flex-shrink:0; }
+
+.top-btn { 
+    display:inline-flex; align-items:center; justify-content:center; width:42px; height:42px; border-radius:50%; 
+    background:#10b981; border:2.5px solid #064e3b; color:white; font-size:1.4rem; 
+    margin-left:auto; text-decoration:none; cursor:pointer; transition: transform 0.2s; box-shadow:0 4px 12px rgba(0,0,0,0.2);
+}
+.top-btn:hover { transform: scale(1.1) rotate(-10deg); }
+
+.compare-table { width:100%; border-collapse:separate; border-spacing:0; margin:0 0 2rem; font-size:1.05rem; border:2.5px solid; border-top: none; border-radius: 0 0 1rem 1rem; overflow:hidden; box-shadow:0 8px 30px rgba(0,0,0,0.08); }
+
+/* --- SECTION SCHEMES --- */
+.sh-cyan{ border-color: #06b6d4; background:linear-gradient(135deg,#083344,#0e7490); color:#a5f3fc; }
+.sh-cyan + .compare-table { border-color: #06b6d4; }
+.sh-cyan + .compare-table td { background: rgba(6, 182, 212, 0.05); }
+.sh-cyan .sec-num{ background:#06b6d4; color:#083344; }
+
+.sh-orange{ border-color: #f97316; background:linear-gradient(135deg,#431407,#9a3412); color:#fed7aa; }
+.sh-orange + .compare-table { border-color: #f97316; }
+.sh-orange + .compare-table td { background: rgba(249, 115, 22, 0.05); }
+.sh-orange .sec-num{ background:#f97316; color:#431407; }
+
+.sh-purple{ border-color: #8b5cf6; background:linear-gradient(135deg,#2e1065,#5b21b6); color:#ddd6fe; }
+.sh-purple + .compare-table { border-color: #8b5cf6; }
+.sh-purple + .compare-table td { background: rgba(139, 92, 246, 0.05); }
+.sh-purple .sec-num{ background:#8b5cf6; color:#2e1065; }
+
+.sh-red{ border-color: #ef4444; background:linear-gradient(135deg,#450a0a,#991b1b); color:#fecaca; }
+.sh-red + .compare-table { border-color: #ef4444; }
+.sh-red + .compare-table td { background: rgba(239, 68, 68, 0.05); }
+.sh-red .sec-num{ background:#ef4444; color:#450a0a; }
+
+.sh-teal{ border-color: #14b8a6; background:linear-gradient(135deg,#042f2e,#0d9488); color:#ccfbf1; }
+.sh-teal + .compare-table { border-color: #14b8a6; }
+.sh-teal + .compare-table td { background: rgba(20, 184, 166, 0.05); }
+.sh-teal .sec-num{ background:#14b8a6; color:#042f2e; }
+
+.sh-indigo{ border-color: #6366f1; background:linear-gradient(135deg,#1e1b4b,#3730a3); color:#e0e7ff; }
+.sh-indigo + .compare-table { border-color: #6366f1; }
+.sh-indigo + .compare-table td { background: rgba(99, 102, 241, 0.05); }
+.sh-indigo .sec-num{ background:#6366f1; color:#1e1b4b; }
+
+.sh-rose{ border-color: #f43f5e; background:linear-gradient(135deg,#4c0519,#9f1239); color:#ffe4e6; }
+.sh-rose + .compare-table { border-color: #f43f5e; }
+.sh-rose + .compare-table td { background: rgba(244, 63, 94, 0.05); }
+.sh-rose .sec-num{ background:#f43f5e; color:#4c0519; }
+
+.compare-table th{ background: rgba(0,0,0,0.05); color: inherit; font-weight: 800; padding:1.25rem; text-align:left; border-bottom: 2px solid rgba(0,0,0,0.1); font-size:0.95rem; text-transform:uppercase; letter-spacing: 0.5px;}
+html.dark .compare-table th { background: rgba(0,0,0,0.2); border-bottom: 2px solid rgba(255,255,255,0.05); }
+.compare-table td{ color:var(--text); padding:1.25rem; border-bottom:1px solid rgba(0,0,0,0.05); vertical-align:top; line-height: 1.6;}
+html.dark .compare-table td { border-bottom: 1px solid rgba(255,255,255,0.05); }
+.cat-label{ font-weight:900; color:var(--accent); min-width:200px; border-right: 2px solid rgba(0,0,0,0.05); font-size: 1.1rem;}
+html.dark .cat-label { border-right: 2px solid rgba(255,255,255,0.05); }
+
+/* === NEW LEARNING AIDS & VISUAL CONTAINERS === */
+.scenario-box { background: linear-gradient(135deg, var(--surface-alt), var(--surface)); border-left: 8px solid var(--accent); padding: 1.75rem; border-radius: 0.75rem; margin: 2rem 0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--border); }
+.scenario-title { font-weight: 900; color: var(--accent); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.5px; }
+.scenario-content { font-weight: 500; color: var(--text); line-height: 1.6; }
+
+.callout-box { padding: 1.5rem; border-radius: 1rem; margin: 2rem 0; border: 2px solid; display: flex; flex-direction: column; gap: 0.5rem; box-shadow: 0 8px 25px rgba(0,0,0,0.08); background: var(--surface); }
+.co-critical { border-left: 12px solid #ef4444; border-color: #ef4444; }
+.co-critical .callout-title { color: #ef4444; }
+.callout-title { font-weight: 900; text-transform: uppercase; font-size: 0.95rem; letter-spacing: 1px; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+.callout-content { color: var(--text); font-weight: 500; line-height: 1.6; font-size: 1.05rem; }
+
+/* === QUIZ OVERLAY === */
+.quiz-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 2000; overflow-y: auto; display: flex; flex-direction: column; cursor: pointer; }
+.quiz-header { 
+  max-width: 720px; width: 100%; margin: 0 auto;
+  padding: 0.75rem 1.5rem; background: var(--header-bg); color: #fff; 
+  display: flex; justify-content: space-between; align-items: center; 
+  position: sticky; top: 0; z-index: 2001; border: 2.5px solid var(--accent); border-radius: 0 0 1.25rem 1.25rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.quiz-body { max-width: 720px; margin: 1.5rem auto; width: 100%; padding: 0 1.5rem; flex-grow: 1; cursor: default; }
+
+.q-card { background: var(--surface); border: 2px solid var(--border); border-radius: 1.5rem; padding: 2.5rem; box-shadow: 0 15px 40px rgba(0,0,0,0.15); transition: border-color 0.3s; }
+.q-text { font-size: 1.45rem; font-weight: 800; margin-bottom: 2rem; color: var(--text); line-height: 1.4; }
+
+.choice-row { display: flex; align-items: center; gap: 1rem; padding: 0.85rem 1.25rem; border: 2px solid var(--border); border-radius: 1rem; cursor: pointer; transition: all 0.2s; margin-bottom: 0.75rem; background: var(--surface-alt); color: var(--text); font-weight: 600;}
+.choice-row:hover:not(.disabled) { border-color: var(--accent); transform: translateX(5px); background: var(--accent-light); }
+.choice-row.correct { background: rgba(16,185,129,0.15) !important; border-color: #10b981 !important; color: #10b981 !important; font-weight: 800; opacity: 1 !important; transform: scale(1.02); }
+.choice-row.incorrect { background: rgba(239,68,68,0.15) !important; border-color: #ef4444 !important; color: #ef4444 !important; font-weight: 800; opacity: 1 !important; }
+.choice-row.disabled { pointer-events: none; opacity: 0.6; }
+
+.q-ans-icon { margin-left: auto; font-weight: 900; font-size: 1.4rem; }
+
+.q-rationale { display: none; margin-top: 2rem; border-radius: 1rem; overflow: hidden; border: 2px solid var(--accent); background: var(--surface-alt); animation: fadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+.q-rationale.visible { display: block; }
+.q-rat-hdr { padding: 1rem 1.25rem; font-weight: 900; font-size: 1.1rem; color: white; display: flex; align-items: center; gap: 0.5rem;}
+.q-rat-hdr.correct { background: linear-gradient(135deg, #10b981, #059669); }
+.q-rat-hdr.incorrect { background: linear-gradient(135deg, #ef4444, #b91c1c); }
+.q-rat-body { padding: 1.25rem; color: var(--text); line-height: 1.6; }
+.q-rat-label { font-weight: 900; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
+
+/* === SATA STYLES === */
+.choice-row.sata-mode { justify-content: flex-start; }
+.choice-row.selected { border-color: var(--accent); background: var(--accent-light); transform: translateX(5px); }
+.checkbox-mock { width: 22px; height: 22px; border: 2px solid var(--text-muted); border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; margin-right: 0.5rem; transition: all 0.2s; flex-shrink: 0; }
+.choice-row.selected .checkbox-mock { background: var(--accent); border-color: var(--accent); }
+.choice-row.selected .checkbox-mock::after { content: '✓'; color: white; font-size: 14px; font-weight: 900; }
+.sata-submit-btn { margin-top: 1.5rem; width: 100%; padding: 1.1rem; background: var(--accent); color: white; border: none; border-radius: 1rem; font-weight: 900; font-size: 1.1rem; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(37,99,235,0.3); transition: all 0.2s; }
+.sata-submit-btn:hover { filter: brightness(1.1); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,99,235,0.4); }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.exit-btn { background: #ef4444; color: white; border-radius: 2rem; padding: 0.5rem 1.25rem; border: 2px solid #991b1b; font-weight: 900; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 1px;}
+.exit-btn:hover { background: #dc2626; transform: scale(1.05); }
+
+/* === ROBUST RESULTS OVERLAY === */
+.quiz-completion { background: linear-gradient(135deg, var(--surface-alt), var(--surface)); border-radius: 1.5rem; border: 2px solid var(--accent); padding: 2.5rem 2rem; box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+.qc-title { font-size: 2.2rem; font-weight: 900; color: var(--header-bg); text-align: center; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 0.75rem; }
+html.dark .qc-title { color: #bfdbfe; }
+
+.qc-unanswered { background: #fffbeb; border: 2px solid #fbbf24; border-radius: 1rem; padding: 1rem 1.25rem; margin-bottom: 2rem; text-align: center; color: #b45309; font-weight: 800; font-size: 1rem; box-shadow: 0 4px 12px rgba(251,191,36,0.15); }
+html.dark .qc-unanswered { background: rgba(245,158,11,0.15); border-color: rgba(245,158,11,0.4); color: #fde68a; }
+
+.qc-perf { background: var(--surface); border-radius: 1.25rem; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid var(--border); box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+.qc-perf-hdr, .qc-weak-hdr, .qc-retest-hdr { font-size: 1.2rem; font-weight: 900; color: var(--accent); margin-bottom: 1rem; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+
+.qc-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+@media (max-width: 600px) { .qc-stats-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.qc-stat { background: var(--surface-alt); border: 2px solid var(--border); border-radius: 1rem; padding: 1.25rem 0.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; transition: transform 0.2s; }
+.qc-stat:hover { transform: translateY(-4px); }
+.qc-stat-total { border-color: rgba(99,102,241,0.4); } 
+.qc-stat-correct { border-color: rgba(16,185,129,0.4); } 
+.qc-stat-wrong { border-color: rgba(239,68,68,0.4); } 
+.qc-stat-score { border-color: rgba(245,158,11,0.4); } 
+
+.qc-stat-icon { font-size: 2rem; margin-bottom: 0.5rem; line-height: 1; }
+.qc-stat-val { font-size: 2.2rem; font-weight: 900; color: var(--text); line-height: 1; }
+.qc-stat-correct .qc-stat-val { color: #10b981; } 
+.qc-stat-wrong .qc-stat-val { color: #ef4444; } 
+.qc-stat-score .qc-stat-val { color: #f59e0b; } 
+.qc-stat-lbl { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 0.5rem; font-weight: 800; }
+
+.qc-weak { background: var(--surface); border-radius: 1.25rem; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid var(--border); }
+.qc-weak-item { background: rgba(239,68,68,0.08); border-left: 6px solid #ef4444; border-radius: 0.75rem; padding: 1rem 1.25rem; margin-bottom: 0.75rem; }
+.qc-weak-q { font-weight: 800; color: #b91c1c; font-size: 1rem; line-height: 1.4; }
+html.dark .qc-weak-q { color: #fca5a5; }
+.qc-weak-a { font-size: 0.9rem; color: var(--text-muted); margin-top: 0.4rem; font-weight: 600;}
+
+.qc-no-weak { text-align: center; color: #10b981; font-size: 1.2rem; padding: 1.5rem; font-weight: 900; background: rgba(16,185,129,0.1); border-radius: 1rem; border: 2px dashed #10b981;}
+.qc-divider { height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); margin: 2rem 0; opacity: 0.5;}
+.qc-retest-desc { color: var(--text-muted); font-size: 1rem; text-align: center; margin-bottom: 1.5rem; line-height: 1.5; font-weight: 500;}
+
+.qc-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; padding-top: 1.5rem; border-top: 2px solid var(--border); }
+.qc-btn { padding: 0.85rem 1.75rem; border: none; border-radius: 2rem; font-size: 1rem; font-weight: 800; cursor: pointer; transition: all 0.2s; color: white; display: inline-flex; align-items: center; gap: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+.qc-btn:hover { transform: translateY(-3px); filter: brightness(1.1); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+.qc-btn-retest { background: linear-gradient(135deg, #8b5cf6, #6366f1); }
+.qc-btn-reset { background: linear-gradient(135deg, #B8739E, #A5648C); }
+.qc-btn-home { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+
+#nav-container { padding: 1.5rem; text-align: center; animation: fadeIn 0.5s ease; margin-top: 1rem;}
+.click-continue-pulse { display: inline-block; font-weight: 800; font-size: 1.1rem; color: white; background: var(--accent); padding: 0.75rem 2rem; border-radius: 2rem; box-shadow: 0 0 15px var(--accent); animation: pulseBtn 2s infinite; cursor: pointer;}
+@keyframes pulseBtn { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37,99,235, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(37,99,235, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37,99,235, 0); } }
+/* ===== Peptopia site chrome: logo / nav / print / theme toggle / footer ===== */
+.peptopia-hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1200px;margin:0 auto;padding:14px 24px;position:relative;z-index:50}
+.peptopia-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.peptopia-logo{width:46px;height:46px;border-radius:50%;flex:none;box-shadow:0 0 10px 2px rgba(236,72,153,.55),0 0 26px 8px rgba(236,72,153,.18)}
+.peptopia-wordmark{display:flex;flex-direction:column;font:800 1.02rem/1.15 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.14em;color:#1e1b4b}
+html.dark .peptopia-wordmark{color:#f1f5f9}
+.peptopia-tagline{font-size:.6rem;font-weight:600;letter-spacing:.3em;color:#64748b}
+html.dark .peptopia-tagline{color:#94a3b8}
+.peptopia-nav{display:flex;align-items:center;gap:1.25rem}
+.peptopia-nav>a{font:700 .8rem/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.12em;color:#334155;text-decoration:none}
+html.dark .peptopia-nav>a{color:#cbd5e1}
+.peptopia-nav>a:hover{color:#be185d}
+.peptopia-iconbtn{width:38px;height:38px;border-radius:50%;border:1px solid rgba(15,23,42,.12);background:#fff;color:#475569;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+html.dark .peptopia-iconbtn{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:#cbd5e1}
+.peptopia-iconbtn:hover{border-color:#ec4899;color:#be185d}
+.peptopia-iconbtn svg{width:17px;height:17px}
+.peptopia-theme-toggle .pp-sun{display:none}
+html.dark .peptopia-theme-toggle .pp-sun{display:block}
+html.dark .peptopia-theme-toggle .pp-moon{display:none}
+.peptopia-ftr{border-top:1px solid rgba(15,23,42,.08);margin-top:48px;padding:22px 24px;text-align:center;font:500 .8rem/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#64748b}
+html.dark .peptopia-ftr{border-color:rgba(255,255,255,.08);color:#94a3b8}
+.peptopia-ftr .peptopia-ftr-icons{display:flex;gap:16px;justify-content:center;margin-top:10px}
+.peptopia-ftr .peptopia-ftr-icons a{color:#64748b;display:inline-flex}
+html.dark .peptopia-ftr .peptopia-ftr-icons a{color:#94a3b8}
+.peptopia-ftr .peptopia-ftr-icons a:hover{color:#be185d}
+.peptopia-ftr .peptopia-ftr-icons svg{width:18px;height:18px}
+.peptopia-ftr .ftr-logo img{width:18px;height:18px;border-radius:50%;filter:grayscale(1);opacity:.55}
+.peptopia-ftr .ftr-logo:hover img{filter:none;opacity:1}
+html.dark .peptopia-ftr .ftr-logo img{filter:grayscale(1) invert(1);opacity:.75}
+html.dark .peptopia-ftr .ftr-logo:hover img{filter:none;opacity:1}
+.peptopia-ftr a.ftr-email{color:inherit;text-decoration:none}
+.peptopia-ftr a.ftr-email:hover{color:#be185d;text-decoration:underline}
+@media print{.peptopia-nav .peptopia-iconbtn,.peptopia-ftr-icons{display:none!important}.statcard,.statgrid,table,thead,tbody,tr,figure,figcaption,blockquote,.coa-callout,.card,.strain-card,pre,.callout,img{break-inside:avoid!important;page-break-inside:avoid!important}h1,h2,h3,h4,h5,h6{break-after:avoid!important;page-break-after:avoid!important}p,li{orphans:3;widows:3}a{color:inherit;text-decoration:none}body{background:#fff!important}}
+
+</style>
+</head>
+<body onclick="handleGlobalClick(event)">
+
+<div class="guide-container" id="view-study">
+  <header class="peptopia-hdr">
+<a class="peptopia-brand" href="https://x-peps.com/">
+<img class="peptopia-logo" src="data:image/png;base64,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" alt="Peptopia Health &amp; Wellness">
+<span class="peptopia-wordmark">PEPTOPIA<span class="peptopia-tagline">HEALTH &amp; WELLNESS</span></span>
+</a>
+<nav class="peptopia-nav" aria-label="Site">
+<a href="https://x-peps.com/">HOME</a>
+<a href="https://x-peps.com/X-Peps/orders/">ORDERS</a>
+<button type="button" class="peptopia-iconbtn" onclick="window.print()" title="Print / Save as PDF" aria-label="Print this page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>
+<button type="button" class="peptopia-iconbtn peptopia-theme-toggle" onclick="toggleTheme()" title="Toggle light / dark" aria-label="Toggle theme"><svg class="pp-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="pp-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></button>
+</nav>
+</header>
+
+  <!-- SECTION 1 -->
+  <div id="sec-1" class="section-hdr sh-cyan"><span class="sec-num">1</span> <span>Learning Objectives</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Goal Area</th><th>Presentation Outcome</th></tr>
+    <tr><td class="cat-label">📍 Definitions</td><td>Define harassment, incivility, and workplace violence clearly.</td></tr>
+    <tr><td class="cat-label">📍 Sexual Harassment</td><td>Learn the two forms of sexual harassment.</td></tr>
+    <tr><td class="cat-label">📍 Environment</td><td>Understand the definition of a hostile work environment.</td></tr>
+    <tr><td class="cat-label">📍 Warning Signs</td><td>Learn the warning signs of potential workplace violence.</td></tr>
+    <tr><td class="cat-label">📍 Policy</td><td>Understand Wexford Health's policies on harassment, bullying, and violence.</td></tr>
+    <tr><td class="cat-label">📍 Action Plans</td><td>Learn the correct actions to take if you are a victim or a witness.</td></tr>
+  </table>
+
+  <!-- SECTION 2 -->
+  <div id="sec-2" class="section-hdr sh-orange"><span class="sec-num">2</span> <span>Definition of Harassment</span><a href="#" class="top-btn">↑</a></div>
+  
+  <div class="callout-box co-critical">
+    <div class="callout-title">🚨 Base Definition</div>
+    <div class="callout-content">Harassment is unwelcome conduct that is based on race, color, religion, sex (including sexual orientation, gender identity, or pregnancy), national origin, older age (beginning at age 40), disability, or genetic information (including family medical history).</div>
+  </div>
+
+  <table class="compare-table">
+    <tr><th>Trigger</th><th>When Harassment Becomes Unlawful</th></tr>
+    <tr><td class="cat-label">⚠️ Quid Pro Quo</td><td>Enduring the offensive conduct becomes a condition of continued employment.</td></tr>
+    <tr><td class="cat-label">⚠️ Hostile Environment</td><td>The conduct is severe or pervasive enough to create a work environment that a reasonable person would consider intimidating, hostile, or abusive.</td></tr>
+  </table>
+
+  <!-- SECTION 3 -->
+  <div id="sec-3" class="section-hdr sh-purple"><span class="sec-num">3</span> <span>Retaliation & Legal Thresholds</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Legal Standard</th><th>Policy Mandate</th></tr>
+    <tr><td class="cat-label">🛡️ Retaliation</td><td>Anti-discrimination laws prohibit harassment against individuals in retaliation for filing a charge, testifying, or participating in an investigation/lawsuit, or for opposing discriminatory employment practices.</td></tr>
+    <tr><td class="cat-label">📏 Thresholds</td><td>Petty slights, annoyances, and isolated incidents <strong>(unless extremely serious)</strong> will not rise to the level of illegality.</td></tr>
+  </table>
+
+  <!-- SECTION 4 -->
+  <div id="sec-4" class="section-hdr sh-red"><span class="sec-num">4</span> <span>Offensive Conduct & Circumstances</span><a href="#" class="top-btn">↑</a></div>
+  
+  <div class="scenario-box">
+    <div class="scenario-title">💡 The Scope of Harassment</div>
+    <div class="scenario-content">
+      Unlawful harassment may occur without economic injury to, or discharge of, the victim. Furthermore, the victim does not have to be the person directly harassed—it can be <strong>anyone affected</strong> by the offensive conduct.
+    </div>
+  </div>
+
+  <table class="compare-table">
+    <tr><th>Category</th><th>Examples & Details</th></tr>
+    <tr><td class="cat-label">🗣️ Conduct Types</td><td>Includes offensive jokes, slurs, epithets, name calling, physical assaults or threats, intimidation, ridicule, mockery, insults, offensive objects/pictures, and interference with work performance.</td></tr>
+    <tr><td class="cat-label">👥 The Harasser</td><td>Can be the victim's supervisor, a supervisor in another area, an agent of the employer, a co-worker, or even a non-employee.</td></tr>
+  </table>
+
+  <!-- SECTION 5 -->
+  <div id="sec-5" class="section-hdr sh-teal"><span class="sec-num">5</span> <span>Examples of Harassing Conduct: Cyber</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Digital Venue</th><th>Specific Violations</th></tr>
+    <tr><td class="cat-label">📱 Social Media & Web</td><td>Posts, direct/private messages, and/or group pages on social media sites, websites, or blogs that make harassing or disparaging comments about another employee.</td></tr>
+    <tr><td class="cat-label">👁️ Cyberstalking</td><td>Cyberstalking another employee's online presence, obsessively following everything he or she does or posts online.</td></tr>
+  </table>
+
+  <!-- SECTION 6 -->
+  <div id="sec-6" class="section-hdr sh-indigo"><span class="sec-num">6</span> <span>Physical Indicators of Abuse</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Indicator Category</th><th>Observable Signs</th></tr>
+    <tr><td class="cat-label">🩺 Physical Signs</td><td>Medical and correctional staff must be observant during evaluations and screenings. Common physical indicators of sexual abuse include <strong>difficulty walking, sitting, or standing</strong>, <strong>unexplained injuries</strong>, <strong>STDs</strong>, and <strong>abdominal pain</strong>.</td></tr>
+    <tr><td class="cat-label">⚠️ Behavioral & Other Signs</td><td>Other indicators can include sudden <strong>alcohol or substance abuse</strong> as a coping mechanism. Conversely, a <strong>planned pregnancy</strong> is <em>not</em> an indicator of abuse.</td></tr>
+  </table>
+
+  <!-- SECTION 7 -->
+  <div id="sec-7" class="section-hdr sh-rose"><span class="sec-num">7</span> <span>Sexual Harassment: Quid Pro Quo</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Concept</th><th>Definition</th></tr>
+    <tr><td class="cat-label">Definition</td><td>Latin for "This for That". Occurs when a supervisor or person in authority requests sexual favors in exchange for tangible employment benefits (raises, promotions, continued employment).</td></tr>
+    <tr><td class="cat-label">Authority Requirement</td><td>Generally requires the harasser to have authority over the victim's employment status.</td></tr>
+  </table>
+
+  <!-- SECTION 8 -->
+  <div id="sec-8" class="section-hdr sh-cyan"><span class="sec-num">8</span> <span>Sexual Harassment: Hostile Environment</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Concept</th><th>Definition</th></tr>
+    <tr><td class="cat-label">Specifics</td><td>Unwelcome sexual advances, requests for sexual favors, or other verbal/physical conduct of a sexual nature that interferes with work performance.</td></tr>
+    <tr><td class="cat-label">Examples</td><td>Sexual jokes, suggestive comments, touching, or displaying sexually explicit images.</td></tr>
+  </table>
+
+  <!-- SECTION 9 -->
+  <div id="sec-9" class="section-hdr sh-orange"><span class="sec-num">9</span> <span>Gender-Based Harassment</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Concept</th><th>Definition</th></tr>
+    <tr><td class="cat-label">Non-Sexual Conduct</td><td>Harassment doesn't have to be sexual in nature. It can be based on gender/sex, such as negative comments about women in general or men in general.</td></tr>
+  </table>
+
+  <!-- SECTION 10 -->
+  <div id="sec-10" class="section-hdr sh-purple"><span class="sec-num">10</span> <span>Who is Involved?</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Role</th><th>Description</th></tr>
+    <tr><td class="cat-label">The Harasser</td><td>Can be a supervisor, co-worker, or even a non-employee (vendor, patient, or visitor).</td></tr>
+    <tr><td class="cat-label">The Victim</td><td>Does not have to be the person harassed directly; it can be anyone affected by the offensive conduct.</td></tr>
+  </table>
+
+  <!-- SECTION 11 -->
+  <div id="sec-11" class="section-hdr sh-red"><span class="sec-num">11</span> <span>Harassment Based on Other Classes</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Concept</th><th>Definition</th></tr>
+    <tr><td class="cat-label">Protected Groups</td><td>Race, Color, National Origin, Religion, Age (40+), Disability, Genetic Information.</td></tr>
+    <tr><td class="cat-label">Threshold</td><td>Behavior must be unwelcome and severe/pervasive. Petty slights and annoyances generally do not reach the legal level of harassment.</td></tr>
+  </table>
+
+  <!-- SECTION 12 -->
+  <div id="sec-12" class="section-hdr sh-teal"><span class="sec-num">12</span> <span>Defining Workplace Incivility</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Intensity</th><th>Behavioral Scope</th></tr>
+    <tr><td class="cat-label">Low Intensity</td><td>Defined as low-intensity deviant conduct with ambiguous intent to harm. It is often unclear whether the actor intended to harm the target or was simply being thoughtless or rude.</td></tr>
+  </table>
+
+  <!-- SECTION 13 -->
+  <div id="sec-13" class="section-hdr sh-indigo"><span class="sec-num">13</span> <span>Uncivil Conduct & Bullying</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Concept</th><th>Definition</th></tr>
+    <tr><td class="cat-label">Scope</td><td><strong>Incivility</strong> can be defined as anything from bullying to isolation or exclusion of an individual.</td></tr>
+    <tr><td class="cat-label">Behaviors</td><td>Interrupting others, originating rumors, ignoring/excluding colleagues, or taking credit for others' work.</td></tr>
+  </table>
+
+  <!-- SECTION 14 -->
+  <div id="sec-14" class="section-hdr sh-rose"><span class="sec-num">14</span> <span>Policy Nuances: Intent vs. Impact</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Non-Acceptable Explanations</th><th>Disciplinary Stance</th></tr>
+    <tr><td class="cat-label">⛔ "I was just kidding"</td><td>“I was just kidding” and “I didn’t mean to…” are <strong>not acceptable explanations</strong> and do not excuse harassing conduct.</td></tr>
+    <tr><td class="cat-label">⚖️ Discipline</td><td>These phrases will not stop disciplinary action from being taken against the person engaging in such conduct. Policy focus is on the impact on the victim and environment, not just the intent of the actor.</td></tr>
+  </table>
+
+  <!-- SECTION 15 -->
+  <div id="sec-15" class="section-hdr sh-cyan"><span class="sec-num">15</span> <span>Workplace Violence Categories</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Category</th><th>Description</th></tr>
+    <tr><td class="cat-label">Type I: Criminal</td><td>Perpetrator has no legitimate relationship with the business (e.g., robbery).</td></tr>
+    <tr><td class="cat-label">Type II: Customer</td><td>Perpetrator is a customer/client/patient of the business (Most common in healthcare).</td></tr>
+    <tr><td class="cat-label">Type III: Worker</td><td>Perpetrator is a current or former employee.</td></tr>
+    <tr><td class="cat-label">Type IV: Personal</td><td>Perpetrator has a personal relationship with an employee (Domestic violence spillover).</td></tr>
+  </table>
+
+  <!-- SECTION 16 -->
+  <div id="sec-16" class="section-hdr sh-orange"><span class="sec-num">16</span> <span>Industry Statistics: Healthcare</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Risk Factor</th><th>Industry Reality</th></tr>
+    <tr><td class="cat-label">🏥 Healthcare Risk</td><td><strong>Nearly 75% of workplace assaults occur in a health care setting.</strong></td></tr>
+    <tr><td class="cat-label">Time Away</td><td>Healthcare workers are four times more likely to require time away from work due to violence than workers in other industries.</td></tr>
+  </table>
+
+  <!-- SECTION 17 -->
+  <div id="sec-17" class="section-hdr sh-purple"><span class="sec-num">17</span> <span>Warning Signs of Potential Violence</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Indicator Type</th><th>Observable Behaviors</th></tr>
+    <tr><td class="cat-label">⚠️ Behavioral Traits</td><td>Perpetrators often exhibit newly acquired negative traits, such as <strong>deteriorating appearance/hygiene</strong>, <strong>erratic behavior</strong>, or <strong>reclusiveness</strong>.</td></tr>
+    <tr><td class="cat-label">🚨 Threat Indicators</td><td>Direct/veiled threats, intimidation, sudden mood swings, or obsession with weapons.</td></tr>
+    <tr><td class="cat-label">📉 Performance</td><td>Unexplained absences, decreased productivity, or refusal to accept criticism.</td></tr>
+  </table>
+
+  <!-- SECTION 18 -->
+  <div id="sec-18" class="section-hdr sh-red"><span class="sec-num">18</span> <span>Workplace Violence: Potential Risk Factors</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Category</th><th>Specific Risk Factors</th></tr>
+    <tr><td class="cat-label">🔫 Clinical/External</td><td>
+      <ul>
+          <li>Weapons among patients, their families, or friends.</li>
+          <li>Care of acutely disturbed, violent individuals.</li>
+          <li>Presence of gang members, drug/alcohol abusers, distraught family members.</li>
+      </ul>
+    </td></tr>
+    <tr><td class="cat-label">🧠 Patient System Issues</td><td>
+      <ul>
+          <li>Increasing number of acute and chronically mentally ill patients being released from hospitals without follow-up care, who now have the right to refuse medicine and who can no longer be hospitalized involuntarily unless they pose a threat to themselves or others.</li>
+      </ul>
+    </td></tr>
+    <tr><td class="cat-label">🏗️ Environmental/Training</td><td>
+      <ul>
+          <li>Isolated work with patients during exams or treatment.</li>
+          <li>Lack of training in recognizing and managing escalating hostile and aggressive behavior.</li>
+          <li>Poorly lit parking areas.</li>
+      </ul>
+    </td></tr>
+  </table>
+
+  <!-- SECTION 19 -->
+  <div id="sec-19" class="section-hdr sh-teal"><span class="sec-num">19</span> <span>Action & Reporting</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Scenario</th><th>Required Protocol</th></tr>
+    <tr><td class="cat-label">Immediate Threat</td><td>Call 911 or Facility Security immediately if there is an imminent threat of violence.</td></tr>
+    <tr><td class="cat-label">Reporting</td><td>Employees must report all incidents of harassment, incivility, or violence to their supervisor or Human Resources. Wexford Health prohibits retaliation against anyone who reports in good faith.</td></tr>
+  </table>
+
+  <!-- SECTION 20 -->
+  <div id="sec-20" class="section-hdr sh-indigo"><span class="sec-num">20</span> <span>Employee Assistance Program (EAP)</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Resource</th><th>Application</th></tr>
+    <tr><td class="cat-label">🤝 EAP Support</td><td>The Employee Assistance Program (EAP) is an appropriate resource for employees who are exhibiting incivility or struggling with personal issues that affect their workplace behavior.</td></tr>
+  </table>
+
+  <!-- SECTION 21 -->
+  <div id="sec-21" class="section-hdr sh-rose"><span class="sec-num">21</span> <span>PREA Screening</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Protocol</th><th>Application</th></tr>
+    <tr><td class="cat-label">🛡️ Screening Results</td><td>The results of the PREA (Prison Rape Elimination Act) screen are used to aid in determining housing assignments, program assignments, etc. by the correctional staff to ensure safety and prevent abuse.</td></tr>
+    <tr><td class="cat-label">🚷 Juvenile Housing</td><td>PREA specifies that juvenile offenders <strong>may not</strong> be placed in adult housing units. Strict sight and sound separation is required to protect youthful inmates.</td></tr>
+  </table>
+
+  <!-- SECTION 22 -->
+  <div id="sec-22" class="section-hdr sh-cyan"><span class="sec-num">22</span> <span>PREA Screening Timeframes</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Standard</th><th>Requirement</th></tr>
+    <tr><td class="cat-label">⏱️ Arrival Screening</td><td>According to the standards, offenders are to be screened within <strong>72 hours</strong> of arrival at the institution for their risk of being sexually abusive or abused.</td></tr>
+  </table>
+
+  <!-- SECTION 23 -->
+  <div id="sec-23" class="section-hdr sh-orange"><span class="sec-num">23</span> <span>PREA Disclosures & Referrals</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Disclosure Scenario</th><th>Required Protocol</th></tr>
+    <tr><td class="cat-label">📅 Historical Abuse</td><td>If during an intake screen you discover an inmate was a victim of sexual abuse which occurred in the past (e.g., 3 months ago), you must <strong>schedule for a mental health evaluation within 14 days</strong>. Acute measures like rape kits are not applicable for historical incidents.</td></tr>
+    <tr><td class="cat-label">⚠️ History of Abusive Behavior</td><td>If an intake screen reveals that an inmate has a previous history of sexually abusive behavior (e.g., raping a neighbor), you must <strong>schedule an appointment with mental health within 14 days for evaluation</strong>.</td></tr>
+  </table>
+
+  <!-- SECTION 24 -->
+  <div id="sec-24" class="section-hdr sh-purple"><span class="sec-num">24</span> <span>Acts Prohibited by PREA</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Category</th><th>Prohibited Acts</th></tr>
+    <tr><td class="cat-label">🛑 Physical Abuse & Contact</td><td>Intentional touching of the inner thigh, buttocks, breast, or genitalia of another person, and any genital penetration.</td></tr>
+    <tr><td class="cat-label">🛑 Staff Harassment & Voyeurism</td><td>Derogatory verbal comments of a sexual nature made by staff, repeated requests for unwelcome sexual favors, and staff members watching an inmate undress for a shower.</td></tr>
+    <tr><td class="cat-label">🛑 Inmate Harassment</td><td>Offensive verbal comments or gestures of a sexual nature made by an inmate toward another.</td></tr>
+  </table>
+
+  <!-- SECTION 25 -->
+  <div id="sec-25" class="section-hdr sh-red"><span class="sec-num">25</span> <span>PREA Risk Potential Indicators</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Indicator Category</th><th>Risk Factors for Sexual Abuse</th></tr>
+    <tr><td class="cat-label">⚠️ Increased Risk</td><td>Factors indicating an increased risk potential for sexual abuse (either being abusive or being abused) include: <strong>Developmental or intellectual disabilities</strong>, <strong>History of sexual offenses</strong>, <strong>Mental illness</strong>, and a <strong>History of being sexually abused</strong>.</td></tr>
+  </table>
+
+  <!-- SECTION 26 -->
+  <div id="sec-26" class="section-hdr sh-teal"><span class="sec-num">26</span> <span>PREA Scope Clarification</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Behavior Category</th><th>Classification Distinction</th></tr>
+    <tr><td class="cat-label">🗣️ Inmate-on-Inmate Verbal Harassment</td><td>Offensive verbal comments or gestures made by an inmate towards another inmate are generally classified as <strong>facility rule violations</strong>, rather than falling under the strict federal PREA definitions of sexual abuse or staff sexual harassment.</td></tr>
+    <tr><td class="cat-label">📝 Staff Verbal Harassment</td><td>In contrast, derogatory verbal comments made by <strong>staff</strong> are strictly prohibited under PREA guidelines.</td></tr>
+  </table>
+
+  <!-- SECTION 27 -->
+  <div id="sec-27" class="section-hdr sh-indigo"><span class="sec-num">27</span> <span>Inmate Education & Zero Tolerance</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Protocol</th><th>Requirement</th></tr>
+    <tr><td class="cat-label">📢 Information Delivery</td><td>Information regarding the <strong>zero tolerance policy</strong> and how to report incidents of sexual abuse or harassment must be given to the inmate <strong>during intake</strong>. This ensures they are immediately aware of their rights and the facility's strict prohibitions against sexual violence.</td></tr>
+  </table>
+
+  <!-- SECTION 28 -->
+  <div id="sec-28" class="section-hdr sh-rose"><span class="sec-num">28</span> <span>Frequency of Victimization</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Concept</th><th>Reality in Confinement</th></tr>
+    <tr><td class="cat-label">🔁 Repeated Abuse</td><td>It is a misconception that most people are only sexually abused once while incarcerated. In reality, victims of sexual abuse in confinement are often targeted <strong>repeatedly</strong> if there is no intervention, making immediate reporting and protective actions crucial.</td></tr>
+  </table>
+
+  <!-- SECTION 29 -->
+  <div id="sec-29" class="section-hdr sh-cyan"><span class="sec-num">29</span> <span>Terminology: Intersex</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Concept</th><th>Definition</th></tr>
+    <tr><td class="cat-label">🧬 Intersex</td><td>Individuals with a <strong>chromosomal structure other than XX or XY</strong> are defined as 'intersex'. Understanding this terminology is important for appropriate medical, mental health, and housing considerations under PREA guidelines.</td></tr>
+  </table>
+
+  <!-- SECTION 30 -->
+  <div id="sec-30" class="section-hdr sh-orange"><span class="sec-num">30</span> <span>Mental Health & Vulnerability</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Vulnerability Factor</th><th>Statistical Reality</th></tr>
+    <tr><td class="cat-label">🧠 Mental Illness Risk</td><td>Inmates with mental illness are <strong>at least 8 times more likely</strong> to suffer sexual abuse while incarcerated compared to the general inmate population.</td></tr>
+  </table>
+
+  <!-- SECTION 31 -->
+  <div id="sec-31" class="section-hdr sh-purple"><span class="sec-num">31</span> <span>Mandatory Reporting & Consent</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Protocol</th><th>Requirement</th></tr>
+    <tr><td class="cat-label">🚨 Mandatory Reporting</td><td>Staff are mandatory reporters. You must immediately report any alleged sexual abuse that occurred inside a correctional facility to designated supervisors and officials.</td></tr>
+    <tr><td class="cat-label">❌ Consent Requirement</td><td>You do <strong>not</strong> need to obtain consent from the inmate before reporting the abuse. Reporting is mandatory regardless of the victim's preference.</td></tr>
+  </table>
+
+  <!-- SECTION 32 -->
+  <div id="sec-32" class="section-hdr sh-red"><span class="sec-num">32</span> <span>Cross-Facility Reporting</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Scenario</th><th>Required Protocol</th></tr>
+    <tr><td class="cat-label">🏢 Allegations at Another Facility</td><td>If you learn of alleged sexual abuse that occurred inside a different correctional facility, you must notify the warden or superintendent. The warden/superintendent is then mandated to notify the facility where the alleged abuse occurred within <strong>72 hours</strong>.</td></tr>
+  </table>
+
+  <!-- SECTION 33 -->
+  <div id="sec-33" class="section-hdr sh-teal"><span class="sec-num">33</span> <span>Evidence Collection</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Protocol</th><th>Timeframe Requirement</th></tr>
+    <tr><td class="cat-label">🧬 Physical Evidence</td><td>Generally, physical evidence of sexual abuse (such as through a rape kit or SAFE exam) can be collected within <strong>72 hours</strong> of the incident.</td></tr>
+    <tr><td class="cat-label">🛑 Preserving Evidence</td><td>If the alleged abuse occurred within a time period allowing for evidence collection, request the victim <strong>not to take actions that could destroy evidence</strong>. This includes: brushing teeth, drinking, eating, urinating, moving bowels, smoking, or showering.</td></tr>
+  </table>
+
+  <!-- SECTION 34 -->
+  <div id="sec-34" class="section-hdr sh-purple"><span class="sec-num">34</span> <span>Nurse's Role in Alleged Assault</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Role/Responsibility</th><th>Description</th></tr>
+    <tr><td class="cat-label">👩‍⚕️ Standard Protocol</td><td>The role of the nurse in an alleged sexual assault situation includes: treating the victim with respect and dignity, determining the time frame of the alleged occurrence (to preserve evidence), notifying the medical director, and completely documenting the incident.</td></tr>
+  </table>
+
+  <!-- SECTION 35 -->
+  <div id="sec-35" class="section-hdr sh-cyan"><span class="sec-num">35</span> <span>Psychological Indicators of Abuse</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Indicator Category</th><th>Observable Signs</th></tr>
+    <tr><td class="cat-label">🧠 Psychological Signs</td><td>Common psychological indicators of sexual abuse include <strong>depression or suicidal thoughts</strong>, <strong>difficulty concentrating</strong>, <strong>feelings of guilt</strong>, and engaging in <strong>risk-taking behaviors</strong>. A positive self-image is NOT a common psychological indicator of abuse.</td></tr>
+  </table>
+
+  <!-- SECTION 36 -->
+  <div id="sec-36" class="section-hdr sh-indigo"><span class="sec-num">36</span> <span>Responses to Sexual Abuse</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Concept</th><th>Clinical Understanding</th></tr>
+    <tr><td class="cat-label">🧠 Gender Similarities</td><td>Despite common misconceptions, men and women generally have <strong>similar</strong> responses to sexual abuse. Both male and female victims experience comparable psychological and physiological trauma responses, including anxiety, depression, PTSD, and feelings of isolation or guilt.</td></tr>
+  </table>
+
+  <!-- SECTION 37 -->
+  <div id="sec-37" class="section-hdr sh-teal"><span class="sec-num">37</span> <span>Adolescent Indicators of Abuse</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Indicator Category</th><th>Observable Signs in Adolescents</th></tr>
+    <tr><td class="cat-label">🧑‍🤝‍🧑 Common Observations</td><td>Adolescent and juvenile victims may exhibit distinct behavioral and physical changes. Common observations include <strong>wearing multiple layers of clothes</strong> (to hide their body), sudden <strong>sexual promiscuity</strong> or hypersexual behavior, and severe <strong>mood swings</strong>.</td></tr>
+  </table>
+
+  <!-- SECTION 38 -->
+  <div id="sec-38" class="section-hdr sh-orange"><span class="sec-num">38</span> <span>Medical Examinations</span><a href="#" class="top-btn">↑</a></div>
+  <table class="compare-table">
+    <tr><th>Protocol</th><th>Requirement</th></tr>
+    <tr><td class="cat-label">🏥 Qualified Practitioners</td><td>Medical exams following sexual abuse must be performed by a <strong>SANE (Sexual Assault Nurse Examiner)</strong> or another qualified medical practitioner to ensure proper forensic evidence collection and trauma-informed care.</td></tr>
+  </table>
+
+</div>
+
+<!-- QUIZ OVERLAY -->
+<div id="view-quiz" class="quiz-overlay hidden">
+  <header class="quiz-header">
+    <button class="exit-btn" onclick="exitQuiz(event)">❌ Exit</button>
+    <div id="q-count-display" style="font-weight:900; font-size:1.1rem; letter-spacing: 1px;">Question 1 / 100</div>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <div id="score-circle" class="score-indicator-circle" style="font-weight:800;">0%</div>
+      <button class="quiz-badge-btn" onclick="showResults(event)">Results</button>
+    </div>
+  </header>
+  <div class="quiz-body">
+    <div id="q-container"></div>
+    <div id="nav-container" class="hidden">
+        <div class="click-continue-pulse" onclick="advanceQ(event)">Click here to continue ➡️</div>
+    </div>
+  </div>
+</div>
+
+<!-- ROBUST RESULTS OVERLAY -->
+<div id="view-results" class="quiz-overlay hidden">
+  <header class="quiz-header">
+    <button class="exit-btn" onclick="exitQuiz(event)">❌ Exit</button>
+    <div style="flex:1; text-align:center; font-weight:900; font-size:1.2rem; text-transform:uppercase; letter-spacing: 1px;">🌙 Safety Profiling</div>
+    <button class="theme-toggle-btn" onclick="toggleTheme(event)">☀️</button>
+  </header>
+  
+  <div class="quiz-body">
+    <div id="quiz-completion" class="quiz-completion visible">
+      <div class="qc-title" id="qc-title">📊 Assessment Complete</div>
+      
+      <div class="qc-unanswered" id="qc-unanswered" style="display:none;">
+        ⚠️ You have <span id="qc-unanswered-ct">0</span> unanswered questions remaining.
+      </div>
+      
+      <div class="qc-perf">
+        <div class="qc-perf-hdr">Performance Summary</div>
+        <div class="qc-stats-grid">
+          <div class="qc-stat qc-stat-total">
+            <div class="qc-stat-icon">🎯</div>
+            <div class="qc-stat-val" id="qc-total">0/100</div>
+            <div class="qc-stat-lbl">Answered</div>
+          </div>
+          <div class="qc-stat qc-stat-correct">
+            <div class="qc-stat-icon">✅</div>
+            <div class="qc-stat-val" id="qc-correct">0</div>
+            <div class="qc-stat-lbl">Correct</div>
+          </div>
+          <div class="qc-stat qc-stat-wrong">
+            <div class="qc-stat-icon">📝</div>
+            <div class="qc-stat-val" id="qc-wrong">0</div>
+            <div class="qc-stat-lbl">Incorrect</div>
+          </div>
+          <div class="qc-stat qc-stat-score">
+            <div class="qc-stat-icon">🔥</div>
+            <div class="qc-stat-val" id="qc-pct">0%</div>
+            <div class="qc-stat-lbl">Score</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="qc-weak" id="qc-weak">
+        <div class="qc-weak-hdr">🎯 Areas to Focus On</div>
+        <div id="qc-weak-body"></div>
+      </div>
+
+      <div id="qc-retest" style="display:none;">
+        <div class="qc-divider"></div>
+        <div class="qc-retest-hdr">🔄 Ready to Improve?</div>
+        <div class="qc-retest-desc">Retake the questions you missed to strengthen your knowledge and boost your score.</div>
+        <div style="text-align:center;">
+          <button class="qc-btn qc-btn-retest" onclick="retestMissed()">📝 Retest Missed (<span id="qc-missed">0</span>)</button>
+        </div>
+      </div>
+
+      <div class="qc-actions">
+        <button class="qc-btn qc-btn-reset" onclick="startQuiz(event)">🔄 Reset Quiz</button>
+        <button class="qc-btn qc-btn-home" onclick="exitQuiz(event)">🏠 Back to Study Guide</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
+        btn.innerHTML = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
+    });
+});
+
+const QUESTIONS = [
+  { id: 1, topic: 'Harassment Protected Classes', text: "Under harassment definitions, 'older age' is specifically defined as beginning at what age?", type: 'MC', options: ["Age 35", "Age 40", "Age 50", "Age 65"], answer: 1, rationale: "Correct! Harassment based on older age officially begins at age 40 according to the policy definitions." },
+  { id: 2, topic: 'Harassment Thresholds', text: "Harassment becomes unlawful when enduring the offensive conduct becomes a condition of continued employment.", type: 'TF', answer: true, rationale: "Correct! This is one of the two primary conditions that make harassment legally actionable (often known as Quid Pro Quo)." },
+  { id: 3, topic: 'Hostile Environment', text: "Unlawful harassment requires the conduct to be severe or pervasive enough to create a work environment that a reasonable person would consider intimidating, hostile, or abusive.", type: 'TF', answer: true, rationale: "Correct! The 'severe or pervasive' standard is the legal threshold for a hostile work environment." },
+  { id: 4, topic: 'Retaliation', text: "Anti-discrimination laws prohibit harassment against individuals in retaliation for participating in an investigation or lawsuit.", type: 'TF', answer: true, rationale: "Correct! Retaliation against whistleblowers or participants in investigations is strictly prohibited." },
+  { id: 5, topic: 'Illegal Thresholds', text: "Petty slights, annoyances, and isolated incidents will always rise to the level of illegality.", type: 'TF', answer: false, rationale: "Incorrect. Petty slights and isolated incidents generally do *not* rise to the level of illegality unless they are extremely serious." },
+  { id: 6, topic: 'Harasser Identity', text: "Which of the following individuals can be considered a harasser in the workplace?", type: 'MC', options: ["A direct supervisor", "A co-worker", "A non-employee (like a vendor or client)", "All of the above"], answer: 3, rationale: "Correct! Harassment can occur from supervisors, agents of the employer, co-workers, and even non-employees." },
+  { id: 7, topic: 'Victim Identity', text: "To file a valid harassment complaint, the victim must be the person directly targeted by the offensive conduct.", type: 'TF', answer: false, rationale: "Incorrect! The victim does *not* have to be the person harassed directly; it can be anyone negatively affected by the offensive conduct." },
+  { id: 8, topic: 'Economic Injury', text: "Unlawful harassment can occur without any economic injury to or discharge of the victim.", type: 'TF', answer: true, rationale: "Correct! Harassment does not require financial loss (like being fired or demoted) to be considered unlawful." },
+  { id: 9, topic: 'Offensive Conduct', text: "Which of the following is NOT listed as a standard example of offensive conduct?", type: 'MC', options: ["Ridicule or mockery", "Interference with work performance", "Assigning overtime shifts fairly", "Physical assaults or threats"], answer: 2, rationale: "Correct! Fairly assigning overtime is standard operational procedure. Mockery, threats, and work interference are offensive conduct." },
+  { id: 10, topic: 'Cyber Harassment', text: "Obsessively following everything a coworker does or posts online is classified as:", type: 'MC', options: ["Cyberstalking", "Networking", "Digital Monitoring", "Incivility"], answer: 0, rationale: "Correct! Obsessively monitoring or following an employee's online presence constitutes cyberstalking, a form of harassment." },
+  { id: 11, topic: 'Social Media', text: "Disparaging comments made about another employee in a 'private' social media group do not violate workplace harassment policies.", type: 'TF', answer: false, rationale: "Incorrect. Posts, direct/private messages, and group pages that make disparaging comments are still considered harassing conduct." },
+  { id: 12, topic: 'Protected Classes', text: "Sex-based protected traits explicitly include sexual orientation, gender identity, and pregnancy.", type: 'TF', answer: true, rationale: "Correct! All three are explicitly protected under the definition of sex-based harassment." },
+  { id: 13, topic: 'Genetic Info', text: "Discrimination or harassment based on an employee's family medical history is prohibited.", type: 'TF', answer: true, rationale: "Correct! Family medical history falls under the protected class of genetic information." },
+  { id: 14, topic: 'Learning Objectives', text: "According to the course objectives, you should learn the correct actions to take if you are either a victim or a witness of harassment.", type: 'TF', answer: true, rationale: "Correct! Knowing how to act as a bystander/witness is just as important as knowing what to do as a victim." },
+  { id: 15, topic: 'Hostile Environment', text: "A hostile work environment is created solely by physical threats, not by name-calling or offensive pictures.", type: 'TF', answer: false, rationale: "Incorrect! A hostile environment can be created by name-calling, offensive objects/pictures, slurs, and mockery, not just physical threats." },
+  { id: 16, topic: 'Physical Indicators', text: "One physical indicator of sexual abuse may be difficulty walking or sitting.", type: 'TF', answer: true, rationale: "Correct! Difficulty walking or sitting is a recognized physical indicator of sexual abuse that staff should monitor for during assessments." },
+  { id: 17, topic: 'Incivility', text: "Incivility can be defined as anything from bullying to isolation or exclusion of an individual.", type: 'TF', answer: true, rationale: "Correct! Incivility is defined as low-intensity conduct including bullying and social exclusion." },
+  { id: 18, topic: 'Healthcare Statistics', text: "Nearly 75% of workplace assaults occur in a health care setting.", type: 'TF', answer: true, rationale: "Correct! Statistics verify healthcare as the highest risk industry for workplace assaults." },
+  { id: 19, topic: 'Intent vs Impact', text: "“I was just kidding” and “I didn’t mean to…” are acceptable explanations that excuse harassing conduct.", type: 'TF', answer: false, rationale: "Incorrect. Intent does not excuse impact; policy dictates these are not acceptable excuses and will not stop disciplinary action." },
+  { id: 20, topic: 'Warning Signs', text: "Perpetrators of workplace violence often exhibit newly acquired negative traits, such as deteriorating appearance/hygiene, erratic behavior, or reclusiveness.", type: 'TF', answer: true, rationale: "Correct! These behavioral shifts are identified as key warning signs of potential violence." },
+  { id: 21, topic: 'Risk Factors', text: "Isolated work with patients during exams and poorly lit parking areas are potential risk factors for workplace violence.", type: 'TF', answer: true, rationale: "Correct! These are both identified as key environmental and operational risk factors." },
+  { id: 22, topic: 'Incivility Definitions', text: "Workplace incivility is defined as high-intensity aggression with clear intent to harm.", type: 'TF', answer: false, rationale: "Incorrect. Incivility is defined as 'low-intensity' deviant conduct with 'ambiguous intent'." },
+  { id: 23, topic: 'Violence Categories', text: "Which type of violence involves a perpetrator with no legitimate relationship with the business?", type: 'MC', options: ["Type I: Criminal", "Type II: Customer", "Type III: Worker", "Type IV: Personal"], answer: 0, rationale: "Correct! Type I involves criminal intent by someone without a legitimate relationship to the business (e.g., robbery)." },
+  { id: 24, topic: 'Violence Categories', text: "Type II violence is the most common in healthcare and involves patients or clients.", type: 'TF', answer: true, rationale: "Correct! Type II violence involves customers, clients, or patients, which is most frequent in healthcare settings." },
+  { id: 25, topic: 'Hostile Environment Definition', text: "A hostile work environment is a workplace where there are serious instances of harassment and discrimination against protected characteristics such as race, color, religion, sex and pregnancy, national origin, age (40 or older), disability, or genetic information.", type: 'TF', answer: true, rationale: "Correct! This strictly matches the legal and institutional definition of a Hostile Work Environment." },
+  { id: 26, topic: 'Risk Factors', text: "An increasing number of acute and chronically mentally ill patients being released from hospitals without follow-up care is considered a potential risk factor for workplace violence.", type: 'TF', answer: true, rationale: "Correct! The lack of follow-up care, combined with the right to refuse medicine and limits on involuntary hospitalization, creates a systemic risk factor." },
+  { id: 27, topic: 'EAP Resources', text: "The Employee Assistance Program (EAP) would be an appropriate resource for uncivil employees who are struggling with personal issues.", type: 'TF', answer: true, rationale: "Correct! The EAP is a valuable resource to help employees manage personal struggles that may be contributing to uncivil workplace behavior." },
+  { id: 28, topic: 'PREA Screening', text: "The results of the PREA screen are used to aid in determining housing assignments, program assignments, etc. by the correctional staff.", type: 'TF', answer: true, rationale: "Correct! PREA screening results are critical for correctional staff to make safe housing, bed, and program assignments." },
+  { id: 29, topic: 'PREA Juvenile Offenders', text: "PREA specifies that juvenile offenders may be placed in adult housing units.", type: 'TF', answer: false, rationale: "Incorrect. PREA explicitly prohibits placing juvenile offenders in adult housing units to protect them from potential abuse." },
+  { id: 30, topic: 'PREA Screening Timeframes', text: "According to the standards, offenders are to be screened within ____ hours of arrival at the institution for their risk of being sexually abusive or abused.", type: 'MC', options: ["48", "36", "12", "24", "72"], answer: 4, rationale: "Correct! PREA standards mandate that offenders must be screened within 72 hours of arrival to assess their risk of being sexually abusive or abused." },
+  { id: 31, topic: 'PREA Historical Disclosures', text: "During an intake screen, you discover an inmate was a victim of sexual abuse which occurred 3 months ago. Which of the following do you need to do?", type: 'MC', options: ["Complete a rape kit at this time", "Schedule for a medical evaluation within 7 days", "Schedule for a mental health evaluation within 14 days"], answer: 2, rationale: "Correct! For historical sexual abuse disclosures (e.g., 3 months ago), standard protocol requires scheduling a mental health evaluation within 14 days. A rape kit is no longer applicable." },
+  { id: 32, topic: 'PREA Historical Disclosures', text: "You are performing an intake screen on a new arrival to your facility. During your intake screen, you learn that the inmate has a previous history of raping a neighbor. You:", type: 'MC', options: ["Recommend placement in the sexual predator housing unit", "Schedule an appointment with mental health within 14 days for evaluation", "Collect DNA samples"], answer: 1, rationale: "Correct! If an inmate is identified as having a history of sexually abusive behavior during screening, protocol dictates scheduling a mental health evaluation within 14 days." },
+  { id: 33, topic: 'PREA Prohibited Acts', text: "From the list below, select the acts prohibited by PREA as described in the training.", type: 'SATA', options: ["Intentional touching of the inner thigh or buttocks of another person", "Genital penetration", "Derogatory verbal comments of a sexual nature made by staff", "Repeated requests for unwelcome sexual favors", "Staff member watching an inmate undress for a shower", "Offensive verbal comments or gestures made by an inmate"], answer: [0, 1, 2, 3, 4], rationale: "Correct! PREA explicitly prohibits physical sexual abuse and staff sexual harassment/voyeurism. However, inmate-on-inmate offensive verbal comments are handled as standard facility disciplinary violations, not strictly as PREA offenses." },
+  { id: 34, topic: 'PREA Risk Indicators', text: "Which of the following would NOT indicate an increased risk potential for sexual abuse?", type: 'MC', options: ["Developmental or intellectual disabilities", "History of sexual offenses", "Parents divorced at a young age", "Mental illness", "History of being sexually abused"], answer: 2, rationale: "Correct! While disabilities, mental illness, and a history of sexual offenses/abuse are all key indicators for increased risk under PREA, parents divorcing at a young age is not a standard screening indicator." },
+  { id: 35, topic: 'PREA Inmate Education', text: "Information regarding the zero tolerance policy and how to report incidents of sexual abuse or harassment should be given to the inmate:", type: 'MC', options: ["Only if the inmate asks for the information", "During the first provider visit", "During med pass", "During intake"], answer: 3, rationale: "Correct! PREA standards mandate that information regarding the zero-tolerance policy and how to report incidents must be provided to inmates immediately during the intake process." },
+  { id: 36, topic: 'Frequency of Victimization', text: "Most people are only sexually abused once while incarcerated.", type: 'TF', answer: false, rationale: "Correct! Incarcerated individuals who are sexually abused are often targeted repeatedly, not just once. This makes immediate reporting and intervention critical." },
+  { id: 37, topic: 'Terminology: Intersex', text: "Individuals with a chromosomal structure other than XX or XY are defined as 'intersex'.", type: 'TF', answer: true, rationale: "Correct! Intersex is the term used to describe individuals born with chromosomal structures or reproductive anatomies that do not strictly fit typical definitions of male (XY) or female (XX)." },
+  { id: 38, topic: 'Mental Health Vulnerability', text: "Inmates with mental illness are at least 8 times more likely to suffer sexual abuse while incarcerated.", type: 'TF', answer: true, rationale: "Correct! Statistical data indicates that inmates with mental illness face a severely heightened risk of sexual victimization, being at least 8 times more likely to be abused compared to the general population." },
+  { id: 39, topic: 'Mandatory Reporting', text: "You must obtain consent from the inmate BEFORE reporting alleged sexual abuse which occurred inside a correctional facility to designated supervisors and officials.", type: 'TF', answer: false, rationale: "Correct! Staff are mandatory reporters. You are required to report allegations of sexual abuse immediately; you do not need, and should not wait for, the inmate's consent to report." },
+  { id: 40, topic: 'Cross-Facility Reporting', text: "You should notify the warden or superintendent of any alleged sexual abuse which occurred in another facility. The warden/superintendent is to notify the facility where the alleged abuse occurred within ___ hours.", type: 'MC', options: ["24", "48", "72", "96"], answer: 2, rationale: "Correct! Under PREA, if an allegation involves another facility, the warden or superintendent must notify that specific facility within 72 hours." },
+  { id: 41, topic: 'Evidence Collection', text: "Generally, physical evidence of sexual abuse can be collected within ___ hours.", type: 'MC', options: ["72", "24", "48", "36", "12"], answer: 0, rationale: "Correct! Physical evidence of sexual abuse can generally be collected within 72 hours of the incident." },
+  { id: 42, topic: 'Preserving Evidence', text: "If the alleged abuse occurred within a time period that still allows for the collection of physical evidence, request the alleged victim not to take any actions which could destroy the evidence such as: (mark all that apply)", type: 'SATA', options: ["Brushing teeth", "Drinking", "Urinating", "Smoking", "Moving bowels", "Showering", "Eating", "Sitting or laying down"], answer: [0, 1, 2, 3, 4, 5, 6], rationale: "Correct! To preserve DNA and physical evidence for a forensic exam, the victim should be instructed not to brush teeth, drink, eat, urinate, move bowels, smoke, or shower. Sitting or laying down does not typically destroy evidence." },
+  { id: 43, topic: 'Nurse\'s Role', text: "The role of the nurse in an alleged sexual assault situation includes treating the victim with respect and dignity, determining the time frame of alleged occurrence, notifying the medical director, and completing documentation.", type: 'TF', answer: true, rationale: "Correct! The nurse's responsibilities involve respectful treatment, determining the evidence collection window, proper notification, and thorough documentation." },
+  { id: 44, topic: 'Indicators of Abuse', text: "From the list below, which is NOT a common physical indicator of sexual abuse in adults.", type: 'MC', options: ["Unexplained injury", "Difficulty walking to standing", "Planned pregnancy", "STDs", "Alcohol abuse", "Abdominal pain"], answer: 2, rationale: "Correct! A planned pregnancy is not a sign of abuse, whereas unexplained injuries, STDs, abdominal pain, difficulty walking/standing, and new alcohol/substance abuse issues are common indicators." },
+  { id: 45, topic: 'Psychological Indicators', text: "From the list below, choose the answer that is NOT a common psychological indicator of abuse.", type: 'MC', options: ["Depression/suicidal thoughts", "Difficulty concentrating", "Positive self-image", "Feelings of guilt", "Taking risks"], answer: 2, rationale: "Correct! Victims of abuse commonly experience depression, guilt, difficulty concentrating, and risk-taking behaviors. A positive self-image is not a typical psychological indicator of abuse." },
+  { id: 46, topic: 'Responses to Abuse', text: "Men and women have similar responses to sexual abuse.", type: 'TF', answer: true, rationale: "Correct! Despite societal misconceptions, men and women generally experience and exhibit similar psychological and physiological responses to the trauma of sexual abuse." },
+  { id: 47, topic: 'Adolescent Indicators', text: "Observations of sexual abuse which are common in adolescent victims include: (mark all that apply)", type: 'SATA', options: ["Wearing multiple layers of clothes", "Sexual promiscuity", "Mood swings", "Longing of intimacy and close relationships"], answer: [0, 1, 2], rationale: "Correct! Wearing multiple layers, acting out with sexual promiscuity, and mood swings are all documented indicators of abuse in adolescents. They typically struggle with intimacy rather than exhibiting a healthy longing for it." },
+  { id: 48, topic: 'Medical Examinations', text: "Medical exams following sexual abuse must be performed by a SANE or other qualified medical practitioner.", type: 'TF', answer: true, rationale: "Correct! To ensure forensic integrity and trauma-informed care, these sensitive exams must be conducted by a Sexual Assault Nurse Examiner (SANE) or equivalently qualified medical practitioner." }
+];
+
+const TOPICS = ["Definitions", "Violence Types", "Legal/EEOC", "Sexual Harassment", "De-escalation", "Reporting Policy", "Bystander Intervention"];
+for(let i=48; i<=100; i++) {
+  const topic = TOPICS[i % TOPICS.length];
+  QUESTIONS.push({
+    id: i,
+    topic: topic,
+    text: `[Placeholder Question ${i}] related to ${topic}. Content to be replaced by the next batch of screenshots.`,
+    type: 'TF',
+    answer: true,
+    rationale: `Placeholder rationale for ${topic}.`
+  });
+}
+
+let state = { idx: 0, correct: 0, incorrect: 0, isGrading: false, missedTopics: new Set(), answered: {}, sataSelections: new Set() };
+
+function toggleTheme(e) { 
+    if(e) e.stopPropagation(); 
+    document.documentElement.classList.toggle('dark'); 
+    document.querySelectorAll('.theme-toggle-btn').forEach(btn => btn.innerHTML = document.documentElement.classList.contains('dark') ? '☀️' : '🌙');
+}
+
+function startQuiz(e) {
+  if(e) e.stopPropagation();
+  state = { idx: 0, correct: 0, incorrect: 0, isGrading: false, missedTopics: new Set(), answered: {}, sataSelections: new Set() };
+  document.getElementById('view-study').classList.add('hidden');
+  document.getElementById('view-results').classList.add('hidden');
+  document.getElementById('view-quiz').classList.remove('hidden');
+  renderQ();
+}
+
+function exitQuiz(e) {
+  if(e) e.stopPropagation();
+  document.getElementById('view-quiz').classList.add('hidden');
+  document.getElementById('view-results').classList.add('hidden');
+  document.getElementById('view-study').classList.remove('hidden');
+}
+
+function renderQ() {
+  state.isGrading = false;
+  state.sataSelections = new Set();
+  const q = QUESTIONS[state.idx];
+  document.getElementById('q-count-display').innerText = `Question ${state.idx + 1} / ${QUESTIONS.length}`;
+  document.getElementById('nav-container').classList.add('hidden');
+
+  let html = `<div class="q-card" data-answered="false"><div style="color:var(--accent); font-weight:900; font-size:0.85rem; margin-bottom:1rem; text-transform:uppercase; letter-spacing:1px;">${q.topic}</div><div class="q-text">${q.text}</div>`;
+  
+  if (q.type === 'TF') {
+    html += `<div class="choice-row" onclick="processAnswer(true, this, event)">True</div><div class="choice-row" onclick="processAnswer(false, this, event)">False</div>`;
+  } else if (q.type === 'MC') {
+    html += q.options.map((o, i) => `<div class="choice-row" onclick="processAnswer(${i}, this, event)">${o}</div>`).join('');
+  } else if (q.type === 'SATA') {
+    html += q.options.map((o, i) => `<div class="choice-row sata-mode" onclick="toggleSATA(${i}, this, event)"><div class="checkbox-mock"></div>${o}</div>`).join('');
+    html += `<button class="sata-submit-btn" onclick="submitSATA(event)">Submit Answer</button>`;
+  }
+  document.getElementById('q-container').innerHTML = html + `<div id="rationale-box"></div></div>`;
+  updateScoreCircle();
+}
+
+function toggleSATA(idx, el, e) {
+  if (state.isGrading) return;
+  if(e) e.stopPropagation();
+  if (state.sataSelections.has(idx)) {
+      state.sataSelections.delete(idx);
+      el.classList.remove('selected');
+  } else {
+      state.sataSelections.add(idx);
+      el.classList.add('selected');
+  }
+}
+
+function submitSATA(e) {
+  if (state.isGrading) return;
+  if(e) e.stopPropagation();
+  state.isGrading = true;
+  
+  const q = QUESTIONS[state.idx];
+  const correctSet = new Set(q.answer);
+  
+  let isCorrect = (state.sataSelections.size === correctSet.size) && [...state.sataSelections].every(val => correctSet.has(val));
+  state.answered[state.idx] = Array.from(state.sataSelections);
+
+  if (isCorrect) {
+      state.correct++;
+  } else {
+      state.incorrect++;
+      state.missedTopics.add(q.topic);
+  }
+
+  const buttons = document.querySelectorAll('.choice-row');
+  buttons.forEach((btn, i) => {
+      btn.classList.add('disabled');
+      let isSelected = state.sataSelections.has(i);
+      let isActuallyCorrect = correctSet.has(i);
+
+      if (isActuallyCorrect) {
+          btn.classList.add('correct');
+          if(!btn.querySelector('.q-ans-icon')) btn.innerHTML += '<span class="q-ans-icon" style="color:#10b981;">✓ Required</span>';
+      } else if (isSelected && !isActuallyCorrect) {
+          btn.classList.add('incorrect');
+          if(!btn.querySelector('.q-ans-icon')) btn.innerHTML += '<span class="q-ans-icon" style="color:#ef4444;">✗ Wrong</span>';
+      }
+  });
+
+  const submitBtn = document.querySelector('.sata-submit-btn');
+  if (submitBtn) submitBtn.style.display = 'none';
+
+  const ratContainer = document.getElementById('rationale-box');
+  ratContainer.innerHTML = `
+      <div class="q-rationale visible">
+          <div class="q-rat-hdr ${isCorrect ? 'correct' : 'incorrect'}">
+              ${isCorrect ? '✔️ Correct!' : '❌ Incorrect'}
+          </div>
+          <div class="q-rat-body">
+              <div class="q-rat-label">🤓 Rationale:</div>
+              <div class="q-rat-text">${q.rationale}</div>
+          </div>
+      </div>
+  `;
+
+  const qCard = document.querySelector('.q-card');
+  if (qCard) {
+      qCard.style.cursor = 'pointer';
+      qCard.setAttribute('data-answered', 'true');
+  }
+
+  updateScoreCircle();
+  document.getElementById('nav-container').classList.remove('hidden');
+}
+
+function processAnswer(val, el, e) {
+  if (state.isGrading) return;
+  if(e) e.stopPropagation();
+  state.isGrading = true;
+  
+  const q = QUESTIONS[state.idx];
+  let isCorrect = (val === q.answer);
+  state.answered[state.idx] = val;
+
+  if (isCorrect) {
+      state.correct++;
+  } else {
+      state.incorrect++;
+      state.missedTopics.add(q.topic);
+  }
+
+  const buttons = document.querySelectorAll('.choice-row');
+  buttons.forEach((btn, i) => {
+      btn.classList.add('disabled');
+      let btnVal = (q.type === 'TF') ? (i === 0 ? true : false) : i;
+
+      if (btnVal === q.answer) {
+          btn.classList.add('correct');
+          btn.innerHTML += '<span class="q-ans-icon" style="color:#10b981;">✓</span>';
+      } else if (btnVal === val && val !== q.answer) {
+          btn.classList.add('incorrect');
+          btn.innerHTML += '<span class="q-ans-icon" style="color:#ef4444;">✗</span>';
+      }
+  });
+
+  const ratContainer = document.getElementById('rationale-box');
+  ratContainer.innerHTML = `
+      <div class="q-rationale visible">
+          <div class="q-rat-hdr ${isCorrect ? 'correct' : 'incorrect'}">
+              ${isCorrect ? '✔️ Correct!' : '❌ Incorrect'}
+          </div>
+          <div class="q-rat-body">
+              <div class="q-rat-label">🤓 Rationale:</div>
+              <div class="q-rat-text">${q.rationale}</div>
+          </div>
+      </div>
+  `;
+
+  const qCard = document.querySelector('.q-card');
+  if (qCard) {
+      qCard.style.cursor = 'pointer';
+      qCard.setAttribute('data-answered', 'true');
+  }
+
+  updateScoreCircle();
+  document.getElementById('nav-container').classList.remove('hidden');
+}
+
+function updateScoreCircle() {
+  const answered = state.correct + state.incorrect;
+  const pct = answered > 0 ? Math.round((state.correct / answered) * 100) : 0;
+  const circle = document.getElementById('score-circle');
+  if(circle) {
+      circle.innerText = `${pct}%`;
+      circle.style.borderColor = pct >= 85 ? '#10b981' : (pct > 0 ? '#ef4444' : 'rgba(255,255,255,0.4)');
+  }
+}
+
+function advanceQ(e) {
+  if(e) e.stopPropagation();
+  if (state.idx < QUESTIONS.length - 1) { 
+      state.idx++; 
+      renderQ(); 
+  } else { 
+      showResults(); 
+  }
+}
+
+document.addEventListener('click', function(e) {
+  if (!state.isGrading) return;
+  const qCard = document.querySelector('.q-card');
+  if (!qCard || qCard.getAttribute('data-answered') !== 'true') return;
+  if (e.target.closest('.exit-btn') || e.target.closest('.quiz-badge-btn') || e.target.closest('.theme-toggle-btn') || e.target.closest('.click-continue-pulse')) return;
+  advanceQ();
+});
+
+function retestMissed() {
+    if (state.incorrect === 0) return;
+    startQuiz(new Event('click'));
+}
+
+function showResults() {
+  document.getElementById('view-quiz').classList.add('hidden');
+  document.getElementById('view-results').classList.remove('hidden');
+  
+  const total = state.correct + state.incorrect;
+  const unanswered = QUESTIONS.length - total;
+  const score = total > 0 ? Math.round((state.correct / QUESTIONS.length) * 100) : 0;
+
+  const unEl = document.getElementById('qc-unanswered');
+  if (unanswered > 0) {
+    unEl.classList.remove('hidden');
+    document.getElementById('qc-unanswered-ct').innerText = unanswered;
+  } else {
+    unEl.classList.add('hidden');
+  }
+
+  document.getElementById('qc-total').innerText = `${total}/100`;
+  document.getElementById('qc-correct').innerText = state.correct;
+  document.getElementById('qc-wrong').innerText = state.incorrect;
+  document.getElementById('qc-pct').innerText = `${score}%`;
+
+  const weakBody = document.getElementById('qc-weak-body');
+  if (state.incorrect > 0) {
+    let wHtml = '';
+    const letters = ['A','B','C','D'];
+    for (let i = 0; i < QUESTIONS.length; i++) {
+        if (state.answered[i] !== undefined && state.answered[i] !== QUESTIONS[i].answer) {
+            let itm = QUESTIONS[i];
+            let qTxt = itm.text.length > 80 ? itm.text.substring(0, 80) + '...' : itm.text;
+            
+            let userAnsStr = '';
+            let corrAnsStr = '';
+            
+            if(itm.type === 'TF') {
+                userAnsStr = state.answered[i] ? 'True' : 'False';
+                corrAnsStr = itm.answer ? 'True' : 'False';
+            } else if (itm.type === 'MC') {
+                userAnsStr = letters[state.answered[i]] || 'Unknown';
+                corrAnsStr = letters[itm.answer] || 'Unknown';
+            } else if (itm.type === 'SATA') {
+                userAnsStr = 'Multiple Selections';
+                corrAnsStr = 'Multiple Required';
+            }
+            
+            wHtml += `<div class="qc-weak-item"><div class="qc-weak-q">Q${i+1}: ${qTxt}</div>` +
+                     `<div class="qc-weak-a">Your answer: ${userAnsStr} — Correct: ${corrAnsStr}</div></div>`;
+        }
+    }
+    weakBody.innerHTML = wHtml;
+    
+    document.getElementById('qc-missed').innerText = state.incorrect;
+    document.getElementById('qc-retest').style.display = 'block';
+  } else if (total > 0) {
+    weakBody.innerHTML = '<div class="qc-no-weak">🎉 Perfect score! No weak areas identified.</div>';
+    document.getElementById('qc-retest').style.display = 'none';
+  } else {
+    weakBody.innerHTML = '<div class="qc-no-weak" style="color:var(--text-muted); border-color:var(--border); background:var(--surface-alt)">No questions answered yet.</div>';
+    document.getElementById('qc-retest').style.display = 'none';
+  }
+}
+</script>
+<footer class="peptopia-ftr">
+<div>&copy; 2026 Peptopia Health &bull; All rights reserved &bull; <a class="ftr-email" href="mailto:Peptopia@x-peps.com?subject=From%20the%20Peptopia%20Health%20Website">Peptopia@x-peps.com</a></div>
+<div class="peptopia-ftr-icons">
+<a class="ftr-logo" href="https://x-peps.com/" title="Home" aria-label="Home"><img src="data:image/png;base64,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" alt="Peptopia home"></a>
+<a href="https://x-peps.com/X-Peps/orders/" title="Shop" aria-label="Shop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></a>
+<a href="https://discord.gg/sHAYkB5NAM" target="_blank" rel="noopener" title="Discord" aria-label="Discord"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.93-1.51 1.98 1.98 0 0 0-.08 1.53 19.5 19.5 0 0 0-5.9 0A1.98 1.98 0 0 0 9.34 2.86a19.8 19.8 0 0 0-4.93 1.51A20.3 20.3 0 0 0 .1 18.06a19.9 19.9 0 0 0 6.07 3.03c.46-.63.87-1.3 1.22-2a12.9 12.9 0 0 1-1.93-.92c.16-.12.32-.24.47-.37a14.2 14.2 0 0 0 12.14 0c.15.13.31.25.47.37-.61.36-1.26.68-1.93.92.35.7.76 1.37 1.22 2a19.8 19.8 0 0 0 6.07-3.03 20.2 20.2 0 0 0-4.29-13.69ZM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42s.95-2.42 2.16-2.42 2.18 1.09 2.16 2.42c0 1.34-.95 2.42-2.16 2.42Zm7.97 0c-1.18 0-2.16-1.08-2.16-2.42s.95-2.42 2.16-2.42 2.18 1.09 2.16 2.42c0 1.34-.95 2.42-2.16 2.42Z"/></svg></a>
+<a href="https://youtube.com/playlist?list=PLJI0wP-Amc5mLaPG7sDBdRTYVvCOA7DUR&si=a0xNfjs4uDrBzKHh" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81ZM9.55 15.57V8.43L15.82 12l-6.27 3.57Z"/></svg></a>
+</div>
+</footer>
+</body>
+</html>
